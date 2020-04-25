@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:PropagaMed"
+             x:Class="PropagaMed.Login">
+
+    <StackLayout BackgroundColor="#8b8a8a">
+        <StackLayout VerticalOptions="StartAndExpand">
+            <Image x:Name = "PropagaMedLogo"
+             Source="PropagaMed"
+             Scale="1"
+             />
+        </StackLayout>
+
+        <ScrollView VerticalOptions="CenterAndExpand">
+            <StackLayout>
+                <Entry x:Name="login"
+                   Scale="0.8"     
+                   Placeholder="Login"
+                   BackgroundColor="#FFF"
+                   TextColor="Black"
+                />
+
+                 <Entry x:Name="password"
+                   MaxLength="4"
+                   Keyboard="Numeric"
+                   IsPassword="True"
+                   Scale="0.8"     
+                   Placeholder="Senha"
+                   BackgroundColor="#FFF"
+                   TextColor="Black"
+                />
+
+                <Button x:Name="Entrar" 
+                   Text="Entrar"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   VerticalOptions="CenterAndExpand"
+                   BackgroundColor="#8b8a8a"
+                   BorderColor="White"
+                   BorderWidth="0.1"
+                   Padding="5"
+                   TextColor="White"
+                   Clicked="EntrarClicado"
+                />
+            </StackLayout>
+        </ScrollView>
+
+        <Button x:Name="Info"
+           Text="Info"
+           TextColor="White"
+           HorizontalOptions="End"
+           VerticalOptions="EndAndExpand"
+           Margin="10"     
+           Clicked="InfoClicado"
+        />
+    </StackLayout>
+</ContentPage>

@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PropagaMed.Home">
+
+<ContentPage x:Name="novaVisita" Title="Nova Visita" BackgroundColor="#8b8a8a">
+    <ScrollView>
+        <StackLayout>
+            <Label Text="Cadastrar Nova Visita"
+               TextColor="White"
+               HorizontalTextAlignment="Center"
+               VerticalOptions="CenterAndExpand"    
+               Margin="50"
+               FontFamily="Arial"
+               FontAttributes="Bold"
+               Scale="1.2"
+             />
+
+            <Label Text="Médico(a):"
+                   TextColor="White"
+                   HorizontalTextAlignment="left"
+                   FontFamily="Arial"
+                   FontAttributes="Bold"
+                   Scale="0.8"
+                 />
+            <Picker x:Name="medicosPicker"
+                    TitleColor="#8b8a8a"
+                    Title="Escolha um(a) médico(a)" 
+                    ItemDisplayBinding="{Binding nome}"
+                    Scale="0.8"
+                    BackgroundColor="#FFF"
+                    TextColor="#8b8a8a"
+                    SelectedIndexChanged="medicosPicker_SelectedIndexChanged"
+            />
+
+            <StackLayout>
+                <Label Text="Data da Visita:"
+                   TextColor="White"
+                   HorizontalTextAlignment="left"
+                   FontFamily="Arial"
+                   FontAttributes="Bold"
+                   Scale="0.8"
+                 />
+
+                <DatePicker x:Name="dataVisita"
+                    Scale="0.8"        
+                    MinimumDate="{Binding dataDeHoje}"
+                    BackgroundColor="#FFF"
+                    TextColor="#8b8a8a"
+                    DateSelected="dataVisita_DateSelected"
+                 />
+             </StackLayout>
+
+            <StackLayout>
+            <Label Text="Hora da Visita:"
+                   TextColor="White"
+                   HorizontalTextAlignment="left"
+                   FontFamily="Arial"
+                   FontAttributes="Bold"
+                   Scale="0.8"
+                 />
+            
+            <TimePicker x:Name="horaVisita"
+                Scale="0.8"
+                BackgroundColor="#FFF"
+                TextColor="#8b8a8a"
+             />
+            </StackLayout>
+
+            <Label Text="Observação:"
+                   TextColor="White"
+                   HorizontalTextAlignment="left"
+                   FontFamily="Arial"
+                   FontAttributes="Bold"
+                   Scale="0.8"
+                 />
+            <Editor x:Name="obsVisita" Scale="0.8" Placeholder="Digite uma observação" PlaceholderColor="#8b8a8a" BackgroundColor="#FFF" TextColor="#8b8a8a">
+                <!--<Editor.BackgroundColor>
+                    <OnPlatform x:TypeArguments="Color">
+                        <On Platform="iOS" Value="#FFF" />
+                    </OnPlatform>
+                </Editor.BackgroundColor>-->
+            </Editor>
+            
+            <Button x:Name="cadastrarVisita" 
+               Text="Cadastrar Visita"
+               TextColor="#FFF"
+               HorizontalOptions="Fill"
+               VerticalOptions="CenterAndExpand"
+               Clicked="cadastrarVisitaClicado"
+            />
+        </StackLayout>
+    </ScrollView>
+   </ContentPage>
+    
+  <ContentPage x:Name="NovoMedico" Title="Novo Médico(a)" BackgroundColor="#8b8a8a">
+    <ScrollView>
+        <StackLayout>        
+            <Label Text="Cadastrar Novo Médico(a)"
+               TextColor="White"
+               HorizontalTextAlignment="Center"
+               VerticalOptions="CenterAndExpand"    
+               Margin="50"  
+               FontFamily="Arial"
+               FontAttributes="Bold"   
+               Scale="1.2"
+             />
+
+            <Label Text="Nome:"
+                   TextColor="White"
+                   HorizontalTextAlignment="left"
+                   FontFamily="Arial"
+                   FontAttributes="Bold"
+                   Scale="0.8"
+                 />
+             <Entry x:Name="nomeMedico"
+               Text="{Binding nome}"
+               Scale="0.8"     
+               Placeholder="Nome"
+               PlaceholderColor="#8b8a8a"
+               BackgroundColor="#FFF"
+               TextColor="#8b8a8a"
+            />
+
+            <Label Text="Especialidade:"
+                   TextColor="White"
+                   HorizontalTextAlignment="left"
+                   FontFamily="Arial"
+                   FontAttributes="Bold"
+                   Scale="0.8"
+                 />
+             <Entry x:Name="espMedico"
+               Text="{Binding especialidade}"
+               Scale="0.8"     
+               Placeholder="Especialidade"
+               PlaceholderColor="#8b8a8a"
+               BackgroundColor="#FFF"
+               TextColor="#8b8a8a"
+            />
+
+            <Label Text="Localização:"
+                   TextColor="White"
+                   HorizontalTextAlignment="left"
+                   FontFamily="Arial"
+                   FontAttributes="Bold"
+                   Scale="0.8"
+                 />
+            <Picker x:Name="localizacaoMedico"
+                    SelectedItem="{Binding localizacao}"
+                    Scale="0.8"
+                    Title="Selecione a localização do médico"
+                    TitleColor="#8b8a8a"
+                    BackgroundColor="#FFF"
+                    TextColor="#8b8a8a">
+                <Picker.Items>
+                    <x:String>Rio de Janeiro</x:String> 
+                    <x:String>Niterói</x:String>
+                </Picker.Items>
+            </Picker> 
+
+            <Label Text="Endereço:"
+                   TextColor="White"
+                   HorizontalTextAlignment="left"
+                   FontFamily="Arial"
+                   FontAttributes="Bold"
+                   Scale="0.8"
+                 />
+             <Entry x:Name="enderecoMedico"
+               Text="{Binding endereco}"
+               Scale="0.8"     
+               Placeholder="Endereço"
+               PlaceholderColor="#8b8a8a"
+               BackgroundColor="#FFF"
+               TextColor="#8b8a8a"
+            />  
+
+            <Label Text="CEP:"
+                   TextColor="White"
+                   HorizontalTextAlignment="left"
+                   FontFamily="Arial"
+                   FontAttributes="Bold"
+                   Scale="0.8"
+                 />
+             <Entry x:Name="CEPMedico"
+               Text="{Binding CEP}"
+               Scale="0.8"     
+               Placeholder="CEP"
+               PlaceholderColor="#8b8a8a"
+               BackgroundColor="#FFF"
+               TextColor="#8b8a8a"
+            />
+
+            <StackLayout>
+                <Label Text="Data da Aniversário:"
+                   TextColor="White"
+                   HorizontalTextAlignment="left"
+                   FontFamily="Arial"
+                   FontAttributes="Bold"
+                   Scale="0.8"
+                 />
+
+                 <DatePicker x:Name="aniversarioMedico"
+                    Date="{Binding aniversario}"
+                    Scale="0.8"
+                    MinimumDate="01/01/1930"
+                    BackgroundColor="#FFF"
+                    TextColor="#8b8a8a"
+                 />   
+            </StackLayout>
+
+            <Label Text="Telefone:"
+                   TextColor="White"
+                   HorizontalTextAlignment="left"
+                   FontFamily="Arial"
+                   FontAttributes="Bold"
+                   Scale="0.8"
+                 />
+             <Entry x:Name="telefoneMedico"
+               Text="{Binding telefone}"
+               Scale="0.8"     
+               Placeholder="Telefone"
+               PlaceholderColor="#8b8a8a"
+               BackgroundColor="#FFF"
+               TextColor="#8b8a8a"
+            />  
+
+            <Label Text="Celular:"
+                   TextColor="White"
+                   HorizontalTextAlignment="left"
+                   FontFamily="Arial"
+                   FontAttributes="Bold"
+                   Scale="0.8"
+                 />
+            <Entry x:Name="celularMedico"
+               Text="{Binding celular}"
+               Scale="0.8"     
+               Placeholder="Celular"
+               PlaceholderColor="#8b8a8a"
+               BackgroundColor="#FFF"
+               TextColor="#8b8a8a"
+            />      
+
+            <Label Text="E-mail:"
+                   TextColor="White"
+                   HorizontalTextAlignment="left"
+                   FontFamily="Arial"
+                   FontAttributes="Bold"
+                   Scale="0.8"
+                 />
+            <Entry x:Name="emailMedico"
+               Text="{Binding email}"
+               Scale="0.8"   
+               Placeholder="E-mail"
+               PlaceholderColor="#8b8a8a"
+               BackgroundColor="#FFF"
+               TextColor="#8b8a8a"
+            />  
+
+            <Label Text="Dia preferencial de visita:"
+                   TextColor="White"
+                   HorizontalTextAlignment="left"
+                   FontFamily="Arial"
+                   FontAttributes="Bold"
+                   Scale="0.8"
+                 />
+            <Picker x:Name="diasVisitaMedicoPicker"
+                    SelectedItem="{Binding diasVisita}"
+                    Scale="0.8"
+                    Title="Escolha um dia de visita"
+                    TitleColor="#8b8a8a"
+                    BackgroundColor="#FFF"
+                    TextColor="#8b8a8a">
+                <Picker.Items>
+                    <x:String>Segunda-feira</x:String> 
+                    <x:String>Terça-feira</x:String>
+                    <x:String>Quarta-feira</x:String>
+                    <x:String>Quinta-feira</x:String>
+                    <x:String>Sexta-feira</x:String>
+                </Picker.Items>
+            </Picker> 
+
+            <Label Text="Turno preferencial de visita:"
+                   TextColor="White"
+                   HorizontalTextAlignment="left"
+                   FontFamily="Arial"
+                   FontAttributes="Bold"
+                   Scale="0.8"
+                 />
+            <Picker x:Name="horarioVisitaMedicoPicker"
+                    SelectedItem="{Binding horariosVisita}"
+                    Scale="0.8"
+                    Title="Escolha um turno de visita"
+                    TitleColor="#8b8a8a"
+                    BackgroundColor="#FFF"
+                    TextColor="#8b8a8a">
+                <Picker.Items>
+                    <x:String>Manhã</x:String> 
+                    <x:String>Tarde</x:String>
+                    <x:String>Noite</x:String>
+                </Picker.Items>
+            </Picker>    
+
+            <Label Text="CRM:"
+                   TextColor="White"
+                   HorizontalTextAlignment="left"
+                   FontFamily="Arial"
+                   FontAttributes="Bold"
+                   Scale="0.8"
+                 />
+            <Entry x:Name="CRMMedico"
+               Text="{Binding CRM}"
+               Scale="0.8"   
+               Placeholder="CRM/N"
+               PlaceholderColor="#8b8a8a"
+               BackgroundColor="#FFF"
+               TextColor="#8b8a8a"
+            />     
+                
+            <Button x:Name="cadastrarMedico" 
+               Text="Cadastrar Médico(a)"
+               TextColor="#FFF"
+               HorizontalOptions="Fill"
+               VerticalOptions="CenterAndExpand"
+               Clicked="cadastrarMedicoClicado"
+            />
+        </StackLayout>            
+    </ScrollView>
+   </ContentPage>
+
+  <ContentPage Title="Ver Visitas" BackgroundColor="#8b8a8a">
+        <ListView x:Name="listView2" Margin="20" BackgroundColor="#8b8a8a">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <StackLayout Margin="20,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                        <Label Text="{Binding nomeMedicoVisita}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand" TextColor="White"/>
+                        <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                            <Label Text="{Binding diaVisita, StringFormat='{0:dd/MM/yyyy}'}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand" TextColor="White"/>
+                        </StackLayout>
+                        <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                            <Label Text="{Binding horaVisita}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand" TextColor="White"/>
+                        </StackLayout>
+                     </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+  </ContentPage>         
+    
+  <ContentPage Title="Ver Médicos" BackgroundColor="#8b8a8a">
+        <ListView x:Name="listView" Margin="20" BackgroundColor="#8b8a8a">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <StackLayout Margin="20,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                        <Label Text="{Binding nome}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand" TextColor="White"/>
+                        <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                            <Label Text="{Binding especialidade}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand" TextColor="White"/>
+                        </StackLayout>
+                     </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+  </ContentPage>
+</TabbedPage>
