@@ -93,7 +93,7 @@
     </ScrollView>
    </ContentPage>
     
-  <ContentPage x:Name="NovoMedico" Title="Novo Médico(a)" BackgroundColor="#8b8a8a">
+  <ContentPage x:Name="novoMedico" Title="Novo Médico(a)" BackgroundColor="#8b8a8a">
     <ScrollView>
         <StackLayout>        
             <Label Text="Cadastrar Novo Médico(a)"
@@ -191,7 +191,7 @@
             />
 
             <StackLayout>
-                <Label Text="Data da Aniversário:"
+                <Label Text="Data de Nascimento:"
                    TextColor="White"
                    HorizontalTextAlignment="left"
                    FontFamily="Arial"
@@ -327,7 +327,7 @@
     </ScrollView>
    </ContentPage>
 
-  <ContentPage Title="Ver Visitas" BackgroundColor="#8b8a8a">
+  <ContentPage x:Name="verVisitas" Title="Ver Visitas" BackgroundColor="#8b8a8a">
         <ListView x:Name="listView2" Margin="20" BackgroundColor="#8b8a8a">
         <ListView.ItemTemplate>
             <DataTemplate>
@@ -347,7 +347,7 @@
     </ListView>
   </ContentPage>         
     
-  <ContentPage Title="Ver Médicos" BackgroundColor="#8b8a8a">
+  <ContentPage x:Name="verMedicos" Title="Ver Médicos" BackgroundColor="#8b8a8a">
         <ListView x:Name="listView" Margin="20" BackgroundColor="#8b8a8a">
         <ListView.ItemTemplate>
             <DataTemplate>

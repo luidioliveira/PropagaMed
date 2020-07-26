@@ -14,7 +14,7 @@ namespace PropagaMed
 		{
 			InitializeComponent();
 
-            MainPage = new NavigationPage(new Login());//new Login();
+            MainPage = new NavigationPage(new Login(false));
 		}
 
 		public static ItemDatabase Database

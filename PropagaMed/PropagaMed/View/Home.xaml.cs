@@ -23,21 +23,10 @@ namespace PropagaMed
             DateTime dateDeHoje = DateTime.Now.Date;
             dataVisita.BindingContext = dateDeHoje;
 
-            /*Binding para teste de médicos
-            medicosPicker.ItemsSource = new List<Medico>
-            {
-                new Medico {id = 1, nome = "Antônio Carlos de Almeida"},
-                new Medico {id = 2, nome = "Lúcio da Silva Oliveira"},
-                new Medico {id = 3, nome = "Neide Lima Pinto Oliveira"},
-                new Medico {id = 4, nome = "Luidi Lima Oliveira"},
-                new Medico {id = 5, nome = "Ana Carla Ricce Telles Corrêa Oliveira"},
-                new Medico {id = 6, nome = "Teste de Exibição Acentuada e Com Grande Texto Para Verificar Se O Aplicativo Quebra"}
-            };*/
-
-            AlimentaComboMedico();
+            AlimentaMedicosEVisitas();
         }
 
-        protected async void AlimentaComboMedico()
+        protected async void AlimentaMedicosEVisitas()
         {
             List<Medico> medicos = await App.Database.GetItemsMedicoAsync();
             List<Visita> visitas = await App.Database.GetItemsVisitaAsync();
@@ -72,7 +61,8 @@ namespace PropagaMed
             {
                 App.Database.SaveItemAsync(VisitaASalvar);
                 DisplayAlert("Informação", "Visita para médico(a) " + MedicoSelecionado.nome + " às " + horaVisita.Time.ToString(@"hh\:mm") + " em " + DataSelecionada.ToString("dd/MM/yyyy") + " cadastrada com sucesso!", "Ok");
-                await Navigation.PushAsync(new Home());
+                AlimentaMedicosEVisitas();
+                this.CurrentPage = verVisitas;
             }
         }
 
@@ -97,7 +87,8 @@ namespace PropagaMed
             {
                 App.Database.SaveItemAsync(MedicoASalvar);
                 DisplayAlert("Informação", "Médico(a) " + MedicoASalvar.nome + " cadastrado(a) com sucesso!", "Ok");
-                await Navigation.PushAsync(new Home());
+                AlimentaMedicosEVisitas();
+                this.CurrentPage = novaVisita;
             }
         }
 

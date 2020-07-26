@@ -11,21 +11,28 @@ namespace PropagaMed
 {
 	public partial class Login : ContentPage
 	{
-        public Login()
+        public Login(bool logado)
         {
-            InitializeComponent();
+            if (!logado)
+            {
+                InitializeComponent();
 
-            PropagaMedLogo.Opacity = 0;
-            PropagaMedLogo.FadeTo(1, 4000);
+                PropagaMedLogo.Opacity = 0;
+                PropagaMedLogo.FadeTo(1, 4000);
+            }
+            else
+            {
+                Navigation.PopAsync();
+                Navigation.PushAsync(new Home());
+            }
         }
 
         private async void EntrarClicado(object sender, EventArgs e)
         {
             if ((login.Text is null?"": login.Text.ToUpper()) == "LUCIOOLIVEIRA" && password.Text == "2604")
             {
+                await Navigation.PopAsync();
                 await Navigation.PushAsync(new Home());
-                login.Text = "";
-                password.Text = "";
             }
             else
             {

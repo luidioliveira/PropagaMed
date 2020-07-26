@@ -149,10 +149,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms">
-      <Version>4.6.0.616-pre4</Version>
+      <Version>4.7.0.1179</Version>
     </PackageReference>
     <PackageReference Include="sqlite-net-pcl">
-      <Version>1.7.302-beta</Version>
+      <Version>1.7.335</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
