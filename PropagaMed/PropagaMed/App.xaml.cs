@@ -1,5 +1,5 @@
 using System;
-using PrpagaMed.Dal;
+using PropagaMed.Dal;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

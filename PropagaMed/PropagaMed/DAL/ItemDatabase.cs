@@ -6,7 +6,7 @@ using PropagaMed;
 using PropagaMed.Model;
 using SQLite;
 
-namespace PrpagaMed.Dal
+namespace PropagaMed.Dal
 {
     public class ItemDatabase
     {

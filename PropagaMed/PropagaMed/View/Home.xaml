@@ -254,51 +254,7 @@
                PlaceholderColor="#8b8a8a"
                BackgroundColor="#FFF"
                TextColor="#8b8a8a"
-            />  
-
-            <Label Text="Dia preferencial de visita:"
-                   TextColor="White"
-                   HorizontalTextAlignment="left"
-                   FontFamily="Arial"
-                   FontAttributes="Bold"
-                   Scale="0.8"
-                 />
-            <Picker x:Name="diasVisitaMedicoPicker"
-                    SelectedItem="{Binding diasVisita}"
-                    Scale="0.8"
-                    Title="Escolha um dia de visita"
-                    TitleColor="#8b8a8a"
-                    BackgroundColor="#FFF"
-                    TextColor="#8b8a8a">
-                <Picker.Items>
-                    <x:String>Segunda-feira</x:String> 
-                    <x:String>Terça-feira</x:String>
-                    <x:String>Quarta-feira</x:String>
-                    <x:String>Quinta-feira</x:String>
-                    <x:String>Sexta-feira</x:String>
-                </Picker.Items>
-            </Picker> 
-
-            <Label Text="Turno preferencial de visita:"
-                   TextColor="White"
-                   HorizontalTextAlignment="left"
-                   FontFamily="Arial"
-                   FontAttributes="Bold"
-                   Scale="0.8"
-                 />
-            <Picker x:Name="horarioVisitaMedicoPicker"
-                    SelectedItem="{Binding horariosVisita}"
-                    Scale="0.8"
-                    Title="Escolha um turno de visita"
-                    TitleColor="#8b8a8a"
-                    BackgroundColor="#FFF"
-                    TextColor="#8b8a8a">
-                <Picker.Items>
-                    <x:String>Manhã</x:String> 
-                    <x:String>Tarde</x:String>
-                    <x:String>Noite</x:String>
-                </Picker.Items>
-            </Picker>    
+            />
 
             <Label Text="CRM:"
                    TextColor="White"
@@ -314,7 +270,103 @@
                PlaceholderColor="#8b8a8a"
                BackgroundColor="#FFF"
                TextColor="#8b8a8a"
-            />     
+            />
+
+            <Label Text="Dia preferencial de visita:"
+                   TextColor="White"
+                   HorizontalTextAlignment="left"
+                   FontFamily="Arial"
+                   FontAttributes="Bold"
+                   Scale="0.8"
+                 />
+
+            <StackLayout>
+                <StackLayout Orientation="Horizontal" Scale="0.8">
+                    <Label Text="Segunda"
+                       TextColor="White"
+                       HorizontalTextAlignment="left"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="0.8"
+                     />
+                    <CheckBox x:Name="monday" Scale="0.8" />
+
+                    <Label Text="Terça"
+                       TextColor="White"
+                       HorizontalTextAlignment="left"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="0.8"
+                     />
+                     <CheckBox x:Name="tuesday" Scale="0.8" />
+
+                    <Label Text="Quarta"
+                       TextColor="White"
+                       HorizontalTextAlignment="left"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="0.8"
+                     />
+                    <CheckBox x:Name="wednesday" Scale="0.8" />
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal" Scale="0.8">
+                    <Label Text="Quinta"
+                       TextColor="White"
+                       HorizontalTextAlignment="left"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="0.8"
+                     />
+                    <CheckBox x:Name="thursday" Scale="0.8" />
+
+                    <Label Text="Sexta"
+                       TextColor="White"
+                       HorizontalTextAlignment="left"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="0.8"
+                     />
+                    <CheckBox x:Name="friday" Scale="0.8" />
+                </StackLayout>
+            </StackLayout>
+
+            <Label Text="Turno preferencial de visita:"
+                   TextColor="White"
+                   HorizontalTextAlignment="left"
+                   FontFamily="Arial"
+                   FontAttributes="Bold"
+                   Scale="0.8"
+                 />
+
+            <StackLayout Orientation="Horizontal" Scale="0.8">
+                <Label Text="Manhã"
+                    TextColor="White"
+                    HorizontalTextAlignment="left"
+                    FontFamily="Arial"
+                    FontAttributes="Bold"
+                    Scale="0.8"
+                    />
+                <CheckBox x:Name="morning" Scale="0.8" />
+
+                <Label Text="Tarde"
+                    TextColor="White"
+                    HorizontalTextAlignment="left"
+                    FontFamily="Arial"
+                    FontAttributes="Bold"
+                    Scale="0.8"
+                    />
+                <CheckBox x:Name="afternoon" Scale="0.8" />
+                
+                <Label Text="Noite"
+                    TextColor="White"
+                    HorizontalTextAlignment="left"
+                    FontFamily="Arial"
+                    FontAttributes="Bold"
+                    Scale="0.8"
+                    />
+                <CheckBox x:Name="night" Scale="0.8" />
+            </StackLayout>
                 
             <Button x:Name="cadastrarMedico" 
                Text="Cadastrar Médico(a)"
@@ -335,7 +387,7 @@
                     <StackLayout Margin="20,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                         <Label Text="{Binding nomeMedicoVisita}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand" TextColor="White"/>
                         <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                            <Label Text="{Binding diaVisita, StringFormat='{0:dd/MM/yyyy}'}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand" TextColor="White"/>
+                            <Label Text="{Binding d iaVisita, StringFormat='{0:dd/MM/yyyy}'}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand" TextColor="White"/>
                         </StackLayout>
                         <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                             <Label Text="{Binding horaVisita}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand" TextColor="White"/>

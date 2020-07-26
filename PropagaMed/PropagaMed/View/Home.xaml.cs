@@ -36,17 +36,6 @@ namespace PropagaMed
             listView2.ItemsSource = visitas;
         }
 
-        private bool validaStringNula(string avalidar)
-        {
-            if (avalidar is null)
-            {
-                DisplayAlert("Informação", "Campos necessários estão vazios!", "Ok");
-                return true;
-            }
-            else
-                return false;
-        }
-
         private async void cadastrarVisitaClicado(object sender, EventArgs e)
         {
             Visita VisitaASalvar = new Visita();
@@ -57,18 +46,42 @@ namespace PropagaMed
             VisitaASalvar.horaVisita = horaVisita.Time;
             VisitaASalvar.observacao = obsVisita.Text is null?"":obsVisita.Text.ToString();
 
-            if (validaStringNula(MedicoSelecionado.nome) is false)
+            if (!String.IsNullOrEmpty(MedicoSelecionado.nome))
             {
                 App.Database.SaveItemAsync(VisitaASalvar);
                 DisplayAlert("Informação", "Visita para médico(a) " + MedicoSelecionado.nome + " às " + horaVisita.Time.ToString(@"hh\:mm") + " em " + DataSelecionada.ToString("dd/MM/yyyy") + " cadastrada com sucesso!", "Ok");
                 AlimentaMedicosEVisitas();
                 this.CurrentPage = verVisitas;
             }
+            else
+                DisplayAlert("Informação", "Campos necessários estão vazios!", "Ok");
         }
 
         private async void cadastrarMedicoClicado(object sender, EventArgs e)
         {
             Medico MedicoASalvar = new Medico();
+
+            //Dias e horários preferências de visita selecionados
+            string diasVisitaSelecionados = "";
+            string horariosVisitaSelecionados = "";
+
+            if (monday.IsChecked)
+                diasVisitaSelecionados += "Segunda";
+            if (tuesday.IsChecked)
+                diasVisitaSelecionados += String.IsNullOrEmpty(diasVisitaSelecionados) ? "Terça" : " e Terça";
+            if (wednesday.IsChecked)
+                diasVisitaSelecionados += String.IsNullOrEmpty(diasVisitaSelecionados) ? "Quarta" : " e Quarta";
+            if (thursday.IsChecked)
+                diasVisitaSelecionados += String.IsNullOrEmpty(diasVisitaSelecionados) ? "Quinta" : " e Quinta";
+            if (friday.IsChecked)
+                diasVisitaSelecionados += String.IsNullOrEmpty(diasVisitaSelecionados) ? "Sexta" : " e Sexta";
+
+            if (morning.IsChecked)
+                horariosVisitaSelecionados += "Manhã";
+            if (afternoon.IsChecked)
+                horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "Tarde" : " e Tarde";
+            if (night.IsChecked)
+                horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "Noite" : " e Noite";
 
             MedicoASalvar.nome = nomeMedico.Text;
             MedicoASalvar.especialidade = espMedico.Text;
@@ -79,17 +92,19 @@ namespace PropagaMed
             MedicoASalvar.telefone = telefoneMedico.Text;
             MedicoASalvar.celular = celularMedico.Text;
             MedicoASalvar.email = emailMedico.Text;
-            MedicoASalvar.diasVisita = (diasVisitaMedicoPicker.SelectedItem is null? "":diasVisitaMedicoPicker.SelectedItem.ToString());
-            MedicoASalvar.horariosVisita = (horarioVisitaMedicoPicker.SelectedItem is null? "":horarioVisitaMedicoPicker.SelectedItem.ToString());
+            MedicoASalvar.diasVisita = diasVisitaSelecionados;
+            MedicoASalvar.horariosVisita = horariosVisitaSelecionados;
             MedicoASalvar.CRM = CRMMedico.Text;
 
-            if (validaStringNula(MedicoASalvar.nome) is false)
+            if (!String.IsNullOrEmpty(MedicoASalvar.nome))
             {
                 App.Database.SaveItemAsync(MedicoASalvar);
                 DisplayAlert("Informação", "Médico(a) " + MedicoASalvar.nome + " cadastrado(a) com sucesso!", "Ok");
                 AlimentaMedicosEVisitas();
                 this.CurrentPage = novaVisita;
             }
+            else
+                DisplayAlert("Informação", "Campos necessários estão vazios!", "Ok");
         }
 
         void medicosPicker_SelectedIndexChanged(System.Object sender, System.EventArgs e)
