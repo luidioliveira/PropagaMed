@@ -384,13 +384,21 @@
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
+                    <ViewCell.ContextActions>
+                        <MenuItem Clicked="DetalharVisita"
+                                  CommandParameter="{Binding id}"
+                                  Text="Mais" />
+                        <MenuItem Clicked="DeletarVisita"
+                                  CommandParameter="{Binding id}"
+                                  Text="Deletar" IsDestructive="True" />
+                     </ViewCell.ContextActions>
                     <StackLayout Margin="20,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                         <Label Text="{Binding nomeMedicoVisita}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand" TextColor="White"/>
                         <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                            <Label Text="{Binding d iaVisita, StringFormat='{0:dd/MM/yyyy}'}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand" TextColor="White"/>
+                            <Label Text="{Binding diaVisita, StringFormat='{0:dd/MM/yyyy}'}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand" TextColor="White"/>
                         </StackLayout>
                         <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                            <Label Text="{Binding horaVisita}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand" TextColor="White"/>
+                            <Label Text="{Binding horaVisita, StringFormat='{}{0:hh\\:mm}'}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand" TextColor="White"/>
                         </StackLayout>
                      </StackLayout>
                 </ViewCell>
@@ -404,6 +412,14 @@
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
+                    <ViewCell.ContextActions>
+                        <MenuItem Clicked="DetalharMedico"
+                                  CommandParameter="{Binding id}"
+                                  Text="Mais" />
+                        <MenuItem Clicked="DeletarMedico"
+                                  CommandParameter="{Binding id}"
+                                  Text="Deletar" IsDestructive="True" />
+                     </ViewCell.ContextActions>
                     <StackLayout Margin="20,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                         <Label Text="{Binding nome}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand" TextColor="White"/>
                         <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">

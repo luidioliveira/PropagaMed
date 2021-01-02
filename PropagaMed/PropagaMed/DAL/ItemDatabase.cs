@@ -73,7 +73,7 @@ namespace PropagaMed.Dal
             //}
         }
 
-        public Task<int> DeleteItemAsync(Medico item)
+        public Task<int> DeleteItemAsync(object item)
         {
             return Database.DeleteAsync(item);
         }

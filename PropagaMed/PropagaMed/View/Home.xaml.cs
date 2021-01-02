@@ -118,5 +118,37 @@ namespace PropagaMed
             DatePicker picker = sender as DatePicker;
             DataSelecionada = (DateTime)picker.Date;
         }
+
+        void DetalharVisita(object sender, EventArgs e)
+        {
+            var mi = ((MenuItem)sender);
+            DisplayAlert("Aguarde", $"Em desenvolvimento!", "Ok");
+        }
+
+        async void DeletarVisita(object sender, EventArgs e)
+        {
+            var mi = ((MenuItem)sender);
+            var visitaASerDeletada = App.Database.GetItemsVisitaAsync().Result.Where(m => m.id == int.Parse(mi.CommandParameter.ToString())).FirstOrDefault();
+
+            await App.Database.DeleteItemAsync(visitaASerDeletada);
+            AlimentaMedicosEVisitas();
+            await DisplayAlert("Informação", $"Visita para {visitaASerDeletada.nomeMedicoVisita} em {visitaASerDeletada.diaVisita.ToString("dd/MM/yyyy")} deletada com sucesso!", "Ok");
+        }
+
+        void DetalharMedico(object sender, EventArgs e)
+        {
+            var mi = ((MenuItem)sender);
+            DisplayAlert("Aguarde", $"Em desenvolvimento!", "Ok");
+        }
+
+        async void DeletarMedico(object sender, EventArgs e)
+        {
+            var mi = ((MenuItem)sender);
+            var medicoASerDeletado = App.Database.GetItemsMedicoAsync().Result.Where(m => m.id == int.Parse(mi.CommandParameter.ToString())).FirstOrDefault();
+
+            await App.Database.DeleteItemAsync(medicoASerDeletado);
+            AlimentaMedicosEVisitas();
+            await DisplayAlert("Informação", $"Médico {medicoASerDeletado.nome} deletado(a) com sucesso!", "Ok");
+        }
     }
 }
