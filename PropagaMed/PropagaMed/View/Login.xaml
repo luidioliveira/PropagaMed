@@ -6,13 +6,33 @@
              x:Name="loginPage">
 
     <StackLayout BackgroundColor="#8b8a8a">
-        <StackLayout VerticalOptions="StartAndExpand">
             <Image x:Name = "PropagaMedLogo"
              Source="PropagaMed"
-             Scale="1"
              />
-        </StackLayout>
 
+            <Button x:Name="Entrar" 
+                   Text="Entrar"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   VerticalOptions="CenterAndExpand"
+                   Margin="5"
+                   BackgroundColor="#8b8a8a"
+                   BorderColor="White"
+                   BorderWidth="0.1"
+                   Padding="5"
+                   TextColor="White"
+                   Clicked="EntrarClicado"
+                />
+
+            <Label Text="Designed By Luidi Oliveira"
+                   TextColor="White"
+                   HorizontalTextAlignment="Center"
+                   VerticalOptions="EndAndExpand"
+                   Padding="11"
+                   Scale="0.8"
+                 />
+
+        <!--
         <ScrollView VerticalOptions="CenterAndExpand">
             <StackLayout>
                 <Entry x:Name="login"
@@ -55,5 +75,6 @@
            Margin="10"     
            Clicked="InfoClicado"
         />
+        !-->
     </StackLayout>
 </ContentPage>

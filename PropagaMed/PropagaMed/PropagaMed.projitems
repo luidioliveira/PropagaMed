@@ -16,6 +16,10 @@
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)View\Login.xaml" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)View\MedicoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
@@ -33,6 +37,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)DAL\ItemDatabase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TaskExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Visita.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)View\MedicoView.xaml.cs">
+      <DependentUpon>MedicoView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Midia\.DS_Store" />

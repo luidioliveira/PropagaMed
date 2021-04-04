@@ -1,12 +1,9 @@
 ﻿using PropagaMed.Model;
+using PropagaMed.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace PropagaMed
 {
@@ -15,7 +12,7 @@ namespace PropagaMed
         Medico MedicoSelecionado = new Medico();
         DateTime DataSelecionada = DateTime.Now.Date;
 
-        public Home()
+        public Home(bool otherView = false)
         {
             InitializeComponent();
 
@@ -24,16 +21,28 @@ namespace PropagaMed
             dataVisita.BindingContext = dateDeHoje;
 
             AlimentaMedicosEVisitas();
+
+            this.CurrentPage =  otherView ? verMedicos : this.CurrentPage;
         }
 
-        protected async void AlimentaMedicosEVisitas()
+        private void ItemTapped(object sender, System.EventArgs e)
+        {
+            var viewCell = (ViewCell)sender;
+
+            if (viewCell.View.BackgroundColor.Equals(Color.FromHex("#8b8a8a")))
+                viewCell.View.BackgroundColor = Color.LightBlue;
+            else
+                viewCell.View.BackgroundColor = Color.FromHex("#8b8a8a");
+        }
+
+        public async void AlimentaMedicosEVisitas()
         {
             List<Medico> medicos = await App.Database.GetItemsMedicoAsync();
             List<Visita> visitas = await App.Database.GetItemsVisitaAsync();
 
             medicosPicker.ItemsSource = medicos;
-            listView.ItemsSource = medicos;
-            listView2.ItemsSource = visitas;
+            listView.ItemsSource = medicos.OrderBy(m => m.nome);
+            listView2.ItemsSource = visitas.OrderBy(v => v.diaVisita).ThenBy(v => v.horaVisita);
         }
 
         private async void cadastrarVisitaClicado(object sender, EventArgs e)
@@ -122,7 +131,7 @@ namespace PropagaMed
         void DetalharVisita(object sender, EventArgs e)
         {
             var mi = ((MenuItem)sender);
-            DisplayAlert("Aguarde", $"Em desenvolvimento!", "Ok");
+            DisplayAlert("Observação", $"{mi.CommandParameter}", "Ok");
         }
 
         async void DeletarVisita(object sender, EventArgs e)
@@ -130,15 +139,22 @@ namespace PropagaMed
             var mi = ((MenuItem)sender);
             var visitaASerDeletada = App.Database.GetItemsVisitaAsync().Result.Where(m => m.id == int.Parse(mi.CommandParameter.ToString())).FirstOrDefault();
 
-            await App.Database.DeleteItemAsync(visitaASerDeletada);
-            AlimentaMedicosEVisitas();
-            await DisplayAlert("Informação", $"Visita para {visitaASerDeletada.nomeMedicoVisita} em {visitaASerDeletada.diaVisita.ToString("dd/MM/yyyy")} deletada com sucesso!", "Ok");
+            var confirmDelete = await DisplayAlert("Atenção", $"Deseja realmente deletar a visita para {visitaASerDeletada.nomeMedicoVisita}?", "Sim", "Não");
+
+            if (confirmDelete)
+            {
+                await App.Database.DeleteItemAsync(visitaASerDeletada);
+                AlimentaMedicosEVisitas();
+                await DisplayAlert("Informação", $"Visita para {visitaASerDeletada.nomeMedicoVisita} em {visitaASerDeletada.diaVisita.ToString("dd/MM/yyyy")} deletada com sucesso!", "Ok");
+            }
         }
 
-        void DetalharMedico(object sender, EventArgs e)
+        async void DetalharMedico(object sender, EventArgs e)
         {
             var mi = ((MenuItem)sender);
-            DisplayAlert("Aguarde", $"Em desenvolvimento!", "Ok");
+            var MedicoASerConsultado = App.Database.GetItemsMedicoAsync().Result.Where(m => m.id == int.Parse(mi.CommandParameter.ToString())).FirstOrDefault();
+
+            await Navigation.PushAsync(new MedicoView(MedicoASerConsultado));
         }
 
         async void DeletarMedico(object sender, EventArgs e)
@@ -146,9 +162,14 @@ namespace PropagaMed
             var mi = ((MenuItem)sender);
             var medicoASerDeletado = App.Database.GetItemsMedicoAsync().Result.Where(m => m.id == int.Parse(mi.CommandParameter.ToString())).FirstOrDefault();
 
-            await App.Database.DeleteItemAsync(medicoASerDeletado);
-            AlimentaMedicosEVisitas();
-            await DisplayAlert("Informação", $"Médico {medicoASerDeletado.nome} deletado(a) com sucesso!", "Ok");
+            var confirmDelete = await DisplayAlert("Atenção", $"Deseja realmente deletar {medicoASerDeletado.nome}?", "Sim", "Não");
+
+            if (confirmDelete)
+            {
+                await App.Database.DeleteItemAsync(medicoASerDeletado);
+                AlimentaMedicosEVisitas();
+                await DisplayAlert("Informação", $"Médico {medicoASerDeletado.nome} deletado(a) com sucesso!", "Ok");
+            }
         }
     }
 }

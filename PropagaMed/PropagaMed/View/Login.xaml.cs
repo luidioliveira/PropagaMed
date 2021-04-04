@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace PropagaMed
 {
-	public partial class Login : ContentPage
+    public partial class Login : ContentPage
 	{
         public Login(bool logado)
         {
+            /*
             if (!logado)
             {
                 InitializeComponent();
@@ -25,10 +23,22 @@ namespace PropagaMed
                 Navigation.PopAsync();
                 Navigation.PushAsync(new Home());
             }
+            */
+            InitializeComponent();
+
+            Task initialize  = Task.Run(() => {
+                                                PropagaMedLogo.Opacity = 0;
+                                                PropagaMedLogo.FadeTo(1, 4000);
+                                              });
+
+            initialize.Wait();
         }
 
         private async void EntrarClicado(object sender, EventArgs e)
         {
+            await Navigation.PushAsync(new Home());
+
+            /*
             if ((login.Text is null?"": login.Text.ToUpper()) == "LUCIOOLIVEIRA" && password.Text == "2604")
             {
                 await Navigation.PopAsync();
@@ -38,6 +48,7 @@ namespace PropagaMed
             {
                 DisplayAlert("Informação", "Login e/ou senha incorreto(s)", "Ok");
             }
+            */
         }
 
         private void InfoClicado(object sender, EventArgs e)

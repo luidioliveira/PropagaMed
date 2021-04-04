@@ -63,14 +63,12 @@ namespace PropagaMed.Dal
 
         public Task<int> SaveItemAsync(Object item)
         {
-            /*if (item.id != 0)
-            {
-                return Database.UpdateAsync(item);
-            }
-            else
-            {*/
-                return Database.InsertAsync(item);
-            //}
+            return Database.InsertAsync(item);
+        }
+
+        public Task<int> UpdateItemAsync(Object item)
+        {
+            return Database.UpdateAsync(item);
         }
 
         public Task<int> DeleteItemAsync(object item)
