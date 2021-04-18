@@ -19,6 +19,7 @@ namespace PropagaMed
             // Binding para data mínima ser a atual
             DateTime dateDeHoje = DateTime.Now.Date;
             dataVisita.BindingContext = dateDeHoje;
+            exportToPDF.Text = $"Exportar Visitas do Dia {DateTime.Now.ToShortDateString()}";
 
             AlimentaMedicosEVisitas();
 
@@ -170,6 +171,32 @@ namespace PropagaMed
                 AlimentaMedicosEVisitas();
                 await DisplayAlert("Informação", $"Médico {medicoASerDeletado.nome} deletado(a) com sucesso!", "Ok");
             }
+        }
+
+        void ViewSelected(object sender, EventArgs e)
+        {
+            var viewCell = (ViewCell)sender;
+            var actualColor = viewCell.View.BackgroundColor.ToHex();
+
+            if (actualColor.Equals("#FF8B8A8A"))
+                viewCell.View.BackgroundColor = Color.FromHex("#98bee3");
+            else
+                viewCell.View.BackgroundColor = Color.FromHex("#FF8B8A8A");
+        }
+
+        async void ExportToPDF(object sender, EventArgs e)
+        {
+            /*
+            using (var doc = new PdfSharp.Pdf.PdfDocument())
+            var document = new PdfDocument();
+            var page = document.AddPage();
+            var gfx = XGraphics.FromPdfPage(page);
+            var font = new XFont("Verdana", 20);
+            gfx.DrawString("Test of PdfSharp on iOS", font, new XSolidBrush(XColor.FromArgb(0, 0, 0)), 10, 130);
+            document.Save(Path.Combine(Path.GetTempPath(), "test.pdf"));
+            */
+
+            await DisplayAlert("Informação", $"Funcionalidade em desenvolvimento", "Ok");
         }
     }
 }

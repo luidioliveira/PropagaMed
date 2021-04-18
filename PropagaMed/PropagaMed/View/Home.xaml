@@ -388,68 +388,76 @@
    </ContentPage>
 
   <ContentPage x:Name="verVisitas" Title="Ver Visitas" BackgroundColor="#8b8a8a">
+    <StackLayout>
         <ListView x:Name="listView2" Margin="20" BackgroundColor="#8b8a8a">
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell>
-                    <ViewCell.ContextActions>
-                        <MenuItem Clicked="DetalharVisita"
-                                  CommandParameter="{Binding observacao}"
-                                  Text="Detalhar" />
-                        <MenuItem Clicked="DeletarVisita"
-                                  CommandParameter="{Binding id}"
-                                  Text="Deletar" IsDestructive="True" />
-                    </ViewCell.ContextActions>
-                    <StackLayout BackgroundColor="#8b8a8a" Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                        <StackLayout WidthRequest="80" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                            <Label Text="{Binding nomeMedicoVisita}" VerticalTextAlignment="Center" TextColor="White"/>
-                        </StackLayout>
-                        <StackLayout Orientation="Vertical">
-                            <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                                <Label FontAttributes="Bold" TextColor="White">Data: </Label>
-                                <Label Text="{Binding diaVisita, StringFormat='{0:dd/MM/yyyy}'}" VerticalTextAlignment="Center" TextColor="White"/>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell Tapped="ViewSelected">
+                        <ViewCell.ContextActions>
+                            <MenuItem Clicked="DetalharVisita"
+                                      CommandParameter="{Binding observacao}"
+                                      Text="Detalhar" />
+                            <MenuItem Clicked="DeletarVisita"
+                                      CommandParameter="{Binding id}"
+                                      Text="Deletar" IsDestructive="True" />
+                        </ViewCell.ContextActions>
+                        <StackLayout BackgroundColor="#8b8a8a" Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                            <StackLayout WidthRequest="80" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                <Label Text="{Binding nomeMedicoVisita}" VerticalTextAlignment="Center" TextColor="White"/>
                             </StackLayout>
-                            <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                                <Label FontAttributes="Bold" TextColor="White">Hora: </Label>
-                                <Label Text="{Binding horaVisita, StringFormat='{}{0:hh\\:mm}'}" VerticalTextAlignment="Center" TextColor="White"/>
+                            <StackLayout Orientation="Vertical">
+                                <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                    <Label FontAttributes="Bold" TextColor="White">Data: </Label>
+                                    <Label Text="{Binding diaVisita, StringFormat='{0:dd/MM/yyyy}'}" VerticalTextAlignment="Center" TextColor="White"/>
+                                </StackLayout>
+                                <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                    <Label FontAttributes="Bold" TextColor="White">Hora: </Label>
+                                    <Label Text="{Binding horaVisita, StringFormat='{}{0:hh\\:mm}'}" VerticalTextAlignment="Center" TextColor="White"/>
+                                </StackLayout>
                             </StackLayout>
                         </StackLayout>
-                    </StackLayout>
-                </ViewCell>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button x:Name="exportToPDF"
+                    TextColor="#FFF"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="CenterAndExpand"
+                    Clicked="ExportToPDF"
+                />
+    </StackLayout>
   </ContentPage>         
     
   <ContentPage x:Name="verMedicos" Title="Ver Médicos" BackgroundColor="#8b8a8a">
         <ListView x:Name="listView" Margin="20" BackgroundColor="#8b8a8a">
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell>
-                    <ViewCell.ContextActions>
-                        <MenuItem Clicked="DetalharMedico"
-                                  CommandParameter="{Binding id}"
-                                  Text="Detalhar" />
-                        <MenuItem Clicked="DeletarMedico"
-                                  CommandParameter="{Binding id}"
-                                  Text="Deletar" IsDestructive="True" />
-                    </ViewCell.ContextActions>
-                    <StackLayout BackgroundColor="#8b8a8a" Margin="0,0,0,0" Orientation="Vertical">
-                        <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="StartAndExpand">
-                            <Label Text="{Binding nome}" VerticalTextAlignment="Center" TextColor="White"/>
-                        </StackLayout>
-                        <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                            <StackLayout Orientation="Horizontal">
-                                <StackLayout Margin="10,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                                    <Label FontAttributes="Bold" TextColor="White">• Localidade: </Label>
-                                    <Label Text="{Binding localizacao}" VerticalTextAlignment="Center" TextColor="White"/>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell Tapped="ViewSelected">
+                        <ViewCell.ContextActions>
+                            <MenuItem Clicked="DetalharMedico"
+                                      CommandParameter="{Binding id}"
+                                      Text="Detalhar" />
+                            <MenuItem Clicked="DeletarMedico"
+                                      CommandParameter="{Binding id}"
+                                      Text="Deletar" IsDestructive="True" />
+                        </ViewCell.ContextActions>
+                        <StackLayout BackgroundColor="#8b8a8a" Margin="0,0,0,0" Orientation="Vertical">
+                            <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                                <Label Text="{Binding nome}" VerticalTextAlignment="Center" TextColor="White"/>
+                            </StackLayout>
+                            <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                <StackLayout Orientation="Horizontal">
+                                    <StackLayout Margin="10,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                        <Label FontAttributes="Bold" TextColor="White">• Localidade: </Label>
+                                        <Label Text="{Binding localizacao}" VerticalTextAlignment="Center" TextColor="White"/>
+                                    </StackLayout>
                                 </StackLayout>
                             </StackLayout>
                         </StackLayout>
-                    </StackLayout>
-                </ViewCell>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
-  </ContentPage>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ContentPage>
 </TabbedPage>
