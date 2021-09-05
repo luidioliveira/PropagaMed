@@ -19,7 +19,7 @@ namespace PropagaMed
             // Binding para data mínima ser a atual
             DateTime dateDeHoje = DateTime.Now.Date;
             dataVisita.BindingContext = dateDeHoje;
-            exportToPDF.Text = $"Exportar Visitas do Dia {DateTime.Now.ToShortDateString()}";
+            exportToPDF.Text = $"Exportar Visitas do Dia {DateTime.Now.ToString("dd/MM/yyyy")}";
 
             AlimentaMedicosEVisitas();
 
