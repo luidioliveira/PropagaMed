@@ -16,11 +16,9 @@
                    HorizontalOptions="Center"
                    VerticalOptions="CenterAndExpand"
                    Margin="5"
-                   BackgroundColor="#FFFFFF"
-                   BorderColor="#76cafb"
-                   BorderWidth="0.1"
-                   Padding="5"
-                   TextColor="#76cafb"
+                   BackgroundColor="#76cafb"
+                   Padding="15"
+                   TextColor="#FFFFFF"
                    Clicked="EntrarClicado"
                 />
 
