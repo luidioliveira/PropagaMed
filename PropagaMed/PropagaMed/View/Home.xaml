@@ -93,10 +93,10 @@
     </ScrollView>
    </ContentPage>
     
-  <ContentPage x:Name="novoMedico" Title="Novo Médico(a)" BackgroundColor="#FFFFFF">
+  <ContentPage x:Name="novoMedico" Title="Novo(a) Médico(a)" BackgroundColor="#FFFFFF">
     <ScrollView>
         <StackLayout>        
-            <Label Text="Novo Médico(a)"
+            <Label Text="Novo(a) Médico(a)"
                TextColor="#76cafb"
                HorizontalTextAlignment="Center"
                VerticalOptions="CenterAndExpand"    
