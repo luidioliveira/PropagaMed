@@ -5,12 +5,12 @@
     x:Class="PropagaMed.View.MedicoView"
     x:Name="atualizaMedico"
     Title="Visualização de Médico(a)"
-    BackgroundColor="#8b8a8a">
+    BackgroundColor="#FFFFFF">
     <ContentPage.Content>
         <ScrollView>
         <StackLayout>        
             <Label Text="Nome:"
-                   TextColor="White"
+                   TextColor="#76cafb"
                    HorizontalTextAlignment="left"
                    FontFamily="Arial"
                    FontAttributes="Bold"
@@ -19,13 +19,13 @@
              <Entry x:Name="nomeMedico"
                Scale="0.8"     
                Placeholder="Nome"
-               PlaceholderColor="#8b8a8a"
-               BackgroundColor="#FFF"
-               TextColor="#8b8a8a"
+               PlaceholderColor="#FFFFFF"
+               BackgroundColor="#76cafb"
+               TextColor="#FFFFFF"
             />
 
             <Label Text="Especialidade:"
-                   TextColor="White"
+                   TextColor="#76cafb"
                    HorizontalTextAlignment="left"
                    FontFamily="Arial"
                    FontAttributes="Bold"
@@ -35,13 +35,13 @@
                Text="{Binding especialidade}"
                Scale="0.8"     
                Placeholder="Especialidade"
-               PlaceholderColor="#8b8a8a"
-               BackgroundColor="#FFF"
-               TextColor="#8b8a8a"
+               PlaceholderColor="#FFFFFF"
+               BackgroundColor="#76cafb"
+               TextColor="#FFFFFF"
             />
 
             <Label Text="Localização:"
-                   TextColor="White"
+                   TextColor="#76cafb"
                    HorizontalTextAlignment="left"
                    FontFamily="Arial"
                    FontAttributes="Bold"
@@ -51,9 +51,9 @@
                     SelectedItem="{Binding localizacao}"
                     Scale="0.8"
                     Title="Selecione a localização do médico"
-                    TitleColor="#8b8a8a"
-                    BackgroundColor="#FFF"
-                    TextColor="#8b8a8a">
+                    TitleColor="#FFFFFF"
+                    BackgroundColor="#76cafb"
+                    TextColor="#FFFFFF">
                 <Picker.Items>
                     <x:String>Rio de Janeiro</x:String> 
                     <x:String>Niterói</x:String>
@@ -61,7 +61,7 @@
             </Picker> 
 
             <Label Text="Endereço:"
-                   TextColor="White"
+                   TextColor="#76cafb"
                    HorizontalTextAlignment="left"
                    FontFamily="Arial"
                    FontAttributes="Bold"
@@ -71,13 +71,13 @@
                Text="{Binding endereco}"
                Scale="0.8"     
                Placeholder="Endereço"
-               PlaceholderColor="#8b8a8a"
-               BackgroundColor="#FFF"
-               TextColor="#8b8a8a"
+               PlaceholderColor="#FFFFFF"
+               BackgroundColor="#76cafb"
+               TextColor="#FFFFFF"
             />  
 
             <Label Text="CEP:"
-                   TextColor="White"
+                   TextColor="#76cafb"
                    HorizontalTextAlignment="left"
                    FontFamily="Arial"
                    FontAttributes="Bold"
@@ -87,14 +87,14 @@
                Text="{Binding CEP}"
                Scale="0.8"     
                Placeholder="CEP"
-               PlaceholderColor="#8b8a8a"
-               BackgroundColor="#FFF"
-               TextColor="#8b8a8a"
+               PlaceholderColor="#FFFFFF"
+               BackgroundColor="#76cafb"
+               TextColor="#FFFFFF"
             />
 
             <StackLayout>
                 <Label Text="Data de Nascimento:"
-                   TextColor="White"
+                   TextColor="#76cafb"
                    HorizontalTextAlignment="left"
                    FontFamily="Arial"
                    FontAttributes="Bold"
@@ -105,13 +105,13 @@
                     Date="{Binding aniversario}"
                     Scale="0.8"
                     MinimumDate="01/01/1930"
-                    BackgroundColor="#FFF"
-                    TextColor="#8b8a8a"
+                    BackgroundColor="#76cafb"
+                    TextColor="#FFFFFF"
                  />   
             </StackLayout>
 
             <Label Text="Telefone:"
-                   TextColor="White"
+                   TextColor="#76cafb"
                    HorizontalTextAlignment="left"
                    FontFamily="Arial"
                    FontAttributes="Bold"
@@ -121,13 +121,13 @@
                Text="{Binding telefone}"
                Scale="0.8"     
                Placeholder="Telefone"
-               PlaceholderColor="#8b8a8a"
-               BackgroundColor="#FFF"
-               TextColor="#8b8a8a"
+               PlaceholderColor="#FFFFFF"
+               BackgroundColor="#76cafb"
+               TextColor="#FFFFFF"
             />  
 
             <Label Text="Celular:"
-                   TextColor="White"
+                   TextColor="#76cafb"
                    HorizontalTextAlignment="left"
                    FontFamily="Arial"
                    FontAttributes="Bold"
@@ -137,13 +137,13 @@
                Text="{Binding celular}"
                Scale="0.8"     
                Placeholder="Celular"
-               PlaceholderColor="#8b8a8a"
-               BackgroundColor="#FFF"
-               TextColor="#8b8a8a"
+               PlaceholderColor="#FFFFFF"
+               BackgroundColor="#76cafb"
+               TextColor="#FFFFFF"
             />      
 
             <Label Text="E-mail:"
-                   TextColor="White"
+                   TextColor="#76cafb"
                    HorizontalTextAlignment="left"
                    FontFamily="Arial"
                    FontAttributes="Bold"
@@ -153,13 +153,13 @@
                Text="{Binding email}"
                Scale="0.8"   
                Placeholder="E-mail"
-               PlaceholderColor="#8b8a8a"
-               BackgroundColor="#FFF"
-               TextColor="#8b8a8a"
+               PlaceholderColor="#FFFFFF"
+               BackgroundColor="#76cafb"
+               TextColor="#FFFFFF"
             />
 
             <Label Text="CRM:"
-                   TextColor="White"
+                   TextColor="#76cafb"
                    HorizontalTextAlignment="left"
                    FontFamily="Arial"
                    FontAttributes="Bold"
@@ -169,13 +169,13 @@
                Text="{Binding CRM}"
                Scale="0.8"   
                Placeholder="CRM/N"
-               PlaceholderColor="#8b8a8a"
-               BackgroundColor="#FFF"
-               TextColor="#8b8a8a"
+               PlaceholderColor="#FFFFFF"
+               BackgroundColor="#76cafb"
+               TextColor="#FFFFFF"
             />
 
             <Label Text="Dia preferencial de visita:"
-                   TextColor="White"
+                   TextColor="#76cafb"
                    HorizontalTextAlignment="left"
                    FontFamily="Arial"
                    FontAttributes="Bold"
@@ -185,7 +185,7 @@
             <StackLayout>
                 <StackLayout Orientation="Horizontal" Scale="0.8">
                     <Label Text="Segunda"
-                       TextColor="White"
+                       TextColor="#76cafb"
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"
                        FontFamily="Arial"
@@ -195,7 +195,7 @@
                     <CheckBox x:Name="monday" Scale="1.2" />
 
                     <Label Text="Terça"
-                       TextColor="White"
+                       TextColor="#76cafb"
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"
                        FontFamily="Arial"
@@ -205,7 +205,7 @@
                      <CheckBox x:Name="tuesday" Scale="1.2" />
 
                     <Label Text="Quarta"
-                       TextColor="White"
+                       TextColor="#76cafb"
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"
                        FontFamily="Arial"
@@ -217,7 +217,7 @@
 
                 <StackLayout Orientation="Horizontal" Scale="0.8">
                     <Label Text="Quinta"
-                       TextColor="White"
+                       TextColor="#76cafb"
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"
                        FontFamily="Arial"
@@ -227,7 +227,7 @@
                     <CheckBox x:Name="thursday" Scale="1.2" />
 
                     <Label Text="Sexta"
-                       TextColor="White"
+                       TextColor="#76cafb"
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"
                        FontFamily="Arial"
@@ -239,7 +239,7 @@
             </StackLayout>
 
             <Label Text="Turno preferencial de visita:"
-                   TextColor="White"
+                   TextColor="#76cafb"
                    HorizontalTextAlignment="left"
                    FontFamily="Arial"
                    FontAttributes="Bold"
@@ -248,7 +248,7 @@
 
             <StackLayout Orientation="Horizontal" Scale="0.8">
                 <Label Text="Manhã"
-                    TextColor="White"
+                    TextColor="#76cafb"
                     HorizontalTextAlignment="Center"
                     VerticalTextAlignment="Center"
                     FontFamily="Arial"
@@ -258,7 +258,7 @@
                 <CheckBox x:Name="morning" Scale="1.2" />
 
                 <Label Text="Tarde"
-                    TextColor="White"
+                    TextColor="#76cafb"
                     HorizontalTextAlignment="Center"
                     VerticalTextAlignment="Center"
                     FontFamily="Arial"
@@ -268,7 +268,7 @@
                 <CheckBox x:Name="afternoon" Scale="1.2" />
                 
                 <Label Text="Noite"
-                    TextColor="White"
+                    TextColor="#76cafb"
                     HorizontalTextAlignment="Center"
                     VerticalTextAlignment="Center"
                     FontFamily="Arial"
@@ -279,8 +279,8 @@
             </StackLayout>
 
             <Button x:Name="atualizarMedico" 
-               Text="Atualizar Médico(a)"
-               TextColor="#FFF"
+               Text="Atualizar"
+               TextColor="#76cafb"
                HorizontalOptions="Fill"
                VerticalOptions="CenterAndExpand"
                Clicked="atualizarMedicoClicado"

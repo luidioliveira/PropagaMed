@@ -10,7 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Midia\FlorDaPele.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)View\Home.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -43,11 +42,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Midia\.DS_Store" />
-    <None Include="$(MSBuildThisFileDirectory)Midia\plus-icon.png" />
-    <None Include="$(MSBuildThisFileDirectory)Midia\PropagaMedIcon120x.png" />
-    <None Include="$(MSBuildThisFileDirectory)Midia\PropagaMedIcon180x.png" />
-    <None Include="$(MSBuildThisFileDirectory)Midia\PropagaMedIcon1024x.png" />
-    <None Include="$(MSBuildThisFileDirectory)Midia\PropagaMedIcon.PNG" />
+    <None Include="$(MSBuildThisFileDirectory)Midia\PropagaMed_New_Logo.png" />
+    <None Include="$(MSBuildThisFileDirectory)Midia\Antigos\PropagaMedIcon180x.png" />
+    <None Include="$(MSBuildThisFileDirectory)Midia\Antigos\PropagaMedIcon1024x.png" />
+    <None Include="$(MSBuildThisFileDirectory)Midia\Antigos\PropagaMed.PNG" />
+    <None Include="$(MSBuildThisFileDirectory)Midia\Antigos\plus-icon.png" />
+    <None Include="$(MSBuildThisFileDirectory)Midia\Antigos\FlorDaPele.png" />
+    <None Include="$(MSBuildThisFileDirectory)Midia\Antigos\PropagaMedIcon.PNG" />
+    <None Include="$(MSBuildThisFileDirectory)Midia\Antigos\PropagaMedIcon120x.png" />
+    <None Include="$(MSBuildThisFileDirectory)Midia\PropagaMed_New_Logo_120.png" />
+    <None Include="$(MSBuildThisFileDirectory)Midia\PropagaMed_New_Logo_180.png" />
+    <None Include="$(MSBuildThisFileDirectory)Midia\PropagaMed_New_Logo_1024.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)View\" />

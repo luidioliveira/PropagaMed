@@ -142,9 +142,11 @@
     <ImageAsset Include="Assets.xcassets\PropagaMed.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\PropagaMed.imageset\FlorDaPele-1.png" />
     <ImageAsset Include="Assets.xcassets\PropagaMed.imageset\PropagaMedIcon180x.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\PropagaMedIcon120x.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\PropagaMedIcon180x.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\PropagaMedIcon1024x.png" />
+    <ImageAsset Include="Assets.xcassets\PropagaMed_New_Logo.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\PropagaMed_New_Logo.imageset\PropagaMed_New_Logo.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\PropagaMed_New_Logo_1024.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\PropagaMed_New_Logo_120.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\PropagaMed_New_Logo_180.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -154,14 +156,15 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms">
-      <Version>5.0.0.2012</Version>
+      <Version>5.0.0.2083</Version>
     </PackageReference>
     <PackageReference Include="sqlite-net-pcl">
-      <Version>1.7.335</Version>
+      <Version>1.8.116</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets.xcassets\PropagaMed.imageset\" />
+    <Folder Include="Assets.xcassets\PropagaMed_New_Logo.imageset\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\PropagaMed\PropagaMed.projitems" Label="Shared" />
