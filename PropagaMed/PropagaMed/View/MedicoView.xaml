@@ -50,7 +50,7 @@
             <Picker x:Name="localizacaoMedico"
                     SelectedItem="{Binding localizacao}"
                     Scale="0.8"
-                    Title="Selecione a localização do médico"
+                    Title="Selecione a localização"
                     TitleColor="#FFFFFF"
                     BackgroundColor="#76cafb"
                     TextColor="#FFFFFF">

@@ -148,7 +148,7 @@
             <Picker x:Name="localizacaoMedico"
                     SelectedItem="{Binding localizacao}"
                     Scale="0.8"
-                    Title="Selecione a localização do médico"
+                    Title="Selecione a localização"
                     TitleColor="#FFFFFF"
                     BackgroundColor="#76cafb"
                     TextColor="#FFFFFF">
@@ -429,7 +429,7 @@
     </StackLayout>
   </ContentPage>         
     
-  <ContentPage x:Name="verMedicos" Title="Ver Médicos" BackgroundColor="#FFFFFF">
+  <ContentPage x:Name="verMedicos" Title="Ver Médicos(as)" BackgroundColor="#FFFFFF">
         <ListView x:Name="listView" Margin="20" BackgroundColor="#FFFFFF">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -449,7 +449,7 @@
                             <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                                 <StackLayout Orientation="Horizontal">
                                     <StackLayout Margin="10,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                                        <Label FontAttributes="Bold" TextColor="#76cafb">• Localidade: </Label>
+                                        <Label FontAttributes="Bold" TextColor="#76cafb">• Localização: </Label>
                                         <Label Text="{Binding localizacao}" VerticalTextAlignment="Center" TextColor="#76cafb"/>
                                     </StackLayout>
                                 </StackLayout>
