@@ -51,6 +51,11 @@ namespace PropagaMed.Dal
             return Database.Table<Visita>().ToListAsync();
         }
 
+        public Task<List<Visita>> GetItemsVisitaDiaAsync()
+        {
+            return Database.Table<Visita>().Where(i => i.DiaVisita == DateTime.Now.Date).ToListAsync();
+        }
+
         public Task<List<Medico>> GetItemsNotDoneAsync()
         {
             return Database.QueryAsync<Medico>("SELECT * FROM [Medico]");
@@ -58,7 +63,7 @@ namespace PropagaMed.Dal
 
         public Task<Medico> GetItemAsync(int id)
         {
-            return Database.Table<Medico>().Where(i => i.id == id).FirstOrDefaultAsync();
+            return Database.Table<Medico>().Where(i => i.Id == id).FirstOrDefaultAsync();
         }
 
         public Task<int> SaveItemAsync(Object item)

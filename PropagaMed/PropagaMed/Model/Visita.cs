@@ -6,11 +6,11 @@ namespace PropagaMed.Model
     public class Visita
     {
         [PrimaryKey, AutoIncrement, NotNull]
-        public int id { get; set; }
-        public int idMedicoVisita { get; set; }
-        public string nomeMedicoVisita { get; set; }
-        public DateTime diaVisita { get; set; }
-        public TimeSpan horaVisita { get; set; }
-        public string observacao { get; set; }
+        public int Id { get; set; }
+        public int IdMedicoVisita { get; set; }
+        public string NomeMedicoVisita { get; set; }
+        public DateTime DiaVisita { get; set; }
+        public TimeSpan HoraVisita { get; set; }
+        public string Observacao { get; set; }
     }
 }

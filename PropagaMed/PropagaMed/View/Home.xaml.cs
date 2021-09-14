@@ -2,7 +2,11 @@
 using PropagaMed.View;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Net.Mime;
 using Xamarin.Forms;
 
 namespace PropagaMed
@@ -19,7 +23,7 @@ namespace PropagaMed
             // Binding para data mínima ser a atual
             DateTime dateDeHoje = DateTime.Now.Date;
             dataVisita.BindingContext = dateDeHoje;
-            exportToPDF.Text = $"Exportar Visitas do Dia {DateTime.Now.ToString("dd/MM/yyyy")}";
+            exportToCSV.Text = $"Exportar Visitas do Dia {DateTime.Now:dd/MM/yyyy}";
 
             AlimentaMedicosEVisitas();
 
@@ -42,29 +46,29 @@ namespace PropagaMed
             List<Visita> visitas = await App.Database.GetItemsVisitaAsync();
 
             medicosPicker.ItemsSource = medicos;
-            listView.ItemsSource = medicos.OrderBy(m => m.nome);
-            listView2.ItemsSource = visitas.OrderBy(v => v.diaVisita).ThenBy(v => v.horaVisita);
+            listView.ItemsSource = medicos.OrderBy(m => m.Nome);
+            listView2.ItemsSource = visitas.OrderBy(v => v.DiaVisita).ThenBy(v => v.HoraVisita);
         }
 
         private async void cadastrarVisitaClicado(object sender, EventArgs e)
         {
             Visita VisitaASalvar = new Visita();
 
-            VisitaASalvar.idMedicoVisita = MedicoSelecionado.id;
-            VisitaASalvar.nomeMedicoVisita = MedicoSelecionado.nome;
-            VisitaASalvar.diaVisita = dataVisita.Date;
-            VisitaASalvar.horaVisita = horaVisita.Time;
-            VisitaASalvar.observacao = obsVisita.Text is null?"":obsVisita.Text.ToString();
+            VisitaASalvar.IdMedicoVisita = MedicoSelecionado.Id;
+            VisitaASalvar.NomeMedicoVisita = MedicoSelecionado.Nome;
+            VisitaASalvar.DiaVisita = dataVisita.Date;
+            VisitaASalvar.HoraVisita = horaVisita.Time;
+            VisitaASalvar.Observacao = obsVisita.Text is null?"":obsVisita.Text.ToString();
 
-            if (!String.IsNullOrEmpty(MedicoSelecionado.nome))
+            if (!String.IsNullOrEmpty(MedicoSelecionado.Nome))
             {
                 App.Database.SaveItemAsync(VisitaASalvar);
-                DisplayAlert("Informação", "Visita para médico(a) " + MedicoSelecionado.nome + " às " + horaVisita.Time.ToString(@"hh\:mm") + " em " + DataSelecionada.ToString("dd/MM/yyyy") + " cadastrada com sucesso!", "Ok");
+                DisplayAlert("Informação", "Visita para médico(a) " + MedicoSelecionado.Nome + " às " + horaVisita.Time.ToString(@"hh\:mm") + " em " + DataSelecionada.ToString("dd/MM/yyyy") + " cadastrada com sucesso", "Ok");
                 AlimentaMedicosEVisitas();
                 this.CurrentPage = verVisitas;
             }
             else
-                DisplayAlert("Informação", "Campos necessários estão vazios!", "Ok");
+                DisplayAlert("Informação", "Campos necessários estão vazios", "Ok");
         }
 
         private async void cadastrarMedicoClicado(object sender, EventArgs e)
@@ -93,28 +97,28 @@ namespace PropagaMed
             if (night.IsChecked)
                 horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "Noite" : " e Noite";
 
-            MedicoASalvar.nome = nomeMedico.Text;
-            MedicoASalvar.especialidade = espMedico.Text;
-            MedicoASalvar.localizacao = (localizacaoMedico.SelectedItem is null? "":localizacaoMedico.SelectedItem.ToString());
-            MedicoASalvar.endereco = enderecoMedico.Text;
+            MedicoASalvar.Nome = nomeMedico.Text;
+            MedicoASalvar.Especialidade = espMedico.Text;
+            MedicoASalvar.Localizacao = (localizacaoMedico.SelectedItem is null? "":localizacaoMedico.SelectedItem.ToString());
+            MedicoASalvar.Endereco = enderecoMedico.Text;
             MedicoASalvar.CEP = CEPMedico.Text;
-            MedicoASalvar.aniversario = aniversarioMedico.Date;
-            MedicoASalvar.telefone = telefoneMedico.Text;
-            MedicoASalvar.celular = celularMedico.Text;
-            MedicoASalvar.email = emailMedico.Text;
-            MedicoASalvar.diasVisita = diasVisitaSelecionados;
-            MedicoASalvar.horariosVisita = horariosVisitaSelecionados;
+            MedicoASalvar.Aniversario = aniversarioMedico.Date;
+            MedicoASalvar.Telefone = telefoneMedico.Text;
+            MedicoASalvar.Celular = celularMedico.Text;
+            MedicoASalvar.Email = emailMedico.Text;
+            MedicoASalvar.DiasVisita = diasVisitaSelecionados;
+            MedicoASalvar.HorariosVisita = horariosVisitaSelecionados;
             MedicoASalvar.CRM = CRMMedico.Text;
 
-            if (!String.IsNullOrEmpty(MedicoASalvar.nome))
+            if (!String.IsNullOrEmpty(MedicoASalvar.Nome))
             {
                 App.Database.SaveItemAsync(MedicoASalvar);
-                DisplayAlert("Informação", "Médico(a) " + MedicoASalvar.nome + " cadastrado(a) com sucesso!", "Ok");
+                DisplayAlert("Informação", "Médico(a) " + MedicoASalvar.Nome + " cadastrado(a) com sucesso", "Ok");
                 AlimentaMedicosEVisitas();
                 this.CurrentPage = novaVisita;
             }
             else
-                DisplayAlert("Informação", "Campos necessários estão vazios!", "Ok");
+                DisplayAlert("Informação", "Campos necessários estão vazios", "Ok");
         }
 
         void medicosPicker_SelectedIndexChanged(System.Object sender, System.EventArgs e)
@@ -138,22 +142,22 @@ namespace PropagaMed
         async void DeletarVisita(object sender, EventArgs e)
         {
             var mi = ((MenuItem)sender);
-            var visitaASerDeletada = App.Database.GetItemsVisitaAsync().Result.Where(m => m.id == int.Parse(mi.CommandParameter.ToString())).FirstOrDefault();
+            var visitaASerDeletada = App.Database.GetItemsVisitaAsync().Result.Where(m => m.Id == int.Parse(mi.CommandParameter.ToString())).FirstOrDefault();
 
-            var confirmDelete = await DisplayAlert("Atenção", $"Deseja realmente deletar a visita para {visitaASerDeletada.nomeMedicoVisita}?", "Sim", "Não");
+            var confirmDelete = await DisplayAlert("Atenção", $"Deseja realmente deletar a visita para {visitaASerDeletada.NomeMedicoVisita}?", "Sim", "Não");
 
             if (confirmDelete)
             {
                 await App.Database.DeleteItemAsync(visitaASerDeletada);
                 AlimentaMedicosEVisitas();
-                await DisplayAlert("Informação", $"Visita para {visitaASerDeletada.nomeMedicoVisita} em {visitaASerDeletada.diaVisita.ToString("dd/MM/yyyy")} deletada com sucesso!", "Ok");
+                await DisplayAlert("Informação", $"Visita para {visitaASerDeletada.NomeMedicoVisita} em {visitaASerDeletada.DiaVisita.ToString("dd/MM/yyyy")} deletada com sucesso", "Ok");
             }
         }
 
         async void DetalharMedico(object sender, EventArgs e)
         {
             var mi = ((MenuItem)sender);
-            var MedicoASerConsultado = App.Database.GetItemsMedicoAsync().Result.Where(m => m.id == int.Parse(mi.CommandParameter.ToString())).FirstOrDefault();
+            var MedicoASerConsultado = App.Database.GetItemsMedicoAsync().Result.Where(m => m.Id == int.Parse(mi.CommandParameter.ToString())).FirstOrDefault();
 
             await Navigation.PushAsync(new MedicoView(MedicoASerConsultado));
         }
@@ -161,15 +165,15 @@ namespace PropagaMed
         async void DeletarMedico(object sender, EventArgs e)
         {
             var mi = ((MenuItem)sender);
-            var medicoASerDeletado = App.Database.GetItemsMedicoAsync().Result.Where(m => m.id == int.Parse(mi.CommandParameter.ToString())).FirstOrDefault();
+            var medicoASerDeletado = App.Database.GetItemsMedicoAsync().Result.Where(m => m.Id == int.Parse(mi.CommandParameter.ToString())).FirstOrDefault();
 
-            var confirmDelete = await DisplayAlert("Atenção", $"Deseja realmente deletar {medicoASerDeletado.nome}?", "Sim", "Não");
+            var confirmDelete = await DisplayAlert("Atenção", $"Deseja realmente deletar {medicoASerDeletado.Nome}?", "Sim", "Não");
 
             if (confirmDelete)
             {
                 await App.Database.DeleteItemAsync(medicoASerDeletado);
                 AlimentaMedicosEVisitas();
-                await DisplayAlert("Informação", $"Médico {medicoASerDeletado.nome} deletado(a) com sucesso!", "Ok");
+                await DisplayAlert("Informação", $"Médico {medicoASerDeletado.Nome} deletado(a) com sucesso", "Ok");
             }
         }
 
@@ -184,19 +188,45 @@ namespace PropagaMed
                 viewCell.View.BackgroundColor = Color.FromHex("#FF8B8A8A");
         }
 
-        async void ExportToPDF(object sender, EventArgs e)
+        async void ExportToCSV(object sender, EventArgs e)
         {
-            /*
-            using (var doc = new PdfSharp.Pdf.PdfDocument())
-            var document = new PdfDocument();
-            var page = document.AddPage();
-            var gfx = XGraphics.FromPdfPage(page);
-            var font = new XFont("Verdana", 20);
-            gfx.DrawString("Test of PdfSharp on iOS", font, new XSolidBrush(XColor.FromArgb(0, 0, 0)), 10, 130);
-            document.Save(Path.Combine(Path.GetTempPath(), "test.pdf"));
-            */
+            var title = $"Visitas do Dia - {DateTime.Now:dd/MM/yyyy}";
+            string to = "luidi.lima@poli.ufrj.br";
+            string from = "luidi.lima@poli.ufrj.br";
+            string personalFolderFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal)).ToString() + $@"/Visitas_{DateTime.Now:dd-MM-yyyy}.csv";
+            List<Visita> visitas = await App.Database.GetItemsVisitaDiaAsync();
 
-            await DisplayAlert("Informação", $"Funcionalidade em desenvolvimento", "Ok");
+            if (!File.Exists(personalFolderFile))
+            {
+                var content = new List<string>(){ "Nome;Hora;Observação;" };
+                var toAdd = visitas.Select(v => string.Join(";", v.NomeMedicoVisita, v.HoraVisita.ToString(@"h\h\:m\m"), v.Observacao)).ToList();
+
+                content.AddRange(toAdd);
+
+                File.WriteAllLines(personalFolderFile, content.ToArray(), System.Text.Encoding.UTF8);
+            }
+
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
+            smtp.Credentials = new NetworkCredential("luidi.lima@poli.ufrj.br", string.Empty/*SENHA AQUI*/);
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtp.EnableSsl = true;
+
+            MailMessage mailSend = new MailMessage();
+
+            mailSend.From = new MailAddress(from.Replace(';', ','));
+            mailSend.To.Add(to.Replace(';', ','));
+            mailSend.Subject = title;
+            mailSend.SubjectEncoding = System.Text.Encoding.UTF8;
+            mailSend.Body = "Anexo.";
+            mailSend.BodyEncoding = System.Text.Encoding.UTF8;
+            mailSend.IsBodyHtml = true;
+            mailSend.Attachments.Add(new Attachment(personalFolderFile, MediaTypeNames.Application.Octet));
+            smtp.Send(mailSend);
+
+            if (File.Exists(personalFolderFile))
+                File.Delete(personalFolderFile);
+
+            await DisplayAlert("Informação", $"Arquivo enviado por e-mail", "Ok");
         }
     }
 }

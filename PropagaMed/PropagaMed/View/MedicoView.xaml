@@ -32,7 +32,7 @@
                    Scale="0.8"
                  />
              <Entry x:Name="espMedico"
-               Text="{Binding especialidade}"
+               Text="{Binding Especialidade}"
                Scale="0.8"     
                Placeholder="Especialidade"
                PlaceholderColor="#FFFFFF"
@@ -48,7 +48,7 @@
                    Scale="0.8"
                  />
             <Picker x:Name="localizacaoMedico"
-                    SelectedItem="{Binding localizacao}"
+                    SelectedItem="{Binding Localizacao}"
                     Scale="0.8"
                     Title="Selecione a localização"
                     TitleColor="#FFFFFF"
@@ -68,7 +68,7 @@
                    Scale="0.8"
                  />
              <Entry x:Name="enderecoMedico"
-               Text="{Binding endereco}"
+               Text="{Binding Endereco}"
                Scale="0.8"     
                Placeholder="Endereço"
                PlaceholderColor="#FFFFFF"
@@ -102,7 +102,7 @@
                  />
 
                  <DatePicker x:Name="aniversarioMedico"
-                    Date="{Binding aniversario}"
+                    Date="{Binding Aniversario}"
                     Scale="0.8"
                     MinimumDate="01/01/1930"
                     BackgroundColor="#76cafb"
@@ -118,7 +118,7 @@
                    Scale="0.8"
                  />
              <Entry x:Name="telefoneMedico"
-               Text="{Binding telefone}"
+               Text="{Binding Telefone}"
                Scale="0.8"     
                Placeholder="Telefone"
                PlaceholderColor="#FFFFFF"
@@ -134,7 +134,7 @@
                    Scale="0.8"
                  />
             <Entry x:Name="celularMedico"
-               Text="{Binding celular}"
+               Text="{Binding Celular}"
                Scale="0.8"     
                Placeholder="Celular"
                PlaceholderColor="#FFFFFF"
@@ -150,7 +150,7 @@
                    Scale="0.8"
                  />
             <Entry x:Name="emailMedico"
-               Text="{Binding email}"
+               Text="{Binding Email}"
                Scale="0.8"   
                Placeholder="E-mail"
                PlaceholderColor="#FFFFFF"

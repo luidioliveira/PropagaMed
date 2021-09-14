@@ -26,7 +26,7 @@
             <Picker x:Name="medicosPicker"
                     TitleColor="#FFFFFF"
                     Title="Escolha um(a) médico(a)" 
-                    ItemDisplayBinding="{Binding nome}"
+                    ItemDisplayBinding="{Binding Nome}"
                     Scale="0.8"
                     BackgroundColor="#76cafb"
                     TextColor="#FFFFFF"
@@ -44,7 +44,7 @@
 
                 <DatePicker x:Name="dataVisita"
                     Scale="0.8"        
-                    MinimumDate="{Binding dataDeHoje}"
+                    MinimumDate="{Binding DataDeHoje}"
                     BackgroundColor="#76cafb"
                     TextColor="#FFFFFF"
                     DateSelected="dataVisita_DateSelected"
@@ -114,7 +114,7 @@
                    Scale="0.8"
                  />
              <Entry x:Name="nomeMedico"
-               Text="{Binding nome}"
+               Text="{Binding Nome}"
                Scale="0.8"     
                Placeholder="Nome"
                PlaceholderColor="#FFFFFF"
@@ -130,7 +130,7 @@
                    Scale="0.8"
                  />
              <Entry x:Name="espMedico"
-               Text="{Binding especialidade}"
+               Text="{Binding Especialidade}"
                Scale="0.8"     
                Placeholder="Especialidade"
                PlaceholderColor="#FFFFFF"
@@ -146,7 +146,7 @@
                    Scale="0.8"
                  />
             <Picker x:Name="localizacaoMedico"
-                    SelectedItem="{Binding localizacao}"
+                    SelectedItem="{Binding Localizacao}"
                     Scale="0.8"
                     Title="Selecione a localização"
                     TitleColor="#FFFFFF"
@@ -166,7 +166,7 @@
                    Scale="0.8"
                  />
              <Entry x:Name="enderecoMedico"
-               Text="{Binding endereco}"
+               Text="{Binding Endereco}"
                Scale="0.8"     
                Placeholder="Endereço"
                PlaceholderColor="#FFFFFF"
@@ -200,7 +200,7 @@
                  />
 
                  <DatePicker x:Name="aniversarioMedico"
-                    Date="{Binding aniversario}"
+                    Date="{Binding Aniversario}"
                     Scale="0.8"
                     MinimumDate="01/01/1930"
                     BackgroundColor="#76cafb"
@@ -216,7 +216,7 @@
                    Scale="0.8"
                  />
              <Entry x:Name="telefoneMedico"
-               Text="{Binding telefone}"
+               Text="{Binding Telefone}"
                Scale="0.8"     
                Placeholder="Telefone"
                PlaceholderColor="#FFFFFF"
@@ -232,7 +232,7 @@
                    Scale="0.8"
                  />
             <Entry x:Name="celularMedico"
-               Text="{Binding celular}"
+               Text="{Binding Celular}"
                Scale="0.8"     
                Placeholder="Celular"
                PlaceholderColor="#FFFFFF"
@@ -248,7 +248,7 @@
                    Scale="0.8"
                  />
             <Entry x:Name="emailMedico"
-               Text="{Binding email}"
+               Text="{Binding Email}"
                Scale="0.8"   
                Placeholder="E-mail"
                PlaceholderColor="#FFFFFF"
@@ -395,24 +395,24 @@
                     <ViewCell Tapped="ViewSelected">
                         <ViewCell.ContextActions>
                             <MenuItem Clicked="DetalharVisita"
-                                      CommandParameter="{Binding observacao}"
+                                      CommandParameter="{Binding Observacao}"
                                       Text="Detalhar" />
                             <MenuItem Clicked="DeletarVisita"
-                                      CommandParameter="{Binding id}"
+                                      CommandParameter="{Binding Id}"
                                       Text="Deletar" IsDestructive="True" />
                         </ViewCell.ContextActions>
                         <StackLayout BackgroundColor="#FFFFFF" Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                             <StackLayout WidthRequest="80" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                                <Label Text="{Binding nomeMedicoVisita}" VerticalTextAlignment="Center" TextColor="#76cafb"/>
+                                <Label Text="{Binding NomeMedicoVisita}" VerticalTextAlignment="Center" TextColor="#76cafb"/>
                             </StackLayout>
                             <StackLayout Orientation="Vertical">
                                 <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                                     <Label FontAttributes="Bold" TextColor="#76cafb">Data: </Label>
-                                    <Label Text="{Binding diaVisita, StringFormat='{0:dd/MM/yyyy}'}" VerticalTextAlignment="Center" TextColor="#76cafb"/>
+                                    <Label Text="{Binding DiaVisita, StringFormat='{0:dd/MM/yyyy}'}" VerticalTextAlignment="Center" TextColor="#76cafb"/>
                                 </StackLayout>
                                 <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                                     <Label FontAttributes="Bold" TextColor="#76cafb">Hora: </Label>
-                                    <Label Text="{Binding horaVisita, StringFormat='{}{0:hh\\:mm}'}" VerticalTextAlignment="Center" TextColor="#76cafb"/>
+                                    <Label Text="{Binding HoraVisita, StringFormat='{}{0:hh\\:mm}'}" VerticalTextAlignment="Center" TextColor="#76cafb"/>
                                 </StackLayout>
                             </StackLayout>
                         </StackLayout>
@@ -420,11 +420,11 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button x:Name="exportToPDF"
+        <Button x:Name="exportToCSV"
                     TextColor="#76cafb"
                     HorizontalOptions="Fill"
                     VerticalOptions="CenterAndExpand"
-                    Clicked="ExportToPDF"
+                    Clicked="ExportToCSV"
                 />
     </StackLayout>
   </ContentPage>         
@@ -436,21 +436,21 @@
                     <ViewCell Tapped="ViewSelected">
                         <ViewCell.ContextActions>
                             <MenuItem Clicked="DetalharMedico"
-                                      CommandParameter="{Binding id}"
+                                      CommandParameter="{Binding Id}"
                                       Text="Detalhar" />
                             <MenuItem Clicked="DeletarMedico"
-                                      CommandParameter="{Binding id}"
+                                      CommandParameter="{Binding Id}"
                                       Text="Deletar" IsDestructive="True" />
                         </ViewCell.ContextActions>
                         <StackLayout BackgroundColor="#FFFFFF" Margin="0,0,0,0" Orientation="Vertical">
                             <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="StartAndExpand">
-                                <Label Text="{Binding nome}" VerticalTextAlignment="Center" TextColor="#76cafb"/>
+                                <Label Text="{Binding Nome}" VerticalTextAlignment="Center" TextColor="#76cafb"/>
                             </StackLayout>
                             <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                                 <StackLayout Orientation="Horizontal">
                                     <StackLayout Margin="10,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                                         <Label FontAttributes="Bold" TextColor="#76cafb">• Localização: </Label>
-                                        <Label Text="{Binding localizacao}" VerticalTextAlignment="Center" TextColor="#76cafb"/>
+                                        <Label Text="{Binding Localizacao}" VerticalTextAlignment="Center" TextColor="#76cafb"/>
                                     </StackLayout>
                                 </StackLayout>
                             </StackLayout>

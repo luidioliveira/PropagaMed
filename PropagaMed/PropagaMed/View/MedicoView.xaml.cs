@@ -12,27 +12,27 @@ namespace PropagaMed.View
         {
             InitializeComponent();
 
-            medicoId = medico.id;
-            nomeMedico.Text = medico.nome;
-            espMedico.Text = medico.especialidade;
-            localizacaoMedico.SelectedItem = medico.localizacao;
-            enderecoMedico.Text = medico.endereco;
+            medicoId = medico.Id;
+            nomeMedico.Text = medico.Nome;
+            espMedico.Text = medico.Especialidade;
+            localizacaoMedico.SelectedItem = medico.Localizacao;
+            enderecoMedico.Text = medico.Endereco;
             CEPMedico.Text = medico.CEP;
-            aniversarioMedico.Date = medico.aniversario;
-            telefoneMedico.Text = medico.telefone;
-            celularMedico.Text = medico.celular;
-            emailMedico.Text = medico.email;
+            aniversarioMedico.Date = medico.Aniversario;
+            telefoneMedico.Text = medico.Telefone;
+            celularMedico.Text = medico.Celular;
+            emailMedico.Text = medico.Email;
             CRMMedico.Text = medico.CRM;
             //Dias preferenciais de visita
-            monday.IsChecked = medico.diasVisita.Contains("Segunda");
-            tuesday.IsChecked = medico.diasVisita.Contains("Terça");
-            wednesday.IsChecked = medico.diasVisita.Contains("Quarta");
-            thursday.IsChecked = medico.diasVisita.Contains("Quinta");
-            friday.IsChecked = medico.diasVisita.Contains("Sexta");
+            monday.IsChecked = medico.DiasVisita.Contains("Segunda");
+            tuesday.IsChecked = medico.DiasVisita.Contains("Terça");
+            wednesday.IsChecked = medico.DiasVisita.Contains("Quarta");
+            thursday.IsChecked = medico.DiasVisita.Contains("Quinta");
+            friday.IsChecked = medico.DiasVisita.Contains("Sexta");
             //Turnos preferenciais de visita
-            morning.IsChecked = medico.horariosVisita.Contains("Manhã");
-            afternoon.IsChecked = medico.horariosVisita.Contains("Tarde");
-            night.IsChecked = medico.horariosVisita.Contains("Noite");
+            morning.IsChecked = medico.HorariosVisita.Contains("Manhã");
+            afternoon.IsChecked = medico.HorariosVisita.Contains("Tarde");
+            night.IsChecked = medico.HorariosVisita.Contains("Noite");
         }
 
         private async void atualizarMedicoClicado(object sender, EventArgs e)
@@ -40,7 +40,7 @@ namespace PropagaMed.View
             var returnPage = new Home(true);
             var medicoAAtualizar = new Medico();
 
-            medicoAAtualizar.id = medicoId;
+            medicoAAtualizar.Id = medicoId;
 
             //Dias e horários preferências de visita selecionados
             string diasVisitaSelecionados = "";
@@ -64,30 +64,30 @@ namespace PropagaMed.View
             if (night.IsChecked)
                 horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "Noite" : " e Noite";
 
-            medicoAAtualizar.nome = nomeMedico.Text;
-            medicoAAtualizar.especialidade = espMedico.Text;
-            medicoAAtualizar.localizacao = (localizacaoMedico.SelectedItem is null ? "" : localizacaoMedico.SelectedItem.ToString());
-            medicoAAtualizar.endereco = enderecoMedico.Text;
+            medicoAAtualizar.Nome = nomeMedico.Text;
+            medicoAAtualizar.Especialidade = espMedico.Text;
+            medicoAAtualizar.Localizacao = (localizacaoMedico.SelectedItem is null ? "" : localizacaoMedico.SelectedItem.ToString());
+            medicoAAtualizar.Endereco = enderecoMedico.Text;
             medicoAAtualizar.CEP = CEPMedico.Text;
-            medicoAAtualizar.aniversario = aniversarioMedico.Date;
-            medicoAAtualizar.telefone = telefoneMedico.Text;
-            medicoAAtualizar.celular = celularMedico.Text;
-            medicoAAtualizar.email = emailMedico.Text;
-            medicoAAtualizar.diasVisita = diasVisitaSelecionados;
-            medicoAAtualizar.horariosVisita = horariosVisitaSelecionados;
+            medicoAAtualizar.Aniversario = aniversarioMedico.Date;
+            medicoAAtualizar.Telefone = telefoneMedico.Text;
+            medicoAAtualizar.Celular = celularMedico.Text;
+            medicoAAtualizar.Email = emailMedico.Text;
+            medicoAAtualizar.DiasVisita = diasVisitaSelecionados;
+            medicoAAtualizar.HorariosVisita = horariosVisitaSelecionados;
             medicoAAtualizar.CRM = CRMMedico.Text;
 
-            if (!String.IsNullOrEmpty(medicoAAtualizar.nome))
+            if (!String.IsNullOrEmpty(medicoAAtualizar.Nome))
             {
                 await App.Database.UpdateItemAsync(medicoAAtualizar);
-                await DisplayAlert("Informação", "Cadastro do(a) Médico(a) " + medicoAAtualizar.nome + " atualizado com sucesso!", "Ok");
+                await DisplayAlert("Informação", "Cadastro do(a) Médico(a) " + medicoAAtualizar.Nome + " atualizado com sucesso", "Ok");
                 returnPage.AlimentaMedicosEVisitas();
                 await Navigation.PushAsync(returnPage);
             }
             else
-                await DisplayAlert("Informação", "Campos necessários estão vazios!", "Ok");
+                await DisplayAlert("Informação", "Campos necessários estão vazios", "Ok");
 
-            //await DisplayAlert("Aguarde", $"Em desenvolvimento!", "Ok");
+            //await DisplayAlert("Aguarde", $"Em desenvolvimento", "Ok");
         }
     }
 }
