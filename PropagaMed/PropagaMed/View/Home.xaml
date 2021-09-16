@@ -87,7 +87,7 @@
                TextColor="#76cafb"
                HorizontalOptions="Fill"
                VerticalOptions="CenterAndExpand"
-               Clicked="cadastrarVisitaClicado"
+               Clicked="CadastrarVisitaClicado"
             />
         </StackLayout>
     </ScrollView>
@@ -381,7 +381,7 @@
                TextColor="#76cafb"
                HorizontalOptions="Fill"
                VerticalOptions="CenterAndExpand"
-               Clicked="cadastrarMedicoClicado"
+               Clicked="CadastrarMedicoClicado"
             />
         </StackLayout>            
     </ScrollView>

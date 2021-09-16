@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace PropagaMed
@@ -27,17 +28,17 @@ namespace PropagaMed
 
             AlimentaMedicosEVisitas();
 
-            this.CurrentPage =  otherView ? verMedicos : this.CurrentPage;
+            this.CurrentPage = otherView ? verMedicos : this.CurrentPage;
         }
 
         private void ItemTapped(object sender, System.EventArgs e)
         {
             var viewCell = (ViewCell)sender;
 
-            if (viewCell.View.BackgroundColor.Equals(Color.FromHex("#8b8a8a")))
+            if (viewCell.View.BackgroundColor.Equals(Color.FromHex("#FFFFFF")))
                 viewCell.View.BackgroundColor = Color.LightBlue;
             else
-                viewCell.View.BackgroundColor = Color.FromHex("#8b8a8a");
+                viewCell.View.BackgroundColor = Color.FromHex("#FFFFFF");
         }
 
         public async void AlimentaMedicosEVisitas()
@@ -47,10 +48,10 @@ namespace PropagaMed
 
             medicosPicker.ItemsSource = medicos;
             listView.ItemsSource = medicos.OrderBy(m => m.Nome);
-            listView2.ItemsSource = visitas.OrderBy(v => v.DiaVisita).ThenBy(v => v.HoraVisita);
+            listView2.ItemsSource = visitas.OrderByDescending(v => v.DiaVisita).ThenBy(v => v.HoraVisita);
         }
 
-        private async void cadastrarVisitaClicado(object sender, EventArgs e)
+        private async void CadastrarVisitaClicado(object sender, EventArgs e)
         {
             Visita VisitaASalvar = new Visita();
 
@@ -58,20 +59,20 @@ namespace PropagaMed
             VisitaASalvar.NomeMedicoVisita = MedicoSelecionado.Nome;
             VisitaASalvar.DiaVisita = dataVisita.Date;
             VisitaASalvar.HoraVisita = horaVisita.Time;
-            VisitaASalvar.Observacao = obsVisita.Text is null?"":obsVisita.Text.ToString();
+            VisitaASalvar.Observacao = obsVisita.Text is null ? "" : obsVisita.Text.ToString();
 
             if (!String.IsNullOrEmpty(MedicoSelecionado.Nome))
             {
-                App.Database.SaveItemAsync(VisitaASalvar);
-                DisplayAlert("Informação", "Visita para médico(a) " + MedicoSelecionado.Nome + " às " + horaVisita.Time.ToString(@"hh\:mm") + " em " + DataSelecionada.ToString("dd/MM/yyyy") + " cadastrada com sucesso", "Ok");
+                await App.Database.SaveItemAsync(VisitaASalvar);
+                await DisplayAlert("Informação", "Visita para médico(a) " + MedicoSelecionado.Nome + " às " + horaVisita.Time.ToString(@"hh\:mm") + " em " + DataSelecionada.ToString("dd/MM/yyyy") + " cadastrada com sucesso", "Ok");
                 AlimentaMedicosEVisitas();
                 this.CurrentPage = verVisitas;
             }
             else
-                DisplayAlert("Informação", "Campos necessários estão vazios", "Ok");
+                await DisplayAlert("Informação", "Campos necessários estão vazios", "Ok");
         }
 
-        private async void cadastrarMedicoClicado(object sender, EventArgs e)
+        private async void CadastrarMedicoClicado(object sender, EventArgs e)
         {
             Medico MedicoASalvar = new Medico();
 
@@ -99,7 +100,7 @@ namespace PropagaMed
 
             MedicoASalvar.Nome = nomeMedico.Text;
             MedicoASalvar.Especialidade = espMedico.Text;
-            MedicoASalvar.Localizacao = (localizacaoMedico.SelectedItem is null? "":localizacaoMedico.SelectedItem.ToString());
+            MedicoASalvar.Localizacao = (localizacaoMedico.SelectedItem is null ? "" : localizacaoMedico.SelectedItem.ToString());
             MedicoASalvar.Endereco = enderecoMedico.Text;
             MedicoASalvar.CEP = CEPMedico.Text;
             MedicoASalvar.Aniversario = aniversarioMedico.Date;
@@ -112,13 +113,13 @@ namespace PropagaMed
 
             if (!String.IsNullOrEmpty(MedicoASalvar.Nome))
             {
-                App.Database.SaveItemAsync(MedicoASalvar);
-                DisplayAlert("Informação", "Médico(a) " + MedicoASalvar.Nome + " cadastrado(a) com sucesso", "Ok");
+                await App.Database.SaveItemAsync(MedicoASalvar);
+                await DisplayAlert("Informação", "Médico(a) " + MedicoASalvar.Nome + " cadastrado(a) com sucesso", "Ok");
                 AlimentaMedicosEVisitas();
                 this.CurrentPage = novaVisita;
             }
             else
-                DisplayAlert("Informação", "Campos necessários estão vazios", "Ok");
+                await DisplayAlert("Informação", "Campos necessários estão vazios", "Ok");
         }
 
         void medicosPicker_SelectedIndexChanged(System.Object sender, System.EventArgs e)
@@ -182,24 +183,30 @@ namespace PropagaMed
             var viewCell = (ViewCell)sender;
             var actualColor = viewCell.View.BackgroundColor.ToHex();
 
-            if (actualColor.Equals("#FF8B8A8A"))
+            if (actualColor.Equals("#FFFFFF"))
                 viewCell.View.BackgroundColor = Color.FromHex("#98bee3");
             else
-                viewCell.View.BackgroundColor = Color.FromHex("#FF8B8A8A");
+                viewCell.View.BackgroundColor = Color.FromHex("#FFFFFF");
         }
 
         async void ExportToCSV(object sender, EventArgs e)
         {
-            var title = $"Visitas do Dia - {DateTime.Now:dd/MM/yyyy}";
+            var title = $"PropagaMed - Relatório de Controle de Visitas - {DateTime.Now:dd/MM/yyyy}";
             string to = "luidi.lima@poli.ufrj.br";
             string from = "luidi.lima@poli.ufrj.br";
-            string personalFolderFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal)).ToString() + $@"/Visitas_{DateTime.Now:dd-MM-yyyy}.csv";
-            List<Visita> visitas = await App.Database.GetItemsVisitaDiaAsync();
+            string personalFolderFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal)).ToString() + $@"/PropagaMed_Visitas_{DateTime.Now:dd-MM-yyyy}.csv";
+            List<Visita> visitas = App.Database.GetItemsVisitaDiaAsync().Result.OrderBy(v => v.HoraVisita).ToList();
+            List<Medico> medicos = new List<Medico>();
+
+            Parallel.ForEach(visitas, visita =>
+            {
+                medicos.Add(App.Database.GetItemAsync(visita.IdMedicoVisita).Result);
+            });
 
             if (!File.Exists(personalFolderFile))
             {
-                var content = new List<string>(){ "Nome;Hora;Observação;" };
-                var toAdd = visitas.Select(v => string.Join(";", v.NomeMedicoVisita, v.HoraVisita.ToString(@"h\h\:m\m"), v.Observacao)).ToList();
+                var content = new List<string>() { "Controle de Visitas", "Nº;CRM;Nome;Data;Hora;Especialidade;Observação;" };
+                var toAdd = visitas.Select(v => string.Join(";", visitas.IndexOf(v)+1, medicos.Where(m => m.Id.Equals(v.IdMedicoVisita)).First()?.CRM, v.NomeMedicoVisita, v.DiaVisita.ToString("dd/MM/yyyy"), v.HoraVisita.ToString(@"hh\:mm"), medicos.Where(m => m.Id.Equals(v.IdMedicoVisita)).First()?.Especialidade, v.Observacao)).ToList();
 
                 content.AddRange(toAdd);
 
