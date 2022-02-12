@@ -420,6 +420,15 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <AbsoluteLayout>
+          <ActivityIndicator x:Name="actInd"
+                             IsRunning="False"
+                             AbsoluteLayout.LayoutBounds="0.5,0.5,100,100" 
+                             AbsoluteLayout.LayoutFlags="PositionProportional"
+                             Color="#76cafb" />
+        </AbsoluteLayout>
+
         <Button x:Name="exportToCSV"
                     TextColor="#76cafb"
                     HorizontalOptions="Fill"
@@ -427,7 +436,7 @@
                     Clicked="ExportToCSV"
                 />
     </StackLayout>
-  </ContentPage>         
+  </ContentPage>
     
   <ContentPage x:Name="verMedicos" Title="Ver Médicos(as)" BackgroundColor="#FFFFFF">
         <ListView x:Name="listView" Margin="20" BackgroundColor="#FFFFFF">
