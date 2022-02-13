@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="PropagaMed.View.ExportView"
+    x:Name="exportarVisitas"
+    Title="Exportar Visitas"
+    BackgroundColor="#FFFFFF">
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <ActivityIndicator x:Name="actInd"
+                                IsRunning="False"
+                                IsVisible="False"
+                                VerticalOptions="EndAndExpand"
+                                Color="#76cafb"/>
+
+                <Button x:Name="exportByDay" 
+                    Text="Para o Dia"
+                    TextColor="#76cafb"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="CenterAndExpand"
+                    Clicked="ExportToCSV"
+                    CommandParameter="0"
+                />
+
+                <Button x:Name="exportByMonth" 
+                    Text="Para o Mês Corrente"
+                    TextColor="#76cafb"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="CenterAndExpand"
+                    Clicked="ExportToCSV"
+                    CommandParameter="1"
+                />
+
+                <Button x:Name="exportLastMonth" 
+                    Text="Para o Mês Passado"
+                    TextColor="#76cafb"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="CenterAndExpand"
+                    Clicked="ExportToCSV"
+                    CommandParameter="2"
+                />
+
+                <Button x:Name="exportLastSixMonths" 
+                    Text="Para os Últimos 6 Meses"
+                    TextColor="#76cafb"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="CenterAndExpand"
+                    Clicked="ExportToCSV"
+                    CommandParameter="3"
+                />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

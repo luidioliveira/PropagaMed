@@ -2,12 +2,7 @@
 using PropagaMed.View;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Mail;
-using System.Net.Mime;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace PropagaMed
@@ -21,8 +16,6 @@ namespace PropagaMed
         {
             InitializeComponent();
             AlimentaMedicosEVisitas();
-
-            exportToCSV.Text = $"Exportar Visitas do Dia {DateTime.Now:dd/MM/yyyy}";
 
             this.CurrentPage = otherView ? verMedicos : this.CurrentPage;
         }
@@ -183,65 +176,9 @@ namespace PropagaMed
                 viewCell.View.BackgroundColor = Color.FromHex("#FFFFFF");
         }
 
-        async void ExportToCSV(object sender, EventArgs e)
+        async void ExportParameters(object sender, EventArgs e)
         {
-            actInd.IsVisible = true;
-            actInd.IsRunning = true;
-            await Task.Delay(100);
-
-            var title = $"PropagaMed - Relatório de Controle de Visitas - {DateTime.Now:dd/MM/yyyy}";
-            string to = "luidi.lima@poli.ufrj.br";
-            string from = "luidi.lima@poli.ufrj.br";
-            string personalFolderFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal)).ToString() + $@"/PropagaMed_Visitas_{DateTime.Now:dd-MM-yyyy}.csv";
-            List<Visita> visitas = App.Database.GetItemsVisitaDiaAsync().Result.OrderBy(v => v.HoraVisita).ToList();
-            List<Medico> medicos = new List<Medico>();
-
-            if (visitas.Any())
-            {
-                Parallel.ForEach(visitas, visita =>
-                {
-                    medicos.Add(App.Database.GetItemAsync(visita.IdMedicoVisita).Result);
-                });
-
-                if (!File.Exists(personalFolderFile))
-                {
-                    var content = new List<string>() { "Controle de Visitas", "Nº;CRM;Nome;Data;Hora;Especialidade;Observação;" };
-                    var toAdd = visitas.Select(v => string.Join(";", visitas.IndexOf(v) + 1, medicos.Where(m => m.Id.Equals(v.IdMedicoVisita)).First()?.CRM, v.NomeMedicoVisita, v.DiaVisita.ToString("dd/MM/yyyy"), v.HoraVisita.ToString(@"hh\:mm"), medicos.Where(m => m.Id.Equals(v.IdMedicoVisita)).First()?.Especialidade, v.Observacao)).ToList();
-
-                    content.AddRange(toAdd);
-
-                    File.WriteAllLines(personalFolderFile, content.ToArray(), System.Text.Encoding.UTF8);
-                }
-
-                SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
-                smtp.Credentials = new NetworkCredential("luidi.lima@poli.ufrj.br", string.Empty/*SENHA AQUI*/);
-                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtp.EnableSsl = true;
-
-                MailMessage mailSend = new MailMessage();
-
-                mailSend.From = new MailAddress(from.Replace(';', ','));
-                mailSend.To.Add(to.Replace(';', ','));
-                mailSend.Subject = title;
-                mailSend.SubjectEncoding = System.Text.Encoding.UTF8;
-                mailSend.Body = "Anexo.";
-                mailSend.BodyEncoding = System.Text.Encoding.UTF8;
-                mailSend.IsBodyHtml = true;
-                mailSend.Attachments.Add(new Attachment(personalFolderFile, MediaTypeNames.Application.Octet));
-                smtp.Send(mailSend);
-
-                if (File.Exists(personalFolderFile))
-                    File.Delete(personalFolderFile);
-
-                await DisplayAlert("Informação", $"Arquivo enviado por e-mail", "Ok");
-            }
-            else
-            {
-                await DisplayAlert("Informação", $"Não há visitas para {DateTime.Now:dd/MM/yyyy}", "Ok");
-            }
-
-            actInd.IsVisible = false;
-            actInd.IsRunning = false;
+            await Navigation.PushAsync(new ExportView());
         }
     }
 }

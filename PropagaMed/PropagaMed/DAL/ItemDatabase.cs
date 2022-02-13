@@ -51,9 +51,27 @@ namespace PropagaMed.Dal
             return Database.Table<Visita>().ToListAsync();
         }
 
-        public Task<List<Visita>> GetItemsVisitaDiaAsync()
+        public Task<List<Visita>> GetItemsVisitaByParameterAsync(int typeParameter)
         {
-            return Database.Table<Visita>().Where(i => i.DiaVisita == DateTime.Now.Date).ToListAsync();
+            var firstDayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).Date;
+            var lastDayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)).Date;
+            var firstDayOfLastMonth = firstDayOfMonth.AddMonths(-1).Date;
+            var LastDayOfLastMonth = new DateTime(firstDayOfLastMonth.Year, firstDayOfLastMonth.Month, DateTime.DaysInMonth(firstDayOfLastMonth.Year, firstDayOfLastMonth.Month)).Date;
+            var SixMonthsSameDay = DateTime.Now.AddMonths(-6).Date;
+
+            switch (typeParameter)
+            { 
+                case (int)ExportEnum.byDay:
+                    return Database.Table<Visita>().Where(i => i.DiaVisita == DateTime.Now.Date).ToListAsync();
+                case (int)ExportEnum.byMonth:
+                    return Database.Table<Visita>().Where(i => i.DiaVisita >= firstDayOfMonth && i.DiaVisita <= lastDayOfMonth).ToListAsync();
+                case (int)ExportEnum.lastMonth:
+                    return Database.Table<Visita>().Where(i => i.DiaVisita >= LastDayOfLastMonth && i.DiaVisita <= LastDayOfLastMonth).ToListAsync();
+                case(int)ExportEnum.lastSixMonths:
+                    return Database.Table<Visita>().Where(i => i.DiaVisita >= SixMonthsSameDay && i.DiaVisita <= DateTime.Now.Date).ToListAsync();
+                default:
+                    return Database.Table<Visita>().Where(i => i.DiaVisita == DateTime.Now.Date).ToListAsync();
+            }
         }
 
         public Task<List<Medico>> GetItemsNotDoneAsync()

@@ -36,7 +36,7 @@
             />
 
             <StackLayout>
-                <Label Text="Data da Visita:"
+                <Label Text="Data:"
                    TextColor="#76cafb"
                    HorizontalTextAlignment="left"
                    FontFamily="Arial"
@@ -54,7 +54,7 @@
              </StackLayout>
 
             <StackLayout>
-            <Label Text="Hora da Visita:"
+            <Label Text="Horário:"
                    TextColor="#76cafb"
                    HorizontalTextAlignment="left"
                    FontFamily="Arial"
@@ -426,17 +426,12 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <ActivityIndicator x:Name="actInd"
-                            IsRunning="False"
-                            IsVisible="False"
-                            VerticalOptions="EndAndExpand"
-                            Color="#76cafb"/>
-
-        <Button x:Name="exportToCSV"
-                    TextColor="#76cafb"
-                    HorizontalOptions="Fill"
-                    VerticalOptions="EndAndExpand"
-                    Clicked="ExportToCSV"
+        <Button x:Name="exportParameters"
+                TextColor="#76cafb"
+                Text="Exportar Visitas"
+                HorizontalOptions="Fill"
+                VerticalOptions="EndAndExpand"
+                Clicked="ExportParameters"
                 />
     </StackLayout>
   </ContentPage>
