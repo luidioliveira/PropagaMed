@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PropagaMed.Home">
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="PropagaMed.Home"
+            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            android:TabbedPage.ToolbarPlacement="Bottom">
 
-<ContentPage x:Name="novaVisita" Title="Nova Visita" BackgroundColor="#FFFFFF">
+<ContentPage x:Name="novaVisita" Title="+ Visita" BackgroundColor="#FFFFFF">
     <ScrollView>
         <StackLayout>
             <Label Text="Nova Visita"
@@ -93,7 +95,7 @@
     </ScrollView>
    </ContentPage>
     
-  <ContentPage x:Name="novoMedico" Title="Novo(a) Médico(a)" BackgroundColor="#FFFFFF">
+  <ContentPage x:Name="novoMedico" Title="+ Médico(a)" BackgroundColor="#FFFFFF">
     <ScrollView>
         <StackLayout>        
             <Label Text="Novo(a) Médico(a)"
@@ -387,7 +389,7 @@
     </ScrollView>
    </ContentPage>
 
-  <ContentPage x:Name="verVisitas" Title="Ver Visitas" BackgroundColor="#FFFFFF">
+  <ContentPage x:Name="verVisitas" Title="Visitas" BackgroundColor="#FFFFFF">
     <StackLayout>
         <ListView x:Name="listView2" Margin="20" BackgroundColor="#FFFFFF">
             <ListView.ItemTemplate>
@@ -438,7 +440,7 @@
     </StackLayout>
   </ContentPage>
     
-  <ContentPage x:Name="verMedicos" Title="Ver Médicos(as)" BackgroundColor="#FFFFFF">
+  <ContentPage x:Name="verMedicos" Title="Médicos(as)" BackgroundColor="#FFFFFF">
         <ListView x:Name="listView" Margin="20" BackgroundColor="#FFFFFF">
             <ListView.ItemTemplate>
                 <DataTemplate>
