@@ -174,15 +174,15 @@
                TextColor="#FFFFFF"
             />
 
-            <Label Text="Dia preferencial de visita:"
+            <StackLayout>
+                 <Label Text="Dia preferencial de visita"
                    TextColor="#76cafb"
-                   HorizontalTextAlignment="left"
+                   HorizontalTextAlignment="Center"
                    FontFamily="Arial"
                    FontAttributes="Bold"
                    Scale="0.8"
                  />
 
-            <StackLayout>
                 <StackLayout Orientation="Horizontal" Scale="0.8">
                     <Label Text="Segunda"
                        TextColor="#76cafb"
@@ -190,9 +190,9 @@
                        VerticalTextAlignment="Center"
                        FontFamily="Arial"
                        FontAttributes="Bold"
-                       Scale="1.3"
+                       Scale="1"
                      />
-                    <CheckBox x:Name="monday" Scale="1.2" />
+                    <CheckBox x:Name="monday" Scale="1" />
 
                     <Label Text="Terça"
                        TextColor="#76cafb"
@@ -200,9 +200,9 @@
                        VerticalTextAlignment="Center"
                        FontFamily="Arial"
                        FontAttributes="Bold"
-                       Scale="1.3"
+                       Scale="1"
                      />
-                     <CheckBox x:Name="tuesday" Scale="1.2" />
+                     <CheckBox x:Name="tuesday" Scale="1" />
 
                     <Label Text="Quarta"
                        TextColor="#76cafb"
@@ -210,9 +210,9 @@
                        VerticalTextAlignment="Center"
                        FontFamily="Arial"
                        FontAttributes="Bold"
-                       Scale="1.3"
+                       Scale="1"
                      />
-                    <CheckBox x:Name="wednesday" Scale="1.2" />
+                    <CheckBox x:Name="wednesday" Scale="1" />
                 </StackLayout>
 
                 <StackLayout Orientation="Horizontal" Scale="0.8">
@@ -222,9 +222,9 @@
                        VerticalTextAlignment="Center"
                        FontFamily="Arial"
                        FontAttributes="Bold"
-                       Scale="1.3"
+                       Scale="1"
                      />
-                    <CheckBox x:Name="thursday" Scale="1.2" />
+                    <CheckBox x:Name="thursday" Scale="1" />
 
                     <Label Text="Sexta"
                        TextColor="#76cafb"
@@ -232,15 +232,15 @@
                        VerticalTextAlignment="Center"
                        FontFamily="Arial"
                        FontAttributes="Bold"
-                       Scale="1.3"
+                       Scale="1"
                      />
-                    <CheckBox x:Name="friday" Scale="1.2" />
+                    <CheckBox x:Name="friday" Scale="1" />
                 </StackLayout>
             </StackLayout>
 
-            <Label Text="Turno preferencial de visita:"
+            <Label Text="Turno preferencial de visita"
                    TextColor="#76cafb"
-                   HorizontalTextAlignment="left"
+                   HorizontalTextAlignment="Center"
                    FontFamily="Arial"
                    FontAttributes="Bold"
                    Scale="0.8"
@@ -253,9 +253,9 @@
                     VerticalTextAlignment="Center"
                     FontFamily="Arial"
                     FontAttributes="Bold"
-                    Scale="1.3"
-                    />
-                <CheckBox x:Name="morning" Scale="1.2" />
+                    Scale="1"
+                />
+                <CheckBox x:Name="morning" Scale="1" />
 
                 <Label Text="Tarde"
                     TextColor="#76cafb"
@@ -263,9 +263,9 @@
                     VerticalTextAlignment="Center"
                     FontFamily="Arial"
                     FontAttributes="Bold"
-                    Scale="1.3"
+                    Scale="1"
                     />
-                <CheckBox x:Name="afternoon" Scale="1.2" />
+                <CheckBox x:Name="afternoon" Scale="1" />
                 
                 <Label Text="Noite"
                     TextColor="#76cafb"
@@ -273,9 +273,9 @@
                     VerticalTextAlignment="Center"
                     FontFamily="Arial"
                     FontAttributes="Bold"
-                    Scale="1.3"
+                    Scale="1"
                     />
-                <CheckBox x:Name="night" Scale="1.2" />
+                <CheckBox x:Name="night" Scale="1" />
             </StackLayout>
 
             <Button x:Name="atualizarMedico" 

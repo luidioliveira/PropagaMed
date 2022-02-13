@@ -76,12 +76,11 @@
                    FontAttributes="Bold"
                    Scale="0.8"
                  />
-            <Editor x:Name="obsVisita" Scale="0.8" Placeholder="Digite uma observação" PlaceholderColor="#FFFFFF" BackgroundColor="#76cafb" TextColor="#FFFFFF">
-                <!--<Editor.BackgroundColor>
-                    <OnPlatform x:TypeArguments="Color">
-                        <On Platform="iOS" Value="#76cafb" />
-                    </OnPlatform>
-                </Editor.BackgroundColor>-->
+            <Editor x:Name="obsVisita"
+                    Scale="0.8" Placeholder="Digite uma observação"
+                    PlaceholderColor="#FFFFFF"
+                    BackgroundColor="#76cafb"
+                    TextColor="#FFFFFF">
             </Editor>
             
             <Button x:Name="cadastrarVisita" 
@@ -274,15 +273,15 @@
                TextColor="#FFFFFF"
             />
 
-            <Label Text="Dia preferencial de visita:"
+            <StackLayout>
+                 <Label Text="Dia preferencial de visita"
                    TextColor="#76cafb"
-                   HorizontalTextAlignment="left"
+                   HorizontalTextAlignment="Center"
                    FontFamily="Arial"
                    FontAttributes="Bold"
                    Scale="0.8"
                  />
 
-            <StackLayout>
                 <StackLayout Orientation="Horizontal" Scale="0.8">
                     <Label Text="Segunda"
                        TextColor="#76cafb"
@@ -290,9 +289,9 @@
                        VerticalTextAlignment="Center"
                        FontFamily="Arial"
                        FontAttributes="Bold"
-                       Scale="1.3"
+                       Scale="1"
                      />
-                    <CheckBox x:Name="monday" Scale="1.2" />
+                    <CheckBox x:Name="monday" Scale="1" />
 
                     <Label Text="Terça"
                        TextColor="#76cafb"
@@ -300,9 +299,9 @@
                        VerticalTextAlignment="Center"
                        FontFamily="Arial"
                        FontAttributes="Bold"
-                       Scale="1.3"
+                       Scale="1"
                      />
-                     <CheckBox x:Name="tuesday" Scale="1.2" />
+                     <CheckBox x:Name="tuesday" Scale="1" />
 
                     <Label Text="Quarta"
                        TextColor="#76cafb"
@@ -310,9 +309,9 @@
                        VerticalTextAlignment="Center"
                        FontFamily="Arial"
                        FontAttributes="Bold"
-                       Scale="1.3"
+                       Scale="1"
                      />
-                    <CheckBox x:Name="wednesday" Scale="1.2" />
+                    <CheckBox x:Name="wednesday" Scale="1" />
                 </StackLayout>
 
                 <StackLayout Orientation="Horizontal" Scale="0.8">
@@ -322,9 +321,9 @@
                        VerticalTextAlignment="Center"
                        FontFamily="Arial"
                        FontAttributes="Bold"
-                       Scale="1.3"
+                       Scale="1"
                      />
-                    <CheckBox x:Name="thursday" Scale="1.2" />
+                    <CheckBox x:Name="thursday" Scale="1" />
 
                     <Label Text="Sexta"
                        TextColor="#76cafb"
@@ -332,15 +331,15 @@
                        VerticalTextAlignment="Center"
                        FontFamily="Arial"
                        FontAttributes="Bold"
-                       Scale="1.3"
+                       Scale="1"
                      />
-                    <CheckBox x:Name="friday" Scale="1.2" />
+                    <CheckBox x:Name="friday" Scale="1" />
                 </StackLayout>
             </StackLayout>
 
-            <Label Text="Turno preferencial de visita:"
+            <Label Text="Turno preferencial de visita"
                    TextColor="#76cafb"
-                   HorizontalTextAlignment="left"
+                   HorizontalTextAlignment="Center"
                    FontFamily="Arial"
                    FontAttributes="Bold"
                    Scale="0.8"
@@ -353,9 +352,9 @@
                     VerticalTextAlignment="Center"
                     FontFamily="Arial"
                     FontAttributes="Bold"
-                    Scale="1.3"
-                    />
-                <CheckBox x:Name="morning" Scale="1.2" />
+                    Scale="1"
+                />
+                <CheckBox x:Name="morning" Scale="1" />
 
                 <Label Text="Tarde"
                     TextColor="#76cafb"
@@ -363,9 +362,9 @@
                     VerticalTextAlignment="Center"
                     FontFamily="Arial"
                     FontAttributes="Bold"
-                    Scale="1.3"
+                    Scale="1"
                     />
-                <CheckBox x:Name="afternoon" Scale="1.2" />
+                <CheckBox x:Name="afternoon" Scale="1" />
                 
                 <Label Text="Noite"
                     TextColor="#76cafb"
@@ -373,9 +372,9 @@
                     VerticalTextAlignment="Center"
                     FontFamily="Arial"
                     FontAttributes="Bold"
-                    Scale="1.3"
+                    Scale="1"
                     />
-                <CheckBox x:Name="night" Scale="1.2" />
+                <CheckBox x:Name="night" Scale="1" />
             </StackLayout>
                 
             <Button x:Name="cadastrarMedico" 
@@ -391,7 +390,7 @@
 
   <ContentPage x:Name="verVisitas" Title="Visitas" BackgroundColor="#FFFFFF">
     <StackLayout>
-        <ListView x:Name="listView2" Margin="20" BackgroundColor="#FFFFFF">
+        <ListView x:Name="listView2" BackgroundColor="#FFFFFF" VerticalOptions="FillAndExpand" HasUnevenRows="true" RowHeight="-1">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell Tapped="ViewSelected">
@@ -401,47 +400,49 @@
                                       Text="Detalhar" />
                             <MenuItem Clicked="DeletarVisita"
                                       CommandParameter="{Binding Id}"
-                                      Text="Deletar" IsDestructive="True" />
+                                      Text="Deletar" IsDestructive="True"/>
                         </ViewCell.ContextActions>
-                        <StackLayout BackgroundColor="#FFFFFF" Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                            <StackLayout WidthRequest="80" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                                <Label Text="{Binding NomeMedicoVisita}" VerticalTextAlignment="Center" TextColor="#76cafb"/>
-                            </StackLayout>
-                            <StackLayout Orientation="Vertical">
-                                <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                                    <Label FontAttributes="Bold" TextColor="#76cafb">Data: </Label>
-                                    <Label Text="{Binding DiaVisita, StringFormat='{0:dd/MM/yyyy}'}" VerticalTextAlignment="Center" TextColor="#76cafb"/>
-                                </StackLayout>
-                                <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                                    <Label FontAttributes="Bold" TextColor="#76cafb">Hora: </Label>
-                                    <Label Text="{Binding HoraVisita, StringFormat='{}{0:hh\\:mm}'}" VerticalTextAlignment="Center" TextColor="#76cafb"/>
-                                </StackLayout>
-                            </StackLayout>
+                        <StackLayout>
+                        <Label BackgroundColor="#76cafb" TextColor="#FFFFFF" Text="{Binding NomeMedicoVisita}" FontSize="15"/>
+                        <Label TextColor="#76cafb" FontSize="12">
+                            <Label.FormattedText>
+                               <FormattedString>
+                                 <Span Text="Data: "/>
+                                 <Span Text="{Binding DiaVisita, StringFormat='{0:dd/MM/yyyy}'}"/>
+                               </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label TextColor="#76cafb" FontSize="12" Margin="0, 0, 0, 5">
+                            <Label.FormattedText>
+                               <FormattedString>
+                                 <Span Text="Horário: "/>
+                                 <Span Text="{Binding HoraVisita, StringFormat='{}{0:hh\\:mm}'}"/>
+                               </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <AbsoluteLayout>
-          <ActivityIndicator x:Name="actInd"
-                             IsRunning="False"
-                             AbsoluteLayout.LayoutBounds="0.5,0.5,100,100" 
-                             AbsoluteLayout.LayoutFlags="PositionProportional"
-                             Color="#76cafb" />
-        </AbsoluteLayout>
+        <ActivityIndicator x:Name="actInd"
+                            IsRunning="False"
+                            IsVisible="False"
+                            VerticalOptions="EndAndExpand"
+                            Color="#76cafb"/>
 
         <Button x:Name="exportToCSV"
                     TextColor="#76cafb"
                     HorizontalOptions="Fill"
-                    VerticalOptions="CenterAndExpand"
+                    VerticalOptions="EndAndExpand"
                     Clicked="ExportToCSV"
                 />
     </StackLayout>
   </ContentPage>
     
   <ContentPage x:Name="verMedicos" Title="Médicos(as)" BackgroundColor="#FFFFFF">
-        <ListView x:Name="listView" Margin="20" BackgroundColor="#FFFFFF">
+        <ListView x:Name="listView" BackgroundColor="#FFFFFF" VerticalOptions="FillAndExpand" HasUnevenRows="true" RowHeight="-1">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell Tapped="ViewSelected">
@@ -453,18 +454,24 @@
                                       CommandParameter="{Binding Id}"
                                       Text="Deletar" IsDestructive="True" />
                         </ViewCell.ContextActions>
-                        <StackLayout BackgroundColor="#FFFFFF" Margin="0,0,0,0" Orientation="Vertical">
-                            <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="StartAndExpand">
-                                <Label Text="{Binding Nome}" VerticalTextAlignment="Center" TextColor="#76cafb"/>
-                            </StackLayout>
-                            <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                                <StackLayout Orientation="Horizontal">
-                                    <StackLayout Margin="10,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                                        <Label FontAttributes="Bold" TextColor="#76cafb">• Localização: </Label>
-                                        <Label Text="{Binding Localizacao}" VerticalTextAlignment="Center" TextColor="#76cafb"/>
-                                    </StackLayout>
-                                </StackLayout>
-                            </StackLayout>
+                        <StackLayout>
+                        <Label BackgroundColor="#76cafb" TextColor="#FFFFFF" Text="{Binding Nome}" FontSize="15"/>
+                        <Label TextColor="#76cafb" FontSize="12">
+                            <Label.FormattedText>
+                               <FormattedString>
+                                 <Span Text="Especialidade: "/>
+                                 <Span Text="{Binding Especialidade}"/>
+                               </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label TextColor="#76cafb" FontSize="12" Margin="0, 0, 0, 5">
+                            <Label.FormattedText>
+                               <FormattedString>
+                                 <Span Text="Localização: "/>
+                                 <Span Text="{Binding Localizacao}"/>
+                               </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

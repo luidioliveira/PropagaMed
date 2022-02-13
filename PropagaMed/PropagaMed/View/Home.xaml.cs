@@ -2,7 +2,6 @@
 using PropagaMed.View;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -186,6 +185,7 @@ namespace PropagaMed
 
         async void ExportToCSV(object sender, EventArgs e)
         {
+            actInd.IsVisible = true;
             actInd.IsRunning = true;
             await Task.Delay(100);
 
@@ -240,6 +240,7 @@ namespace PropagaMed
                 await DisplayAlert("Informação", $"Não há visitas para {DateTime.Now:dd/MM/yyyy}", "Ok");
             }
 
+            actInd.IsVisible = false;
             actInd.IsRunning = false;
         }
     }
