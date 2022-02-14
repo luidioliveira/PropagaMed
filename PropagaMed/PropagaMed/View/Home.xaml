@@ -429,8 +429,8 @@
         <Button x:Name="exportParameters"
                 TextColor="#76cafb"
                 Text="Exportar Visitas"
-                HorizontalOptions="Fill"
-                VerticalOptions="EndAndExpand"
+                HorizontalOptions="Center"
+                VerticalOptions="End"
                 Clicked="ExportParameters"
                 />
     </StackLayout>

@@ -66,7 +66,7 @@ namespace PropagaMed.Dal
                 case (int)ExportEnum.byMonth:
                     return Database.Table<Visita>().Where(i => i.DiaVisita >= firstDayOfMonth && i.DiaVisita <= lastDayOfMonth).ToListAsync();
                 case (int)ExportEnum.lastMonth:
-                    return Database.Table<Visita>().Where(i => i.DiaVisita >= LastDayOfLastMonth && i.DiaVisita <= LastDayOfLastMonth).ToListAsync();
+                    return Database.Table<Visita>().Where(i => i.DiaVisita >= firstDayOfLastMonth && i.DiaVisita <= LastDayOfLastMonth).ToListAsync();
                 case(int)ExportEnum.lastSixMonths:
                     return Database.Table<Visita>().Where(i => i.DiaVisita >= SixMonthsSameDay && i.DiaVisita <= DateTime.Now.Date).ToListAsync();
                 default:
