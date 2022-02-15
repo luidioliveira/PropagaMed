@@ -3,6 +3,7 @@ using PropagaMed.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace PropagaMed
@@ -155,13 +156,19 @@ namespace PropagaMed
             var mi = ((MenuItem)sender);
             var medicoASerDeletado = App.Database.GetItemsMedicoAsync().Result.Where(m => m.Id == int.Parse(mi.CommandParameter.ToString())).FirstOrDefault();
 
-            var confirmDelete = await DisplayAlert("Atenção", $"Deseja realmente deletar {medicoASerDeletado.Nome}?", "Sim", "Não");
+            var confirmDelete = await DisplayAlert("Atenção", $"Deseja realmente deletar {medicoASerDeletado.Nome}? Essa ação não poderá ser desfeita e também removerá as visitas associadas. Deseja prosseguir?", "Sim", "Não");
 
             if (confirmDelete)
             {
                 await App.Database.DeleteItemAsync(medicoASerDeletado);
+
+                Parallel.ForEach(App.Database.GetItemsVisitaAsync().Result.Where(v => v.IdMedicoVisita.Equals(medicoASerDeletado.Id)), visitaASerDeletada =>
+                {
+                    App.Database.DeleteItemAsync(visitaASerDeletada);
+                });
+
                 AlimentaMedicosEVisitas();
-                await DisplayAlert("Informação", $"Médico {medicoASerDeletado.Nome} deletado(a) com sucesso", "Ok");
+                await DisplayAlert("Informação", $"Médico(a) {medicoASerDeletado.Nome} e visitas associadas deletados com sucesso", "Ok");
             }
         }
 

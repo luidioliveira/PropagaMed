@@ -281,8 +281,8 @@
             <Button x:Name="atualizarMedico" 
                Text="Atualizar"
                TextColor="#76cafb"
-               HorizontalOptions="Fill"
-               VerticalOptions="CenterAndExpand"
+               HorizontalOptions="Center"
+               VerticalOptions="End"
                Clicked="atualizarMedicoClicado"
             />
         </StackLayout>            

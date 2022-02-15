@@ -86,8 +86,8 @@
             <Button x:Name="cadastrarVisita" 
                Text="Cadastrar"
                TextColor="#76cafb"
-               HorizontalOptions="Fill"
-               VerticalOptions="CenterAndExpand"
+               HorizontalOptions="Center"
+               VerticalOptions="EndAndExpand"
                Clicked="CadastrarVisitaClicado"
             />
         </StackLayout>
@@ -380,8 +380,8 @@
             <Button x:Name="cadastrarMedico" 
                Text="Cadastrar"
                TextColor="#76cafb"
-               HorizontalOptions="Fill"
-               VerticalOptions="CenterAndExpand"
+               HorizontalOptions="Center"
+               VerticalOptions="End"
                Clicked="CadastrarMedicoClicado"
             />
         </StackLayout>            
