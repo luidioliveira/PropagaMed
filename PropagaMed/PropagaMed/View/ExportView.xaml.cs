@@ -18,6 +18,7 @@ namespace PropagaMed.View
             InitializeComponent();
         }
 
+        [Obsolete]
         async void ExportToCSV(object sender, EventArgs e)
         {
             actInd.IsVisible = true;
@@ -64,22 +65,24 @@ namespace PropagaMed.View
                     File.WriteAllLines(personalFolderFile, content.ToArray(), System.Text.Encoding.UTF8);
                 }
 
-                SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
-                smtp.Credentials = new NetworkCredential("luidi.lima@poli.ufrj.br", string.Empty/*SENHA*/);
-                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtp.EnableSsl = true;
+                using (var client = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    client.Credentials = new NetworkCredential("luidi.lima@poli.ufrj.br", string.Empty/*SENHA*/);
+                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    client.EnableSsl = true;
 
-                MailMessage mailSend = new MailMessage();
+                    MailMessage mailSend = new MailMessage();
 
-                mailSend.From = new MailAddress(from.Replace(';', ','));
-                mailSend.To.Add(to.Replace(';', ','));
-                mailSend.Subject = title;
-                mailSend.SubjectEncoding = System.Text.Encoding.UTF8;
-                mailSend.Body = $"Segue anexo o arquivo de visitas {type}.";
-                mailSend.BodyEncoding = System.Text.Encoding.UTF8;
-                mailSend.IsBodyHtml = true;
-                mailSend.Attachments.Add(new Attachment(personalFolderFile, MediaTypeNames.Application.Octet));
-                smtp.Send(mailSend);
+                    mailSend.From = new MailAddress(from.Replace(';', ','));
+                    mailSend.To.Add(to.Replace(';', ','));
+                    mailSend.Subject = title;
+                    mailSend.SubjectEncoding = System.Text.Encoding.UTF8;
+                    mailSend.Body = $"Segue anexo o arquivo de visitas {type}.";
+                    mailSend.BodyEncoding = System.Text.Encoding.UTF8;
+                    mailSend.IsBodyHtml = true;
+                    mailSend.Attachments.Add(new Attachment(personalFolderFile, MediaTypeNames.Application.Octet));
+                    client.Send(mailSend);
+                }
 
                 if (File.Exists(personalFolderFile))
                     File.Delete(personalFolderFile);

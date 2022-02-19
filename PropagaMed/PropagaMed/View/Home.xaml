@@ -432,6 +432,7 @@
                 HorizontalOptions="Center"
                 VerticalOptions="End"
                 Clicked="ExportParameters"
+                IsEnabled="false"
                 />
     </StackLayout>
   </ContentPage>

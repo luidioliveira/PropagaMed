@@ -36,6 +36,8 @@ namespace PropagaMed
             List<Medico> medicos = await App.Database.GetItemsMedicoAsync();
             List<Visita> visitas = await App.Database.GetItemsVisitaAsync();
 
+            exportParameters.IsEnabled = visitas.Any();
+
             medicosPicker.ItemsSource = medicos;
             listView.ItemsSource = medicos.OrderBy(m => m.Nome);
             listView2.ItemsSource = visitas.OrderByDescending(v => v.DiaVisita).ThenBy(v => v.HoraVisita);
