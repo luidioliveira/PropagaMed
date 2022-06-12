@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             x:Class="PropagaMed.Home"
@@ -426,6 +426,15 @@
             </ListView.ItemTemplate>
         </ListView>
 
+        <Button x:Name="allVisits"
+                TextColor="#76cafb"
+                Text="Ver Todas as Visitas"
+                HorizontalOptions="Center"
+                VerticalOptions="End"
+                Clicked="GetAllVisitsAsync"
+                IsEnabled="false"
+                />
+
         <Button x:Name="exportParameters"
                 TextColor="#76cafb"
                 Text="Exportar Visitas"
@@ -449,6 +458,9 @@
                             <MenuItem Clicked="DeletarMedico"
                                       CommandParameter="{Binding Id}"
                                       Text="Deletar" IsDestructive="True" />
+                            <MenuItem Clicked="VisitasPorMedico"
+                                      CommandParameter="{Binding Id}"
+                                      Text="Visitas" />
                         </ViewCell.ContextActions>
                         <StackLayout>
                         <Label BackgroundColor="#76cafb" TextColor="#FFFFFF" Text="{Binding Nome}" FontSize="15"/>

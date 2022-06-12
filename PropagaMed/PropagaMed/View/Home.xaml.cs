@@ -145,6 +145,24 @@ namespace PropagaMed
             }
         }
 
+        void VisitasPorMedico(object sender, EventArgs e)
+        {
+            var mi = ((MenuItem)sender);
+            listView2.ItemsSource = App.Database.GetItemsVisitaAsync((int)mi.CommandParameter).Result.OrderByDescending(v => v.DiaVisita).ThenBy(v => v.HoraVisita);
+
+            allVisits.IsEnabled = true;
+
+            this.CurrentPage = verVisitas;
+        }
+
+        void GetAllVisitsAsync(object sender, EventArgs e)
+        {
+            AlimentaMedicosEVisitas();
+            allVisits.IsEnabled = false;
+
+            this.CurrentPage = verVisitas;
+        }
+
         async void DetalharMedico(object sender, EventArgs e)
         {
             var mi = ((MenuItem)sender);

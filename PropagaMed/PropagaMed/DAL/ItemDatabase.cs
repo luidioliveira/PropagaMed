@@ -46,9 +46,12 @@ namespace PropagaMed.Dal
             return Database.Table<Medico>().ToListAsync();
         }
 
-        public Task<List<Visita>> GetItemsVisitaAsync()
+        public Task<List<Visita>> GetItemsVisitaAsync(int? medicoId = null)
         {
-            return Database.Table<Visita>().ToListAsync();
+            if(medicoId is null)
+                return Database.Table<Visita>().ToListAsync();
+            else
+                return Database.Table<Visita>().Where(m => m.IdMedicoVisita.Equals(medicoId)).ToListAsync();
         }
 
         public Task<List<Visita>> GetItemsVisitaByParameterAsync(int typeParameter)
