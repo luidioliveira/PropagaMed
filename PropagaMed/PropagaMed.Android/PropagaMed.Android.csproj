@@ -15,7 +15,7 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v13.0</TargetFrameworkVersion>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <Description>Aplicativo para controle de visitas médicas e cadastro de médicos em geral, com diversas funcionalidades para Propagandistas.</Description>
@@ -32,9 +32,8 @@
 <AndroidUseAapt2>true</AndroidUseAapt2>
 <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
 <AndroidKeyStore></AndroidKeyStore>
-<LangVersion></LangVersion>
-<RunCodeAnalysis>false</RunCodeAnalysis>  <AndroidHttpClientHandlerType>Padrão</AndroidHttpClientHandlerType>
-</PropertyGroup>
+<LangVersion>latest</LangVersion>
+<RunCodeAnalysis>false</RunCodeAnalysis>  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>pdbonly</DebugType>
@@ -46,6 +45,7 @@
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
     <MandroidExtraArgs></MandroidExtraArgs>
     <MandroidExtraArgs></MandroidExtraArgs>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
@@ -59,10 +59,10 @@
       <Version>1.8.116</Version>
     </PackageReference>
     <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3.android">
-      <Version>2.1.3</Version>
+      <Version>2.1.5</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms">
-      <Version>5.0.0.2545</Version>
+      <Version>5.0.0.2578</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Google.Android.Material">
       <Version>1.4.0.4</Version>

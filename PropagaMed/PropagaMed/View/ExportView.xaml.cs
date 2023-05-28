@@ -49,7 +49,7 @@ namespace PropagaMed.View
             string from = "luidi.lima@poli.ufrj.br";
             string personalFolderFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal)).ToString() + $@"/PropagaMed_Visitas_{type}.csv";
             List<Visita> visitas = App.Database.GetItemsVisitaByParameterAsync(parameter).Result.OrderBy(v => v.HoraVisita).ToList();
-            List<Medico> medicos = new List<Medico>();
+            List<Medico> medicos = new();
 
             if (visitas.Any())
             {
@@ -60,27 +60,27 @@ namespace PropagaMed.View
 
                 if (!File.Exists(personalFolderFile))
                 {
-                    var content = new List<string>() { "Controle de Visitas", "Nº;CRM;Nome;Data;Hora;Especialidade;Observação;" };
+                    List<string> content = new() { "Controle de Visitas", "Nº;CRM;Nome;Data;Hora;Especialidade;Observação;" };
                     content.AddRange(visitas.Select(v => string.Join(";", visitas.IndexOf(v) + 1, medicos.Where(m => m.Id.Equals(v.IdMedicoVisita)).First()?.CRM, v.NomeMedicoVisita, v.DiaVisita.ToString("dd/MM/yyyy"), v.HoraVisita.ToString(@"hh\:mm"), medicos.Where(m => m.Id.Equals(v.IdMedicoVisita)).First()?.Especialidade, v.Observacao)).ToList());
                     File.WriteAllLines(personalFolderFile, content.ToArray(), System.Text.Encoding.UTF8);
                 }
 
-                using (var client = new SmtpClient("smtp.gmail.com", 587))
+                using (SmtpClient client = new("smtp.gmail.com", 587))
                 {
-                    client.Credentials = new NetworkCredential("luidi.lima@poli.ufrj.br", string.Empty/*SENHA*/);
-                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    client.Credentials = new NetworkCredential("luidi.lima@poli.ufrj.br", ""/*SENHA*/);
                     client.EnableSsl = true;
 
-                    MailMessage mailSend = new MailMessage();
+                    MailMessage mailSend = new()
+                    {
+                        From = new(from.Replace(';', ',')),
+                        Subject = title,
+                        SubjectEncoding = System.Text.Encoding.UTF8,
+                        Body = $"Segue anexo o arquivo de visitas {type}.",
+                        BodyEncoding = System.Text.Encoding.UTF8
+                    };
 
-                    mailSend.From = new MailAddress(from.Replace(';', ','));
                     mailSend.To.Add(to.Replace(';', ','));
-                    mailSend.Subject = title;
-                    mailSend.SubjectEncoding = System.Text.Encoding.UTF8;
-                    mailSend.Body = $"Segue anexo o arquivo de visitas {type}.";
-                    mailSend.BodyEncoding = System.Text.Encoding.UTF8;
-                    mailSend.IsBodyHtml = true;
-                    mailSend.Attachments.Add(new Attachment(personalFolderFile, MediaTypeNames.Application.Octet));
+                    mailSend.Attachments.Add(new(personalFolderFile, MediaTypeNames.Application.Octet));
                     client.Send(mailSend);
                 }
 

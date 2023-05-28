@@ -86,8 +86,6 @@ namespace PropagaMed.View
             }
             else
                 await DisplayAlert("Informação", "Campos necessários estão vazios", "Ok");
-
-            //await DisplayAlert("Aguarde", $"Em desenvolvimento", "Ok");
         }
     }
 }
