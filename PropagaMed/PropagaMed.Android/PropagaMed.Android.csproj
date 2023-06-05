@@ -33,7 +33,9 @@
 <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
 <AndroidKeyStore></AndroidKeyStore>
 <LangVersion>latest</LangVersion>
-<RunCodeAnalysis>false</RunCodeAnalysis>  </PropertyGroup>
+<RunCodeAnalysis>false</RunCodeAnalysis>
+<AndroidSupportedAbis>armeabi-v7a;arm64-v8a;x86_64;x86</AndroidSupportedAbis>
+</PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>pdbonly</DebugType>
