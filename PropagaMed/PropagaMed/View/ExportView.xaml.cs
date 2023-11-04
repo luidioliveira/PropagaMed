@@ -67,7 +67,7 @@ namespace PropagaMed.View
 
                 using (SmtpClient client = new("smtp.gmail.com", 587))
                 {
-                    client.Credentials = new NetworkCredential("luidi.lima@poli.ufrj.br", ""/*SENHA*/);
+                    client.Credentials = new NetworkCredential(from, ""/*SENHA*/);
                     client.EnableSsl = true;
 
                     MailMessage mailSend = new()
