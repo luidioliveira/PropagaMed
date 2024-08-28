@@ -26,7 +26,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>x86_64</MtouchArch>
-    <MtouchLink>SdkOnly</MtouchLink>
+    <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
     <CodesignKey>Apple Development: luidioliveira@icloud.com (DFKV52MW6R)</CodesignKey>
     <CodesignProvision>iOS Team Provisioning Profile: LuidiOliveiraSolucoes.PropagaMed</CodesignProvision>
@@ -166,6 +166,19 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\PropagaMed_New_Logo_1024.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\PropagaMed_New_Logo_120.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\PropagaMed_New_Logo_180.png" />
+    <ImageAsset Include="Assets.xcassets\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\blue_stethoscope.imageset\blue_stethoscope.png" />
+    <ImageAsset Include="Assets.xcassets\blue_stethoscope.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\blue_stethoscope.imageset\blue_stethoscope 1.png" />
+    <ImageAsset Include="Assets.xcassets\blue_stethoscope.imageset\blue_stethoscope 2.png" />
+    <ImageAsset Include="Assets.xcassets\medico-ios.imageset\medico-ios.png" />
+    <ImageAsset Include="Assets.xcassets\medico-ios.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\novo_medico-ios.imageset\novo_medico-ios.png" />
+    <ImageAsset Include="Assets.xcassets\novo_medico-ios.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\nova_visita-ios.imageset\nova_visita-ios.png" />
+    <ImageAsset Include="Assets.xcassets\nova_visita-ios.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\visitas-ios.imageset\visitas-ios.png" />
+    <ImageAsset Include="Assets.xcassets\visitas-ios.imageset\Contents.json" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -175,10 +188,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms">
-      <Version>5.0.0.2578</Version>
+      <Version>5.0.0.2662</Version>
     </PackageReference>
     <PackageReference Include="sqlite-net-pcl">
-      <Version>1.8.116</Version>
+      <Version>1.9.172</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

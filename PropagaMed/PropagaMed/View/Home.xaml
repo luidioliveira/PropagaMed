@@ -5,18 +5,28 @@
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
             android:TabbedPage.ToolbarPlacement="Bottom">
 
-<ContentPage x:Name="novaVisita" Title="+ Visita" BackgroundColor="#FFFFFF">
+<ContentPage x:Name="novaVisita" Title="Nova Visita" BackgroundColor="#FFFFFF">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Nova Visita"
+                     IconImageSource="blue_stethoscope"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.IconImageSource>
+            <OnPlatform x:TypeArguments="FileImageSource">
+                <On Platform="iOS" Value="nova_visita-ios" />
+                <On Platform="Android" Value="nova_visita" />
+            </OnPlatform>
+        </ContentPage.IconImageSource>
     <ScrollView>
         <StackLayout>
-            <Label Text="Nova Visita"
-               TextColor="#76cafb"
-               HorizontalTextAlignment="Center"
-               VerticalOptions="CenterAndExpand"    
-               Margin="50"
-               FontFamily="Arial"
-               FontAttributes="Bold"
-               Scale="1.2"
-             />
+                <Label Text="Nova Visita"
+                   TextColor="#76cafb"
+                   HorizontalTextAlignment="Center"
+                   VerticalOptions="CenterAndExpand"
+                   Margin="50"
+                   FontFamily="Arial"
+                   FontAttributes="Bold"
+                   Scale="1.2"
+                />
 
             <Label Text="Médico(a):"
                    TextColor="#76cafb"
@@ -94,10 +104,20 @@
     </ScrollView>
    </ContentPage>
     
-  <ContentPage x:Name="novoMedico" Title="+ Médico(a)" BackgroundColor="#FFFFFF">
+  <ContentPage x:Name="novoMedico" Title="Novo Médico" BackgroundColor="#FFFFFF">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Novo Médico"
+                     IconImageSource="blue_stethoscope"/>
+    </ContentPage.ToolbarItems>
+      <ContentPage.IconImageSource>
+            <OnPlatform x:TypeArguments="FileImageSource">
+                <On Platform="iOS" Value="novo_medico-ios" />
+                <On Platform="Android" Value="novo_medico" />
+            </OnPlatform>
+        </ContentPage.IconImageSource>
     <ScrollView>
         <StackLayout>        
-            <Label Text="Novo(a) Médico(a)"
+            <Label Text="Novo Médico"
                TextColor="#76cafb"
                HorizontalTextAlignment="Center"
                VerticalOptions="CenterAndExpand"    
@@ -389,6 +409,16 @@
    </ContentPage>
 
   <ContentPage x:Name="verVisitas" Title="Visitas" BackgroundColor="#FFFFFF">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Visitas"
+                     IconImageSource="blue_stethoscope"/>
+    </ContentPage.ToolbarItems>
+      <ContentPage.IconImageSource>
+            <OnPlatform x:TypeArguments="FileImageSource">
+                <On Platform="iOS" Value="visitas-ios" />
+                <On Platform="Android" Value="visitas" />
+            </OnPlatform>
+        </ContentPage.IconImageSource>
     <StackLayout>
         <ListView x:Name="listView2" BackgroundColor="#FFFFFF" VerticalOptions="FillAndExpand" HasUnevenRows="true" RowHeight="-1">
             <ListView.ItemTemplate>
@@ -446,7 +476,17 @@
     </StackLayout>
   </ContentPage>
     
-  <ContentPage x:Name="verMedicos" Title="Médicos(as)" BackgroundColor="#FFFFFF">
+  <ContentPage x:Name="verMedicos" Title="Médicos" BackgroundColor="#FFFFFF">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Médicos"
+                     IconImageSource="blue_stethoscope"/>
+    </ContentPage.ToolbarItems>
+        <ContentPage.IconImageSource>
+            <OnPlatform x:TypeArguments="FileImageSource">
+                <On Platform="iOS" Value="medico-ios" />
+                <On Platform="Android" Value="medico" />
+            </OnPlatform>
+        </ContentPage.IconImageSource>
         <ListView x:Name="listView" BackgroundColor="#FFFFFF" VerticalOptions="FillAndExpand" HasUnevenRows="true" RowHeight="-1">
             <ListView.ItemTemplate>
                 <DataTemplate>

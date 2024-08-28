@@ -61,6 +61,13 @@
     <None Include="$(MSBuildThisFileDirectory)Midia\PropagaMed_New_Logo_120.png" />
     <None Include="$(MSBuildThisFileDirectory)Midia\PropagaMed_New_Logo_180.png" />
     <None Include="$(MSBuildThisFileDirectory)Midia\PropagaMed_New_Logo_1024.png" />
+    <None Include="$(MSBuildThisFileDirectory)Midia\blue_stethoscope.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Midia\medico.png" />
+    <None Include="$(MSBuildThisFileDirectory)Midia\nova_visita.png" />
+    <None Include="$(MSBuildThisFileDirectory)Midia\novo_medico.png" />
+    <None Include="$(MSBuildThisFileDirectory)Midia\visitas.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)View\" />
