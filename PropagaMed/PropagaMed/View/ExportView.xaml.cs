@@ -37,15 +37,15 @@ namespace PropagaMed.View
                     break;
                 case (int)ExportEnum.byMonth:
                     type = "para o mês";
-                    typeAdd = $"mes_{DateTime.Now.Month}";
+                    typeAdd = $"Mes_{DateTime.Now.Month}";
                     break;
                 case (int)ExportEnum.lastMonth:
                     type = "para o mês passado";
-                    typeAdd = $"mes_{DateTime.Now.AddMonths(-1).Month}";
+                    typeAdd = $"Mes_{DateTime.Now.AddMonths(-1).Month}";
                     break;
                 case (int)ExportEnum.lastSixMonths:
                     type = "para os últimos 6 meses";
-                    typeAdd = "ultimos_6_meses";
+                    typeAdd = "Ultimos_6_meses";
                     break;
             }
 
@@ -64,7 +64,7 @@ namespace PropagaMed.View
                 {
                     List<string> content = new() { "Controle de Visitas", "Nº;CRM;Nome;Data;Hora;Especialidade;Observação;" };
                     content.AddRange(visitas.Select(v => string.Join(";", visitas.IndexOf(v) + 1, medicos.Where(m => m.Id.Equals(v.IdMedicoVisita)).First()?.CRM, v.NomeMedicoVisita, v.DiaVisita.ToString("dd/MM/yyyy"), v.HoraVisita.ToString(@"hh\:mm"), medicos.Where(m => m.Id.Equals(v.IdMedicoVisita)).First()?.Especialidade, v.Observacao)).ToList());
-                    File.WriteAllLines(personalFolderFile, content.ToArray(), System.Text.Encoding.UTF8);
+                    File.WriteAllLines(personalFolderFile, [.. content], System.Text.Encoding.UTF8);
                 }
 
                 //Envio de e-mail
