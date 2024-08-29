@@ -8,6 +8,8 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace PropagaMed.View
 {
@@ -44,9 +46,6 @@ namespace PropagaMed.View
                     break;
             }
 
-            var title = $"PropagaMed - Relatório de Controle de Visitas - {DateTime.Now:dd/MM/yyyy}";
-            string to = "luidi.lima@poli.ufrj.br";
-            string from = "luidi.lima@poli.ufrj.br";
             string personalFolderFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal)).ToString() + $@"/PropagaMed_Visitas_{type}.csv";
             List<Visita> visitas = App.Database.GetItemsVisitaByParameterAsync(parameter).Result.OrderBy(v => v.HoraVisita).ToList();
             List<Medico> medicos = new();
@@ -65,29 +64,30 @@ namespace PropagaMed.View
                     File.WriteAllLines(personalFolderFile, content.ToArray(), System.Text.Encoding.UTF8);
                 }
 
-                using (SmtpClient client = new("smtp.gmail.com", 587))
-                {
-                    client.Credentials = new NetworkCredential(from, ""/* SENHA e https://myaccount.google.com/u/1/security */);
-                    client.EnableSsl = true;
+                //Envio de e-mail
+                var client = new SendGridClient(""); //API Key
+                var from = new EmailAddress("luidi.lima@poli.ufrj.br", "PropragaMed");
+                var subject = $"PropagaMed - Relatório de Controle de Visitas - {DateTime.Now:dd/MM/yyyy}";
+                var to = new EmailAddress("luidi.lima@poli.ufrj.br", "Luidi Oliveira");
+                var plainTextContent = $"Segue anexo o arquivo de visitas {type}.";
+                var htmlContent = $"<strong>Segue anexo o arquivo de visitas {type}.</strong>";
+                var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
 
-                    MailMessage mailSend = new()
-                    {
-                        From = new(from.Replace(';', ',')),
-                        Subject = title,
-                        SubjectEncoding = System.Text.Encoding.UTF8,
-                        Body = $"Segue anexo o arquivo de visitas {type}.",
-                        BodyEncoding = System.Text.Encoding.UTF8
-                    };
-
-                    mailSend.To.Add(to.Replace(';', ','));
-                    mailSend.Attachments.Add(new(personalFolderFile, MediaTypeNames.Application.Octet));
-                    client.Send(mailSend);
-                }
+                //Relatório como anexo
+                var fileBytes = File.ReadAllBytes(personalFolderFile);
+                var fileBase64 = Convert.ToBase64String(fileBytes);
+                msg.AddAttachment($"PropagaMed_Visitas_{type}.csv", fileBase64);
+                var response = await client.SendEmailAsync(msg);
 
                 if (File.Exists(personalFolderFile))
                     File.Delete(personalFolderFile);
 
-                await DisplayAlert("Informação", $"Arquivo enviado para o e-mail {to}", "Ok");
+                if (response.IsSuccessStatusCode)
+                { 
+                    await DisplayAlert("Informação", $"Arquivo enviado para o e-mail {to.Email}", "Ok");
+                }
+                else
+                    await DisplayAlert("Erro", $"Falha no envio para o e-mail {to.Email}. Tente novamente mais tarde.", "Ok");
             }
             else
             {

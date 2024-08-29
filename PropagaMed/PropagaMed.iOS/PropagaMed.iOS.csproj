@@ -193,6 +193,9 @@
     <PackageReference Include="sqlite-net-pcl">
       <Version>1.9.172</Version>
     </PackageReference>
+    <PackageReference Include="SendGrid">
+      <Version>9.29.3</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets.xcassets\PropagaMed.imageset\" />
