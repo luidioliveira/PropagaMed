@@ -2,9 +2,6 @@
 using PropagaMed.Model;
 using Xamarin.Forms;
 using System.IO;
-using System.Net;
-using System.Net.Mail;
-using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,23 +27,29 @@ namespace PropagaMed.View
             int parameter = int.Parse(((Button)sender).CommandParameter.ToString());
 
             string type = string.Empty;
+            string typeAdd = string.Empty;
+
             switch (parameter)
             {
                 case (int)ExportEnum.byDay:
                     type = "para o dia";
+                    typeAdd = $"{DateTime.Now:dd-MM-yyyy}";
                     break;
                 case (int)ExportEnum.byMonth:
                     type = "para o mês";
+                    typeAdd = $"mes_{DateTime.Now.Month}";
                     break;
                 case (int)ExportEnum.lastMonth:
                     type = "para o mês passado";
+                    typeAdd = $"mes_{DateTime.Now.AddMonths(-1).Month}";
                     break;
                 case (int)ExportEnum.lastSixMonths:
                     type = "para os últimos 6 meses";
+                    typeAdd = "ultimos_6_meses";
                     break;
             }
 
-            string personalFolderFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal)).ToString() + $@"/PropagaMed_Visitas_{type}.csv";
+            string personalFolderFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal)).ToString() + $@"/PropagaMed_Visitas_{typeAdd}.csv";
             List<Visita> visitas = App.Database.GetItemsVisitaByParameterAsync(parameter).Result.OrderBy(v => v.HoraVisita).ToList();
             List<Medico> medicos = new();
 
@@ -76,7 +79,7 @@ namespace PropagaMed.View
                 //Relatório como anexo
                 var fileBytes = File.ReadAllBytes(personalFolderFile);
                 var fileBase64 = Convert.ToBase64String(fileBytes);
-                msg.AddAttachment($"PropagaMed_Visitas_{type}.csv", fileBase64);
+                msg.AddAttachment($"PropagaMed_Visitas_{typeAdd}.csv", fileBase64);
                 var response = await client.SendEmailAsync(msg);
 
                 if (File.Exists(personalFolderFile))

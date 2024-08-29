@@ -10,7 +10,7 @@ namespace PropagaMed
 {
     public partial class Home : TabbedPage
     {
-        Medico MedicoSelecionado = new Medico();
+        Medico MedicoSelecionado = new();
         DateTime DataSelecionada = DateTime.Now.Date;
 
         public Home(bool otherView = false)
