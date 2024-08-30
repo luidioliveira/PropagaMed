@@ -1,6 +1,9 @@
-﻿using Foundation;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+using Foundation;
 using UIKit;
-using UserNotifications;
 
 namespace PropagaMed.iOS
 {
@@ -21,10 +24,7 @@ namespace PropagaMed.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
-
-            // Solicitar permissão para notificações
-            UNUserNotificationCenter.Current.RequestAuthorization(UNAuthorizationOptions.Alert | UNAuthorizationOptions.Badge | UNAuthorizationOptions.Sound, (granted, error) => { });
-
+            
             return base.FinishedLaunching(app, options);
         }
     }
