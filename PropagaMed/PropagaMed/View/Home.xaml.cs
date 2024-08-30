@@ -18,7 +18,30 @@ namespace PropagaMed
             InitializeComponent();
             AlimentaMedicosEVisitas();
 
+            NotificacoesAniversario();
+
             this.CurrentPage = otherView ? verMedicos : this.CurrentPage;
+        }
+
+        private async void NotificacoesAniversario()
+        {
+            var visitasDia = await App.Database.GetItemsVisitaByParameterAsync((int)ExportEnum.byDay);
+
+            foreach(var visita in visitasDia)
+            {
+                /*
+                var notification = new LocalNotification
+                {
+                    NotificationId = 100,
+                    Title = "Título da Notificação",
+                    Description = "Descrição da Notificação",
+                    ReturningData = "Dados de Retorno",
+                    NotifyTime = DateTime.Now.AddSeconds(10) // Tempo para disparar a notificação
+                };
+
+                NotificationCenter.Current.Show(notification);
+                */
+            }
         }
 
         private void ItemTapped(object sender, System.EventArgs e)
@@ -45,13 +68,14 @@ namespace PropagaMed
 
         private async void CadastrarVisitaClicado(object sender, EventArgs e)
         {
-            Visita VisitaASalvar = new Visita();
-
-            VisitaASalvar.IdMedicoVisita = MedicoSelecionado.Id;
-            VisitaASalvar.NomeMedicoVisita = MedicoSelecionado.Nome;
-            VisitaASalvar.DiaVisita = dataVisita.Date;
-            VisitaASalvar.HoraVisita = horaVisita.Time;
-            VisitaASalvar.Observacao = obsVisita.Text is null ? "" : obsVisita.Text.ToString();
+            Visita VisitaASalvar = new()
+            {
+                IdMedicoVisita = MedicoSelecionado.Id,
+                NomeMedicoVisita = MedicoSelecionado.Nome,
+                DiaVisita = dataVisita.Date,
+                HoraVisita = horaVisita.Time,
+                Observacao = obsVisita.Text is null ? "" : obsVisita.Text.ToString()
+            };
 
             if (!String.IsNullOrEmpty(MedicoSelecionado.Nome))
             {
@@ -65,7 +89,7 @@ namespace PropagaMed
 
         private async void CadastrarMedicoClicado(object sender, EventArgs e)
         {
-            Medico MedicoASalvar = new Medico();
+            Medico MedicoASalvar = new();
 
             //Dias e horários preferências de visita selecionados
             string diasVisitaSelecionados = "";

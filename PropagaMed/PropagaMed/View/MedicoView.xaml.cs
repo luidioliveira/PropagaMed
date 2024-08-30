@@ -35,7 +35,7 @@ namespace PropagaMed.View
             night.IsChecked = medico.HorariosVisita.Contains("Noite");
         }
 
-        private async void atualizarMedicoClicado(object sender, EventArgs e)
+        private async void AtualizarMedicoClicado(object sender, EventArgs e)
         {
             var returnPage = new Home(true);
             var medicoAAtualizar = new Medico();

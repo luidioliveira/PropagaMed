@@ -72,6 +72,9 @@
     <PackageReference Include="SendGrid">
       <Version>9.29.3</Version>
     </PackageReference>
+    <PackageReference Include="Plugin.LocalNotification">
+      <Version>10.1.8</Version>
+    </PackageReference>
 </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
