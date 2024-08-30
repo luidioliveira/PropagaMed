@@ -283,7 +283,7 @@
                TextColor="#76cafb"
                HorizontalOptions="Center"
                VerticalOptions="End"
-               Clicked="atualizarMedicoClicado"
+               Clicked="AtualizarMedicoClicado"
             />
         </StackLayout>            
     </ScrollView>
