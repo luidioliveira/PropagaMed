@@ -28,7 +28,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Model\JsonConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Medico.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\Config.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)View\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -73,5 +75,10 @@
     <Folder Include="$(MSBuildThisFileDirectory)View\" />
     <Folder Include="$(MSBuildThisFileDirectory)ViewModel\" />
     <Folder Include="$(MSBuildThisFileDirectory)DAL\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)config.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
