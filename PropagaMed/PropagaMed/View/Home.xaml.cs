@@ -45,13 +45,14 @@ namespace PropagaMed
 
         private async void CadastrarVisitaClicado(object sender, EventArgs e)
         {
-            Visita VisitaASalvar = new Visita();
-
-            VisitaASalvar.IdMedicoVisita = MedicoSelecionado.Id;
-            VisitaASalvar.NomeMedicoVisita = MedicoSelecionado.Nome;
-            VisitaASalvar.DiaVisita = dataVisita.Date;
-            VisitaASalvar.HoraVisita = horaVisita.Time;
-            VisitaASalvar.Observacao = obsVisita.Text is null ? "" : obsVisita.Text.ToString();
+            Visita VisitaASalvar = new()
+            {
+                IdMedicoVisita = MedicoSelecionado.Id,
+                NomeMedicoVisita = MedicoSelecionado.Nome,
+                DiaVisita = dataVisita.Date,
+                HoraVisita = horaVisita.Time,
+                Observacao = obsVisita.Text is null ? "" : obsVisita.Text.ToString()
+            };
 
             if (!String.IsNullOrEmpty(MedicoSelecionado.Nome))
             {
@@ -65,7 +66,7 @@ namespace PropagaMed
 
         private async void CadastrarMedicoClicado(object sender, EventArgs e)
         {
-            Medico MedicoASalvar = new Medico();
+            Medico MedicoASalvar = new();
 
             //Dias e horários preferências de visita selecionados
             string diasVisitaSelecionados = "";
