@@ -64,7 +64,7 @@ namespace PropagaMed.View
                 {
                     List<string> content = new() { "Controle de Visitas", "Nº;CRM;Nome;Data;Hora;Especialidade;Observação;" };
                     content.AddRange(visitas.Select(v => string.Join(";", visitas.IndexOf(v) + 1, medicos.Where(m => m.Id.Equals(v.IdMedicoVisita)).First()?.CRM, v.NomeMedicoVisita, v.DiaVisita.ToString("dd/MM/yyyy"), v.HoraVisita.ToString(@"hh\:mm"), medicos.Where(m => m.Id.Equals(v.IdMedicoVisita)).First()?.Especialidade, v.Observacao)).ToList());
-                    File.WriteAllLines(personalFolderFile, [.. content], System.Text.Encoding.UTF8);
+                    File.WriteAllLines(personalFolderFile, content.ToArray(), System.Text.Encoding.UTF8);
                 }
 
                 //Envio de e-mail
