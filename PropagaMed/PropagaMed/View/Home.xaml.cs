@@ -161,7 +161,22 @@ namespace PropagaMed
         void VisitasPorMedico(object sender, EventArgs e)
         {
             var mi = ((MenuItem)sender);
-            listView2.ItemsSource = App.Database.GetItemsVisitaAsync((int)mi.CommandParameter).Result.OrderByDescending(v => v.DiaVisita).ThenBy(v => v.HoraVisita);
+
+            var visitas = App.Database.GetItemsVisitaAsync((int)mi.CommandParameter).Result.OrderBy(v => v.DiaVisita).ThenBy(v => v.HoraVisita);
+
+            //Lógica para reforçar aniversário
+            Parallel.ForEach(visitas, visita =>
+            {
+                var birthdayDoc = App.Database.GetItemsMedicoAsync().Result.Find(m => m.Id == visita.IdMedicoVisita).Aniversario;
+
+                if (visita.DiaVisita.Month == birthdayDoc.Month && visita.DiaVisita.Day == birthdayDoc.Day)
+                {
+                    visita.IsBirthday = true;
+                    visita.NomeMedicoVisita += " - Aniversário!";
+                }
+            });
+
+            listView2.ItemsSource = visitas;
 
             allVisits.IsEnabled = true;
 
