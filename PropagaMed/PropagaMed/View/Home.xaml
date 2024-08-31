@@ -420,6 +420,7 @@
             </OnPlatform>
         </ContentPage.IconImageSource>
     <StackLayout>
+        <SearchBar x:Name="searchBarVisitas" Placeholder="Buscar..." TextChanged="OnSearchBarVisitasChanged"/>
         <ListView x:Name="listView2" BackgroundColor="#FFFFFF" VerticalOptions="FillAndExpand" HasUnevenRows="true" RowHeight="-1">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -486,53 +487,56 @@
   </ContentPage>
     
   <ContentPage x:Name="verMedicos" Title="Médicos" BackgroundColor="#FFFFFF">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Médicos"
-                     IconImageSource="blue_stethoscope"/>
-    </ContentPage.ToolbarItems>
+        <ContentPage.ToolbarItems>
+            <ToolbarItem Text="Médicos"
+                         IconImageSource="blue_stethoscope"/>
+        </ContentPage.ToolbarItems>
         <ContentPage.IconImageSource>
             <OnPlatform x:TypeArguments="FileImageSource">
                 <On Platform="iOS" Value="medico-ios" />
                 <On Platform="Android" Value="medico" />
             </OnPlatform>
         </ContentPage.IconImageSource>
-        <ListView x:Name="listView" BackgroundColor="#FFFFFF" VerticalOptions="FillAndExpand" HasUnevenRows="true" RowHeight="-1">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell Tapped="ViewSelected">
-                        <ViewCell.ContextActions>
-                            <MenuItem Clicked="DetalharMedico"
-                                      CommandParameter="{Binding Id}"
-                                      Text="Detalhar" />
-                            <MenuItem Clicked="DeletarMedico"
-                                      CommandParameter="{Binding Id}"
-                                      Text="Deletar" IsDestructive="True" />
-                            <MenuItem Clicked="VisitasPorMedico"
-                                      CommandParameter="{Binding Id}"
-                                      Text="Visitas" />
-                        </ViewCell.ContextActions>
-                        <StackLayout>
-                        <Label BackgroundColor="#76cafb" TextColor="#FFFFFF" Text="{Binding Nome}" FontSize="15"/>
-                        <Label TextColor="#76cafb" FontSize="12">
-                            <Label.FormattedText>
-                               <FormattedString>
-                                 <Span Text="Especialidade: "/>
-                                 <Span Text="{Binding Especialidade}"/>
-                               </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Label TextColor="#76cafb" FontSize="12" Margin="0, 0, 0, 5">
-                            <Label.FormattedText>
-                               <FormattedString>
-                                 <Span Text="Localização: "/>
-                                 <Span Text="{Binding Localizacao}"/>
-                               </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <StackLayout>
+            <SearchBar x:Name="searchBarMedicos" Placeholder="Buscar..." TextChanged="OnSearchBarMedicosChanged"/>
+            <ListView x:Name="listView" BackgroundColor="#FFFFFF" VerticalOptions="FillAndExpand" HasUnevenRows="true" RowHeight="-1">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell Tapped="ViewSelected">
+                            <ViewCell.ContextActions>
+                                <MenuItem Clicked="DetalharMedico"
+                                          CommandParameter="{Binding Id}"
+                                          Text="Detalhar" />
+                                <MenuItem Clicked="DeletarMedico"
+                                          CommandParameter="{Binding Id}"
+                                          Text="Deletar" IsDestructive="True" />
+                                <MenuItem Clicked="VisitasPorMedico"
+                                          CommandParameter="{Binding Id}"
+                                          Text="Visitas" />
+                            </ViewCell.ContextActions>
+                            <StackLayout>
+                            <Label BackgroundColor="#76cafb" TextColor="#FFFFFF" Text="{Binding Nome}" FontSize="15"/>
+                            <Label TextColor="#76cafb" FontSize="12">
+                                <Label.FormattedText>
+                                   <FormattedString>
+                                     <Span Text="Especialidade: "/>
+                                     <Span Text="{Binding Especialidade}"/>
+                                   </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label TextColor="#76cafb" FontSize="12" Margin="0, 0, 0, 5">
+                                <Label.FormattedText>
+                                   <FormattedString>
+                                     <Span Text="Localização: "/>
+                                     <Span Text="{Binding Localizacao}"/>
+                                   </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
     </ContentPage>
 </TabbedPage>

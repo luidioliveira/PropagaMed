@@ -235,5 +235,29 @@ namespace PropagaMed
         {
             await Navigation.PushAsync(new ExportView());
         }
+
+        void OnSearchBarVisitasChanged(object sender, TextChangedEventArgs e)
+        {
+            var visitas = App.Database.GetItemsVisitaAsync().Result.Where(i => i.NomeMedicoVisita.ToLower().Contains(e.NewTextValue.ToLower())).OrderBy(v => v.DiaVisita).ThenBy(v => v.HoraVisita);
+
+            //Lógica para reforçar aniversário
+            Parallel.ForEach(visitas, visita =>
+            {
+                var birthdayDoc = App.Database.GetItemsMedicoAsync().Result.Find(m => m.Id == visita.IdMedicoVisita).Aniversario;
+
+                if (visita.DiaVisita.Month == birthdayDoc.Month && visita.DiaVisita.Day == birthdayDoc.Day)
+                {
+                    visita.IsBirthday = true;
+                    visita.NomeMedicoVisita += " - Aniversário!";
+                }
+            });
+
+            listView2.ItemsSource = visitas;
+        }
+
+        void OnSearchBarMedicosChanged(object sender, TextChangedEventArgs e)
+        {
+            listView.ItemsSource = App.Database.GetItemsMedicoAsync().Result.Where(i => i.Nome.ToLower().Contains(e.NewTextValue.ToLower())).OrderBy(m => m.Nome);
+        }
     }
 }
