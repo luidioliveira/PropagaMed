@@ -1,3 +1,5 @@
 {
-  "SENDGRID_API_KEY": ""
+  "SENDGRID_API_KEY": "",
+  "MAIL_FROM": "luidi.lima@poli.ufrj.br",
+  "MAIL_TO": "luidi.lima@poli.ufrj.br"
 }

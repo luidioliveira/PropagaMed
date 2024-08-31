@@ -18,14 +18,14 @@
         </ContentPage.IconImageSource>
     <ScrollView>
         <StackLayout>
-                <Label Text="Nova Visita"
+                <Label Text="NOVA VISITA"
                    TextColor="#76cafb"
                    HorizontalTextAlignment="Center"
                    VerticalOptions="CenterAndExpand"
                    Margin="50"
                    FontFamily="Arial"
                    FontAttributes="Bold"
-                   Scale="1.2"
+                   Scale="1.8"
                 />
 
             <Label Text="Médico(a):"
@@ -117,14 +117,14 @@
         </ContentPage.IconImageSource>
     <ScrollView>
         <StackLayout>        
-            <Label Text="Novo Médico"
+            <Label Text="NOVO MÉDICO"
                TextColor="#76cafb"
                HorizontalTextAlignment="Center"
                VerticalOptions="CenterAndExpand"    
                Margin="50"  
                FontFamily="Arial"
                FontAttributes="Bold"   
-               Scale="1.2"
+               Scale="1.8"
              />
 
             <Label Text="Nome:"
@@ -433,7 +433,16 @@
                                       Text="Deletar" IsDestructive="True"/>
                         </ViewCell.ContextActions>
                         <StackLayout>
-                        <Label BackgroundColor="#76cafb" TextColor="#FFFFFF" Text="{Binding NomeMedicoVisita}" FontSize="15"/>
+                        <Label x:Name="itemVisita" TextColor="#FFFFFF" Text="{Binding NomeMedicoVisita}" FontSize="15">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding IsBirthday}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="DodgerBlue" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Label" Binding="{Binding IsBirthday}" Value="False">
+                                    <Setter Property="BackgroundColor" Value="#76cafb" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
                         <Label TextColor="#76cafb" FontSize="12">
                             <Label.FormattedText>
                                <FormattedString>

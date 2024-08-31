@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 
 public static class Config
 {
-    public static string GetSendGridApiKey()
+    public static JsonConfig GetConfigItems()
     {
         var assembly = typeof(Config).GetTypeInfo().Assembly;
 
@@ -17,7 +17,13 @@ public static class Config
         {
             var json = reader.ReadToEnd();
             var jsonObj = JObject.Parse(json);
-            return jsonObj["SENDGRID_API_KEY"].ToString();
+
+            return new()
+            {
+                SendGridApiKey = jsonObj["SENDGRID_API_KEY"].ToString(),
+                MailFrom = jsonObj["MAIL_FROM"].ToString(),
+                MailTo = jsonObj["MAIL_TO"].ToString()
+            };
         }
     }
 }

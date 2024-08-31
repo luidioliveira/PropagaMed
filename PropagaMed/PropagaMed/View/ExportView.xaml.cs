@@ -68,12 +68,14 @@ namespace PropagaMed.View
                 }
 
                 //Envio de e-mail
-                var apiKey = Config.GetSendGridApiKey();
+                var configItems = Config.GetConfigItems();
 
-                var client = new SendGridClient(apiKey); //API Key
-                var from = new EmailAddress("luidi.lima@poli.ufrj.br", "PropagaMed");
+                var apiKey = configItems.SendGridApiKey;
+
+                var client = new SendGridClient(apiKey);
+                var from = new EmailAddress(configItems.MailFrom, "PropagaMed");
                 var subject = $"PropagaMed - Relatório de Controle de Visitas - {DateTime.Now:dd/MM/yyyy}";
-                var to = new EmailAddress("luidi.lima@poli.ufrj.br", "Luidi Oliveira");
+                var to = new EmailAddress(configItems.MailTo, "Luidi Oliveira");
                 var plainTextContent = $"Segue anexo o arquivo de visitas {type}.";
                 var htmlContent = $"<strong>Segue anexo o arquivo de visitas {type}.</strong>";
                 var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);

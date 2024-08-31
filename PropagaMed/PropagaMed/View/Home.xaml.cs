@@ -40,7 +40,19 @@ namespace PropagaMed
 
             medicosPicker.ItemsSource = medicos;
             listView.ItemsSource = medicos.OrderBy(m => m.Nome);
-            listView2.ItemsSource = visitas.OrderByDescending(v => v.DiaVisita).ThenBy(v => v.HoraVisita);
+            listView2.ItemsSource = visitas.OrderBy(v => v.DiaVisita).ThenBy(v => v.HoraVisita);
+
+            //Lógica para reforçar aniversário
+            Parallel.ForEach(visitas, visita =>
+            {
+                var birthdayDoc = medicos.Find(m => m.Id == visita.IdMedicoVisita).Aniversario;
+
+                if (visita.DiaVisita.Month == birthdayDoc.Month && visita.DiaVisita.Day == birthdayDoc.Day)
+                {
+                    visita.IsBirthday = true;
+                    visita.NomeMedicoVisita += " - Aniversário!";
+                }
+            });
         }
 
         private async void CadastrarVisitaClicado(object sender, EventArgs e)

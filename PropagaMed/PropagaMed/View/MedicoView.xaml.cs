@@ -6,7 +6,7 @@ namespace PropagaMed.View
 {
     public partial class MedicoView : ContentPage
     {
-        int medicoId = default;
+        readonly int medicoId = default;
 
         public MedicoView(Medico medico)
         {
@@ -38,9 +38,10 @@ namespace PropagaMed.View
         private async void AtualizarMedicoClicado(object sender, EventArgs e)
         {
             var returnPage = new Home(true);
-            var medicoAAtualizar = new Medico();
-
-            medicoAAtualizar.Id = medicoId;
+            var medicoAAtualizar = new Medico
+            {
+                Id = medicoId
+            };
 
             //Dias e horários preferências de visita selecionados
             string diasVisitaSelecionados = "";

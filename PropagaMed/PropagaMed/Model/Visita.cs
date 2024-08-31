@@ -12,5 +12,6 @@ namespace PropagaMed.Model
         public DateTime DiaVisita { get; set; }
         public TimeSpan HoraVisita { get; set; }
         public string Observacao { get; set; }
+        public bool IsBirthday { get; set; }
     }
 }
