@@ -2,6 +2,7 @@
 <ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
     x:Class="PropagaMed.View.MedicoView"
     x:Name="atualizaMedico"
     Title="Visualização de Médico(a)"
@@ -109,22 +110,45 @@
                     TextColor="#FFFFFF"
                  />   
             </StackLayout>
+            
+            <Label Text="Secretária:"
+                TextColor="#76cafb"
+                HorizontalTextAlignment="left"
+                FontFamily="Arial"
+                FontAttributes="Bold"
+       
+                Scale="0.8"
+                />
+            <Entry x:Name="secretaria"
+                Text="{Binding Secretaria}"
+                Scale="0.8"     
+                Placeholder="Secretária"
+                PlaceholderColor="#FFFFFF"
+                BackgroundColor="#76cafb"
+                TextColor="#FFFFFF"
+            />
 
             <Label Text="Telefone:"
-                   TextColor="#76cafb"
-                   HorizontalTextAlignment="left"
-                   FontFamily="Arial"
-                   FontAttributes="Bold"
-                   Scale="0.8"
-                 />
+                TextColor="#76cafb"
+                HorizontalTextAlignment="left"
+                FontFamily="Arial"
+                FontAttributes="Bold"
+                   
+                Scale="0.8"
+                />
              <Entry x:Name="telefoneMedico"
                Text="{Binding Telefone}"
+               Keyboard="Telephone"
                Scale="0.8"     
                Placeholder="Telefone"
                PlaceholderColor="#FFFFFF"
                BackgroundColor="#76cafb"
-               TextColor="#FFFFFF"
-            />  
+               TextColor="#FFFFFF">
+                    
+               <Entry.Behaviors>
+                <xct:MaskedBehavior Mask="(XX) XXXX-XXXX" />
+               </Entry.Behaviors>
+             </Entry>
 
             <Label Text="Celular:"
                    TextColor="#76cafb"
@@ -135,12 +159,17 @@
                  />
             <Entry x:Name="celularMedico"
                Text="{Binding Celular}"
+               Keyboard="Telephone"
                Scale="0.8"     
                Placeholder="Celular"
                PlaceholderColor="#FFFFFF"
                BackgroundColor="#76cafb"
-               TextColor="#FFFFFF"
-            />      
+               TextColor="#FFFFFF">
+                
+              <Entry.Behaviors>
+                <xct:MaskedBehavior Mask="(XX) XXXXX-XXXX" />
+              </Entry.Behaviors>
+            </Entry>     
 
             <Label Text="E-mail:"
                    TextColor="#76cafb"
@@ -174,71 +203,101 @@
                TextColor="#FFFFFF"
             />
 
+            <Label Text="TIPO DE VISITA"
+                    TextColor="#76cafb"
+                    HorizontalTextAlignment="Center"
+                    FontFamily="Arial"
+                    FontAttributes="Bold"
+                    Scale="0.8"
+                    />
+
+            <StackLayout Orientation="Horizontal" Scale="0.8">
+                <CheckBox x:Name="presencialTipoVisita" Color="#76cafb" Scale="1" />
+                <Label Text="Presencial"
+                    TextColor="#76cafb"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    FontFamily="Arial"
+                    FontAttributes="Bold"
+                    Scale="1"
+                />
+
+            <CheckBox x:Name="onlineTipoVisita" Color="#76cafb" Scale="1" />
+                <Label Text="On-line"
+                    TextColor="#76cafb"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    FontFamily="Arial"
+                    FontAttributes="Bold"
+                    Scale="1"
+                    />
+            </StackLayout>
+
             <StackLayout>
-                 <Label Text="Dia preferencial de visita"
-                   TextColor="#76cafb"
-                   HorizontalTextAlignment="Center"
-                   FontFamily="Arial"
-                   FontAttributes="Bold"
-                   Scale="0.8"
-                 />
+                <Label Text="DIA PREFERENCIAL DE VISITA"
+                TextColor="#76cafb"
+                HorizontalTextAlignment="Center"
+                FontFamily="Arial"
+                FontAttributes="Bold"
+                Scale="0.8"
+                />
 
                 <StackLayout Orientation="Horizontal" Scale="0.8">
+                    <CheckBox x:Name="monday" Color="#76cafb" Scale="1" />
                     <Label Text="Segunda"
-                       TextColor="#76cafb"
-                       HorizontalTextAlignment="Center"
-                       VerticalTextAlignment="Center"
-                       FontFamily="Arial"
-                       FontAttributes="Bold"
-                       Scale="1"
-                     />
-                    <CheckBox x:Name="monday" Scale="1" />
+                        TextColor="#76cafb"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                        FontFamily="Arial"
+                        FontAttributes="Bold"
+                        Scale="1"
+                        />
 
+                    <CheckBox x:Name="tuesday" Color="#76cafb" Scale="1" />
                     <Label Text="Terça"
-                       TextColor="#76cafb"
-                       HorizontalTextAlignment="Center"
-                       VerticalTextAlignment="Center"
-                       FontFamily="Arial"
-                       FontAttributes="Bold"
-                       Scale="1"
-                     />
-                     <CheckBox x:Name="tuesday" Scale="1" />
+                        TextColor="#76cafb"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                        FontFamily="Arial"
+                        FontAttributes="Bold"
+                        Scale="1"
+                        />
 
+                    <CheckBox x:Name="wednesday" Color="#76cafb" Scale="1" />
                     <Label Text="Quarta"
-                       TextColor="#76cafb"
-                       HorizontalTextAlignment="Center"
-                       VerticalTextAlignment="Center"
-                       FontFamily="Arial"
-                       FontAttributes="Bold"
-                       Scale="1"
-                     />
-                    <CheckBox x:Name="wednesday" Scale="1" />
+                        TextColor="#76cafb"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                        FontFamily="Arial"
+                        FontAttributes="Bold"
+                        Scale="1"
+                        />
                 </StackLayout>
 
                 <StackLayout Orientation="Horizontal" Scale="0.8">
+                    <CheckBox x:Name="thursday" Color="#76cafb" Scale="1" />
                     <Label Text="Quinta"
-                       TextColor="#76cafb"
-                       HorizontalTextAlignment="Center"
-                       VerticalTextAlignment="Center"
-                       FontFamily="Arial"
-                       FontAttributes="Bold"
-                       Scale="1"
-                     />
-                    <CheckBox x:Name="thursday" Scale="1" />
+                        TextColor="#76cafb"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                        FontFamily="Arial"
+                        FontAttributes="Bold"
+                        Scale="1"
+                        />
 
+                    <CheckBox x:Name="friday" Color="#76cafb" Scale="1" />
                     <Label Text="Sexta"
-                       TextColor="#76cafb"
-                       HorizontalTextAlignment="Center"
-                       VerticalTextAlignment="Center"
-                       FontFamily="Arial"
-                       FontAttributes="Bold"
-                       Scale="1"
-                     />
-                    <CheckBox x:Name="friday" Scale="1" />
+                        TextColor="#76cafb"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                        FontFamily="Arial"
+                        FontAttributes="Bold"
+                        Scale="1"
+                        />
                 </StackLayout>
             </StackLayout>
 
-            <Label Text="Turno preferencial de visita"
+            <Label Text="TURNO PREFERENCIAL DE VISITA"
                    TextColor="#76cafb"
                    HorizontalTextAlignment="Center"
                    FontFamily="Arial"
@@ -247,6 +306,7 @@
                  />
 
             <StackLayout Orientation="Horizontal" Scale="0.8">
+                <CheckBox x:Name="morning" Color="#76cafb" Scale="1" />
                 <Label Text="Manhã"
                     TextColor="#76cafb"
                     HorizontalTextAlignment="Center"
@@ -255,8 +315,8 @@
                     FontAttributes="Bold"
                     Scale="1"
                 />
-                <CheckBox x:Name="morning" Scale="1" />
 
+                <CheckBox x:Name="afternoon" Color="#76cafb" Scale="1" />
                 <Label Text="Tarde"
                     TextColor="#76cafb"
                     HorizontalTextAlignment="Center"
@@ -265,8 +325,8 @@
                     FontAttributes="Bold"
                     Scale="1"
                     />
-                <CheckBox x:Name="afternoon" Scale="1" />
-                
+
+                <CheckBox x:Name="night" Color="#76cafb" Scale="1" />
                 <Label Text="Noite"
                     TextColor="#76cafb"
                     HorizontalTextAlignment="Center"
@@ -275,7 +335,6 @@
                     FontAttributes="Bold"
                     Scale="1"
                     />
-                <CheckBox x:Name="night" Scale="1" />
             </StackLayout>
 
             <Button x:Name="atualizarMedico" 

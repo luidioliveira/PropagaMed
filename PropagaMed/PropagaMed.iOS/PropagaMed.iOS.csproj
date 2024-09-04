@@ -41,18 +41,26 @@
     <MtouchLink>None</MtouchLink>
     <MtouchArch>x86_64</MtouchArch>
     <ConsolePause>false</ConsolePause>
-    <DefineConstants></DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <IntermediateOutputPath></IntermediateOutputPath>
+    <IntermediateOutputPath>
+    </IntermediateOutputPath>
     <ExternalConsole>false</ExternalConsole>
-    <Commandlineparameters></Commandlineparameters>
+    <Commandlineparameters>
+    </Commandlineparameters>
     <RunWithWarnings>true</RunWithWarnings>
-    <CreatePackage></CreatePackage>
-    <PackagingExtraArgs></PackagingExtraArgs>
+    <CreatePackage>
+    </CreatePackage>
+    <PackagingExtraArgs>
+    </PackagingExtraArgs>
     <UseHardenedRuntime>false</UseHardenedRuntime>
-    <CodesignProvision></CodesignProvision>
-    <CodesignKey></CodesignKey>
-    <PackageSigningKey></PackageSigningKey>
+    <CodesignProvision>
+    </CodesignProvision>
+    <CodesignKey>
+    </CodesignKey>
+    <PackageSigningKey>
+    </PackageSigningKey>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
@@ -158,27 +166,69 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\PropagaMed.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\PropagaMed.imageset\FlorDaPele-1.png" />
-    <ImageAsset Include="Assets.xcassets\PropagaMed.imageset\PropagaMedIcon180x.png" />
-    <ImageAsset Include="Assets.xcassets\PropagaMed_New_Logo.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\PropagaMed_New_Logo.imageset\PropagaMed_New_Logo.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\PropagaMed_New_Logo_1024.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\PropagaMed_New_Logo_120.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\PropagaMed_New_Logo_180.png" />
-    <ImageAsset Include="Assets.xcassets\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\blue_stethoscope.imageset\blue_stethoscope.png" />
-    <ImageAsset Include="Assets.xcassets\blue_stethoscope.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\blue_stethoscope.imageset\blue_stethoscope 1.png" />
-    <ImageAsset Include="Assets.xcassets\blue_stethoscope.imageset\blue_stethoscope 2.png" />
-    <ImageAsset Include="Assets.xcassets\medico-ios.imageset\medico-ios.png" />
-    <ImageAsset Include="Assets.xcassets\medico-ios.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\novo_medico-ios.imageset\novo_medico-ios.png" />
-    <ImageAsset Include="Assets.xcassets\novo_medico-ios.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\nova_visita-ios.imageset\nova_visita-ios.png" />
-    <ImageAsset Include="Assets.xcassets\nova_visita-ios.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\visitas-ios.imageset\visitas-ios.png" />
-    <ImageAsset Include="Assets.xcassets\visitas-ios.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\PropagaMed.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\PropagaMed.imageset\FlorDaPele-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\PropagaMed.imageset\PropagaMedIcon180x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\PropagaMed_New_Logo.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\PropagaMed_New_Logo.imageset\PropagaMed_New_Logo.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\PropagaMed_New_Logo_1024.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\PropagaMed_New_Logo_120.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\PropagaMed_New_Logo_180.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\blue_stethoscope.imageset\blue_stethoscope.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\blue_stethoscope.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\blue_stethoscope.imageset\blue_stethoscope 1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\blue_stethoscope.imageset\blue_stethoscope 2.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\medico-ios.imageset\medico-ios.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\medico-ios.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\novo_medico-ios.imageset\novo_medico-ios.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\novo_medico-ios.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\nova_visita-ios.imageset\nova_visita-ios.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\nova_visita-ios.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\visitas-ios.imageset\visitas-ios.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\visitas-ios.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -187,6 +237,9 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Xamarin.CommunityToolkit">
+      <Version>2.0.6</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms">
       <Version>5.0.0.2662</Version>
     </PackageReference>

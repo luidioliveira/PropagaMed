@@ -48,7 +48,7 @@ namespace PropagaMed.Dal
 
         public Task<List<Visita>> GetItemsVisitaAsync(int? medicoId = null)
         {
-            if(medicoId is null)
+            if (medicoId is null)
                 return Database.Table<Visita>().ToListAsync();
             else
                 return Database.Table<Visita>().Where(m => m.IdMedicoVisita.Equals(medicoId)).ToListAsync();

@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
             x:Class="PropagaMed.Home"
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
             android:TabbedPage.ToolbarPlacement="Bottom">
@@ -78,6 +79,34 @@
                 TextColor="#FFFFFF"
              />
             </StackLayout>
+            
+            <Label Text="Tipo de Visita:"
+                    TextColor="#76cafb"
+                    HorizontalTextAlignment="left"
+                    FontFamily="Arial"
+                    FontAttributes="Bold"
+                    Scale="0.8"
+                    />
+            
+            <StackLayout Orientation="Horizontal" Margin="35, 0, 0, 0">
+                <CheckBox x:Name="VisitaPresencialTipoVisita" Color="#76cafb" Scale="0.8" />
+                <Label Text="Presencial"
+                    TextColor="#76cafb"
+                    VerticalOptions="Center"
+                    FontFamily="Arial"
+                    FontAttributes="Bold"
+                    Scale="0.8"
+                />
+
+                <CheckBox x:Name="VisitaOnlineTipoVisita" Color="#76cafb" Scale="0.8" />
+                    <Label Text="On-line"
+                    TextColor="#76cafb"
+                    VerticalOptions="Center"
+                    FontFamily="Arial"
+                    FontAttributes="Bold"
+                    Scale="0.8"
+                    />
+            </StackLayout>
 
             <Label Text="Observação:"
                    TextColor="#76cafb"
@@ -87,7 +116,8 @@
                    Scale="0.8"
                  />
             <Editor x:Name="obsVisita"
-                    Scale="0.8" Placeholder="Digite uma observação"
+                    Scale="0.8" 
+                    Placeholder="Digite uma observação"
                     PlaceholderColor="#FFFFFF"
                     BackgroundColor="#76cafb"
                     TextColor="#FFFFFF">
@@ -229,21 +259,44 @@
                  />   
             </StackLayout>
 
+            <Label Text="Secretária:"
+                TextColor="#76cafb"
+                HorizontalTextAlignment="left"
+                FontFamily="Arial"
+                FontAttributes="Bold"
+       
+                Scale="0.8"
+                />
+            <Entry x:Name="secretaria"
+                Text="{Binding Secretaria}"
+                Scale="0.8"     
+                Placeholder="Secretária"
+                PlaceholderColor="#FFFFFF"
+                BackgroundColor="#76cafb"
+                TextColor="#FFFFFF"
+            />
+
             <Label Text="Telefone:"
-                   TextColor="#76cafb"
-                   HorizontalTextAlignment="left"
-                   FontFamily="Arial"
-                   FontAttributes="Bold"
-                   Scale="0.8"
-                 />
+                TextColor="#76cafb"
+                HorizontalTextAlignment="left"
+                FontFamily="Arial"
+                FontAttributes="Bold"
+                   
+                Scale="0.8"
+                />
              <Entry x:Name="telefoneMedico"
                Text="{Binding Telefone}"
+               Keyboard="Telephone"
                Scale="0.8"     
                Placeholder="Telefone"
                PlaceholderColor="#FFFFFF"
                BackgroundColor="#76cafb"
-               TextColor="#FFFFFF"
-            />  
+               TextColor="#FFFFFF">
+                    
+               <Entry.Behaviors>
+                <xct:MaskedBehavior Mask="(XX) XXXX-XXXX" />
+               </Entry.Behaviors>
+             </Entry>
 
             <Label Text="Celular:"
                    TextColor="#76cafb"
@@ -254,20 +307,26 @@
                  />
             <Entry x:Name="celularMedico"
                Text="{Binding Celular}"
+               Keyboard="Telephone"
                Scale="0.8"     
                Placeholder="Celular"
                PlaceholderColor="#FFFFFF"
                BackgroundColor="#76cafb"
-               TextColor="#FFFFFF"
-            />      
+               TextColor="#FFFFFF">
+                
+              <Entry.Behaviors>
+                <xct:MaskedBehavior Mask="(XX) XXXXX-XXXX" />
+              </Entry.Behaviors>
+            </Entry>
 
             <Label Text="E-mail:"
-                   TextColor="#76cafb"
-                   HorizontalTextAlignment="left"
-                   FontFamily="Arial"
-                   FontAttributes="Bold"
-                   Scale="0.8"
-                 />
+                TextColor="#76cafb"
+                HorizontalTextAlignment="left"
+                FontFamily="Arial"
+                FontAttributes="Bold"
+                Scale="0.8"
+                />
+            
             <Entry x:Name="emailMedico"
                Text="{Binding Email}"
                Scale="0.8"   
@@ -293,8 +352,38 @@
                TextColor="#FFFFFF"
             />
 
+            <Label Text="TIPO PREFERENCIAL DE VISITA"
+                    TextColor="#76cafb"
+                    HorizontalTextAlignment="Center"
+                    FontFamily="Arial"
+                    FontAttributes="Bold"
+                    Scale="0.8"
+                    />
+
+            <StackLayout Orientation="Horizontal" Scale="0.8">
+                <CheckBox x:Name="presencialTipoVisita" Color="#76cafb" Scale="1" />
+                <Label Text="Presencial"
+                    TextColor="#76cafb"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    FontFamily="Arial"
+                    FontAttributes="Bold"
+                    Scale="1"
+                />
+
+            <CheckBox x:Name="onlineTipoVisita" Color="#76cafb" Scale="1" />
+                <Label Text="On-line"
+                    TextColor="#76cafb"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    FontFamily="Arial"
+                    FontAttributes="Bold"
+                    Scale="1"
+                    />
+            </StackLayout>
+
             <StackLayout>
-                 <Label Text="DIA PREFERENCIAL DE VISITA"
+                <Label Text="DIA PREFERENCIAL DE VISITA"
                    TextColor="#76cafb"
                    HorizontalTextAlignment="Center"
                    FontFamily="Arial"
@@ -434,32 +523,40 @@
                                       Text="Deletar" IsDestructive="True"/>
                         </ViewCell.ContextActions>
                         <StackLayout>
-                        <Label x:Name="itemVisita" TextColor="#FFFFFF" Text="{Binding NomeMedicoVisita}" FontSize="15">
-                            <Label.Triggers>
-                                <DataTrigger TargetType="Label" Binding="{Binding IsBirthday}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="DodgerBlue" />
-                                </DataTrigger>
-                                <DataTrigger TargetType="Label" Binding="{Binding IsBirthday}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="#76cafb" />
-                                </DataTrigger>
-                            </Label.Triggers>
-                        </Label>
-                        <Label TextColor="#76cafb" FontSize="12">
-                            <Label.FormattedText>
-                               <FormattedString>
-                                 <Span Text="Data: "/>
-                                 <Span Text="{Binding DiaVisita, StringFormat='{0:dd/MM/yyyy}'}"/>
-                               </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Label TextColor="#76cafb" FontSize="12" Margin="0, 0, 0, 5">
-                            <Label.FormattedText>
-                               <FormattedString>
-                                 <Span Text="Horário: "/>
-                                 <Span Text="{Binding HoraVisita, StringFormat='{}{0:hh\\:mm}'}"/>
-                               </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
+                            <Label x:Name="itemVisita" TextColor="#FFFFFF" Text="{Binding NomeMedicoVisita}" FontSize="15">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsBirthday}" Value="True">
+                                        <Setter Property="BackgroundColor" Value="DodgerBlue" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsBirthday}" Value="False">
+                                        <Setter Property="BackgroundColor" Value="#76cafb" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <Label TextColor="#76cafb" FontSize="12">
+                                <Label.FormattedText>
+                                   <FormattedString>
+                                     <Span Text="Data: "/>
+                                     <Span Text="{Binding DiaVisita, StringFormat='{0:dd/MM/yyyy}'}"/>
+                                   </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label TextColor="#76cafb" FontSize="12">
+                                <Label.FormattedText>
+                                   <FormattedString>
+                                     <Span Text="Horário: "/>
+                                     <Span Text="{Binding HoraVisita, StringFormat='{}{0:hh\\:mm}'}"/>
+                                   </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label TextColor="#76cafb" FontSize="12">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Tipo de Visita: "/>
+                                        <Span Text="{Binding TipoVisita}"/>
+                                </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

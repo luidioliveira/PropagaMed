@@ -62,8 +62,8 @@ namespace PropagaMed.View
 
                 if (!File.Exists(personalFolderFile))
                 {
-                    List<string> content = new() { "Controle de Visitas", "Nº;CRM;Nome;Data;Hora;Especialidade;Observação;" };
-                    content.AddRange(visitas.Select(v => string.Join(";", visitas.IndexOf(v) + 1, medicos.Where(m => m.Id.Equals(v.IdMedicoVisita)).First()?.CRM, v.NomeMedicoVisita, v.DiaVisita.ToString("dd/MM/yyyy"), v.HoraVisita.ToString(@"hh\:mm"), medicos.Where(m => m.Id.Equals(v.IdMedicoVisita)).First()?.Especialidade, v.Observacao)).ToList());
+                    List<string> content = new() { "Controle de Visitas", "Nº;CRM;Nome;Data;Hora;Especialidade;Secretaria;Observação;" };
+                    content.AddRange(visitas.Select(v => string.Join(";", visitas.IndexOf(v) + 1, medicos.Where(m => m.Id.Equals(v.IdMedicoVisita)).First()?.CRM, v.NomeMedicoVisita, v.DiaVisita.ToString("dd/MM/yyyy"), v.HoraVisita.ToString(@"hh\:mm"), medicos.Where(m => m.Id.Equals(v.IdMedicoVisita)).First()?.Especialidade, medicos.Where(m => m.Id.Equals(v.IdMedicoVisita)).First()?.Secretaria, v.Observacao)).ToList());
                     File.WriteAllLines(personalFolderFile, content.ToArray(), System.Text.Encoding.UTF8);
                 }
 

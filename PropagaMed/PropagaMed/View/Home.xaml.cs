@@ -63,6 +63,7 @@ namespace PropagaMed
                 NomeMedicoVisita = MedicoSelecionado.Nome,
                 DiaVisita = dataVisita.Date,
                 HoraVisita = horaVisita.Time,
+                TipoVisita = VisitaPresencialTipoVisita.IsChecked ? VisitaOnlineTipoVisita.IsChecked ? "Presencial e Online" : "Presencial" : VisitaOnlineTipoVisita.IsChecked ? "Online" : string.Empty,
                 Observacao = obsVisita.Text is null ? "" : obsVisita.Text.ToString()
             };
 
@@ -80,9 +81,15 @@ namespace PropagaMed
         {
             Medico MedicoASalvar = new();
 
-            //Dias e horários preferências de visita selecionados
-            string diasVisitaSelecionados = "";
-            string horariosVisitaSelecionados = "";
+            //Tipos, dias e horários preferenciais de visita selecionados
+            string tiposVisitaSelecionados = string.Empty;
+            string diasVisitaSelecionados = string.Empty;
+            string horariosVisitaSelecionados = string.Empty;
+
+            if (presencialTipoVisita.IsChecked)
+                tiposVisitaSelecionados += "Presencial";
+            if (onlineTipoVisita.IsChecked)
+                tiposVisitaSelecionados += String.IsNullOrEmpty(tiposVisitaSelecionados) ? "Online" : "e Online";
 
             if (monday.IsChecked)
                 diasVisitaSelecionados += "Segunda";
@@ -108,9 +115,11 @@ namespace PropagaMed
             MedicoASalvar.Endereco = enderecoMedico.Text;
             MedicoASalvar.CEP = CEPMedico.Text;
             MedicoASalvar.Aniversario = aniversarioMedico.Date;
+            MedicoASalvar.Secretaria = secretaria.Text;
             MedicoASalvar.Telefone = telefoneMedico.Text;
             MedicoASalvar.Celular = celularMedico.Text;
             MedicoASalvar.Email = emailMedico.Text;
+            MedicoASalvar.TiposVisita = tiposVisitaSelecionados;
             MedicoASalvar.DiasVisita = diasVisitaSelecionados;
             MedicoASalvar.HorariosVisita = horariosVisitaSelecionados;
             MedicoASalvar.CRM = CRMMedico.Text;

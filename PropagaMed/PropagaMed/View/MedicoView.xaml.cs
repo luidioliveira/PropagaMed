@@ -19,20 +19,24 @@ namespace PropagaMed.View
             enderecoMedico.Text = medico.Endereco;
             CEPMedico.Text = medico.CEP;
             aniversarioMedico.Date = medico.Aniversario;
+            secretaria.Text = medico.Secretaria;
             telefoneMedico.Text = medico.Telefone;
             celularMedico.Text = medico.Celular;
             emailMedico.Text = medico.Email;
             CRMMedico.Text = medico.CRM;
+            //Tipos preferenciais de visita
+            presencialTipoVisita.IsChecked = medico.TiposVisita is not null && medico.TiposVisita.Contains("Presencial");
+            onlineTipoVisita.IsChecked = medico.TiposVisita is not null && medico.TiposVisita.Contains("Online");
             //Dias preferenciais de visita
-            monday.IsChecked = medico.DiasVisita.Contains("Segunda");
-            tuesday.IsChecked = medico.DiasVisita.Contains("Terça");
-            wednesday.IsChecked = medico.DiasVisita.Contains("Quarta");
-            thursday.IsChecked = medico.DiasVisita.Contains("Quinta");
-            friday.IsChecked = medico.DiasVisita.Contains("Sexta");
+            monday.IsChecked = medico.DiasVisita is not null && medico.DiasVisita.Contains("Segunda");
+            tuesday.IsChecked = medico.DiasVisita is not null && medico.DiasVisita.Contains("Terça");
+            wednesday.IsChecked = medico.DiasVisita is not null && medico.DiasVisita.Contains("Quarta");
+            thursday.IsChecked = medico.DiasVisita is not null && medico.DiasVisita.Contains("Quinta");
+            friday.IsChecked = medico.DiasVisita is not null && medico.DiasVisita.Contains("Sexta");
             //Turnos preferenciais de visita
-            morning.IsChecked = medico.HorariosVisita.Contains("Manhã");
-            afternoon.IsChecked = medico.HorariosVisita.Contains("Tarde");
-            night.IsChecked = medico.HorariosVisita.Contains("Noite");
+            morning.IsChecked = medico.HorariosVisita is not null && medico.HorariosVisita.Contains("Manhã");
+            afternoon.IsChecked = medico.HorariosVisita is not null && medico.HorariosVisita.Contains("Tarde");
+            night.IsChecked = medico.HorariosVisita is not null && medico.HorariosVisita.Contains("Noite");
         }
 
         private async void AtualizarMedicoClicado(object sender, EventArgs e)
@@ -43,9 +47,15 @@ namespace PropagaMed.View
                 Id = medicoId
             };
 
-            //Dias e horários preferências de visita selecionados
-            string diasVisitaSelecionados = "";
-            string horariosVisitaSelecionados = "";
+            //Tipos, dias e horários preferenciais de visita selecionados
+            string tiposVisitaSelecionados = string.Empty;
+            string diasVisitaSelecionados = string.Empty;
+            string horariosVisitaSelecionados = string.Empty;
+
+            if (presencialTipoVisita.IsChecked)
+                tiposVisitaSelecionados += "Presencial";
+            if (onlineTipoVisita.IsChecked)
+                tiposVisitaSelecionados += String.IsNullOrEmpty(tiposVisitaSelecionados) ? "Online" : "e Online";
 
             if (monday.IsChecked)
                 diasVisitaSelecionados += "Segunda";
@@ -71,9 +81,11 @@ namespace PropagaMed.View
             medicoAAtualizar.Endereco = enderecoMedico.Text;
             medicoAAtualizar.CEP = CEPMedico.Text;
             medicoAAtualizar.Aniversario = aniversarioMedico.Date;
+            medicoAAtualizar.Secretaria = secretaria.Text;
             medicoAAtualizar.Telefone = telefoneMedico.Text;
             medicoAAtualizar.Celular = celularMedico.Text;
             medicoAAtualizar.Email = emailMedico.Text;
+            medicoAAtualizar.TiposVisita = tiposVisitaSelecionados;
             medicoAAtualizar.DiasVisita = diasVisitaSelecionados;
             medicoAAtualizar.HorariosVisita = horariosVisitaSelecionados;
             medicoAAtualizar.CRM = CRMMedico.Text;
