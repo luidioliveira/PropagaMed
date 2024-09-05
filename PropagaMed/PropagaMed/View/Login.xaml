@@ -22,57 +22,12 @@
                    Clicked="EntrarClicado"
                 />
 
-            <Label Text="Designed By Luidi Oliveira"
+            <Label Text="v1.0"
                    TextColor="#76cafb"
                    HorizontalTextAlignment="Center"
                    VerticalOptions="EndAndExpand"
                    Padding="11"
                    Scale="0.8"
                  />
-
-        <!--
-        <ScrollView VerticalOptions="CenterAndExpand">
-            <StackLayout>
-                <Entry x:Name="login"
-                   Scale="0.8"     
-                   Placeholder="Login"
-                   BackgroundColor="#FFFFFF"
-                   TextColor="Black"
-                />
-
-                 <Entry x:Name="password"
-                   MaxLength="4"
-                   Keyboard="Numeric"
-                   IsPassword="True"
-                   Scale="0.8"     
-                   Placeholder="Senha"
-                   BackgroundColor="#FFFFFF"
-                   TextColor="Black"
-                />
-
-                <Button x:Name="Entrar" 
-                   Text="Entrar"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"
-                   VerticalOptions="CenterAndExpand"
-                   BackgroundColor="#8b8a8a"
-                   BorderColor="White"
-                   BorderWidth="0.1"
-                   Padding="5"
-                   TextColor="White"
-                   Clicked="EntrarClicado"
-                />
-            </StackLayout>
-        </ScrollView>
-
-        <Button x:Name="Info"
-           Text="Info"
-           TextColor="White"
-           HorizontalOptions="End"
-           VerticalOptions="EndAndExpand"
-           Margin="10"     
-           Clicked="InfoClicado"
-        />
-        !-->
     </StackLayout>
 </ContentPage>
