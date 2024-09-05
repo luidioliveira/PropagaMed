@@ -88,10 +88,11 @@
                     Scale="0.8"
                     />
             
-            <StackLayout Orientation="Horizontal" Margin="35, 0, 0, 0">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                 <CheckBox x:Name="VisitaPresencialTipoVisita" Color="#76cafb" Scale="0.8" />
                 <Label Text="Presencial"
                     TextColor="#76cafb"
+                    HorizontalOptions="Center"
                     VerticalOptions="Center"
                     FontFamily="Arial"
                     FontAttributes="Bold"
@@ -101,6 +102,7 @@
                 <CheckBox x:Name="VisitaOnlineTipoVisita" Color="#76cafb" Scale="0.8" />
                     <Label Text="On-line"
                     TextColor="#76cafb"
+                    HorizontalOptions="Center"
                     VerticalOptions="Center"
                     FontFamily="Arial"
                     FontAttributes="Bold"
