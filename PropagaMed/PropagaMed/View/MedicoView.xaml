@@ -203,7 +203,22 @@
                TextColor="#FFFFFF"
             />
 
-            <Label Text="TIPO DE VISITA"
+            <Label Text="Observação:"
+                   TextColor="#76cafb"
+                   HorizontalTextAlignment="left"
+                   FontFamily="Arial"
+                   FontAttributes="Bold"
+                   Scale="0.8"
+                 />
+            <Editor x:Name="obsMedico"
+                    Scale="0.8" 
+                    Placeholder="Digite uma observação"
+                    PlaceholderColor="#FFFFFF"
+                    BackgroundColor="#76cafb"
+                    TextColor="#FFFFFF">
+            </Editor>
+
+            <Label Text="TIPO PREFERENCIAL DE VISITA"
                     TextColor="#76cafb"
                     HorizontalTextAlignment="Center"
                     FontFamily="Arial"
@@ -234,70 +249,7 @@
             </StackLayout>
 
             <StackLayout>
-                <Label Text="DIA PREFERENCIAL DE VISITA"
-                TextColor="#76cafb"
-                HorizontalTextAlignment="Center"
-                FontFamily="Arial"
-                FontAttributes="Bold"
-                Scale="0.8"
-                />
-
-                <StackLayout Orientation="Horizontal" Scale="0.8">
-                    <CheckBox x:Name="monday" Color="#76cafb" Scale="1" />
-                    <Label Text="Segunda"
-                        TextColor="#76cafb"
-                        HorizontalTextAlignment="Center"
-                        VerticalTextAlignment="Center"
-                        FontFamily="Arial"
-                        FontAttributes="Bold"
-                        Scale="1"
-                        />
-
-                    <CheckBox x:Name="tuesday" Color="#76cafb" Scale="1" />
-                    <Label Text="Terça"
-                        TextColor="#76cafb"
-                        HorizontalTextAlignment="Center"
-                        VerticalTextAlignment="Center"
-                        FontFamily="Arial"
-                        FontAttributes="Bold"
-                        Scale="1"
-                        />
-
-                    <CheckBox x:Name="wednesday" Color="#76cafb" Scale="1" />
-                    <Label Text="Quarta"
-                        TextColor="#76cafb"
-                        HorizontalTextAlignment="Center"
-                        VerticalTextAlignment="Center"
-                        FontFamily="Arial"
-                        FontAttributes="Bold"
-                        Scale="1"
-                        />
-                </StackLayout>
-
-                <StackLayout Orientation="Horizontal" Scale="0.8">
-                    <CheckBox x:Name="thursday" Color="#76cafb" Scale="1" />
-                    <Label Text="Quinta"
-                        TextColor="#76cafb"
-                        HorizontalTextAlignment="Center"
-                        VerticalTextAlignment="Center"
-                        FontFamily="Arial"
-                        FontAttributes="Bold"
-                        Scale="1"
-                        />
-
-                    <CheckBox x:Name="friday" Color="#76cafb" Scale="1" />
-                    <Label Text="Sexta"
-                        TextColor="#76cafb"
-                        HorizontalTextAlignment="Center"
-                        VerticalTextAlignment="Center"
-                        FontFamily="Arial"
-                        FontAttributes="Bold"
-                        Scale="1"
-                        />
-                </StackLayout>
-            </StackLayout>
-
-            <Label Text="TURNO PREFERENCIAL DE VISITA"
+                <Label Text="DIA/TURNO PREFERENCIAL DE VISITA"
                    TextColor="#76cafb"
                    HorizontalTextAlignment="Center"
                    FontFamily="Arial"
@@ -305,36 +257,250 @@
                    Scale="0.8"
                  />
 
-            <StackLayout Orientation="Horizontal" Scale="0.8">
-                <CheckBox x:Name="morning" Color="#76cafb" Scale="1" />
-                <Label Text="Manhã"
-                    TextColor="#76cafb"
-                    HorizontalTextAlignment="Center"
-                    VerticalTextAlignment="Center"
-                    FontFamily="Arial"
-                    FontAttributes="Bold"
-                    Scale="1"
-                />
+                <StackLayout Orientation="Horizontal" Scale="0.8">
+                    <CheckBox x:Name="monday" Color="#76cafb" Scale="1" />
+                    <Label Text="Segunda"
+                       TextColor="#76cafb"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="1"
+                       LineBreakMode="NoWrap"
+                     />
 
-                <CheckBox x:Name="afternoon" Color="#76cafb" Scale="1" />
-                <Label Text="Tarde"
-                    TextColor="#76cafb"
-                    HorizontalTextAlignment="Center"
-                    VerticalTextAlignment="Center"
-                    FontFamily="Arial"
-                    FontAttributes="Bold"
-                    Scale="1"
-                    />
+                    <CheckBox x:Name="manhaMonday" IsVisible="{Binding Source={x:Reference monday}, Path=IsChecked}" Color="SteelBlue" Scale="1"/>
+                    <Label Text="Manhã"
+                       TextColor="SteelBlue"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="1"
+                       IsVisible="{Binding Source={x:Reference monday}, Path=IsChecked}"
+                       LineBreakMode="NoWrap"
+                     />
 
-                <CheckBox x:Name="night" Color="#76cafb" Scale="1" />
-                <Label Text="Noite"
-                    TextColor="#76cafb"
-                    HorizontalTextAlignment="Center"
-                    VerticalTextAlignment="Center"
-                    FontFamily="Arial"
-                    FontAttributes="Bold"
-                    Scale="1"
-                    />
+                    <CheckBox x:Name="tardeMonday" IsVisible="{Binding Source={x:Reference monday}, Path=IsChecked}" Color="SteelBlue" Scale="1" />
+                    <Label Text="Tarde"
+                       TextColor="SteelBlue"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="1"
+                       IsVisible="{Binding Source={x:Reference monday}, Path=IsChecked}"
+                       LineBreakMode="NoWrap"
+                     />
+
+                    <CheckBox x:Name="noiteMonday" IsVisible="{Binding Source={x:Reference monday}, Path=IsChecked}" Color="SteelBlue" Scale="1" />
+                    <Label Text="Noite"
+                       TextColor="SteelBlue"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="1"
+                       IsVisible="{Binding Source={x:Reference monday}, Path=IsChecked}"
+                       LineBreakMode="NoWrap"
+                     />
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal" Scale="0.8">
+                    <CheckBox x:Name="tuesday" Color="#76cafb" Scale="1" />
+                    <Label Text="Terça"
+                       TextColor="#76cafb"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="1"
+                       LineBreakMode="NoWrap"
+                     />
+
+                    <CheckBox x:Name="manhaTuesday" IsVisible="{Binding Source={x:Reference tuesday}, Path=IsChecked}" Color="SteelBlue" Scale="1"/>
+                    <Label Text="Manhã"
+                       TextColor="SteelBlue"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="1"
+                       IsVisible="{Binding Source={x:Reference tuesday}, Path=IsChecked}"
+                       LineBreakMode="NoWrap"
+                     />
+
+                    <CheckBox x:Name="tardeTuesday" IsVisible="{Binding Source={x:Reference tuesday}, Path=IsChecked}" Color="SteelBlue" Scale="1" />
+                    <Label Text="Tarde"
+                       TextColor="SteelBlue"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="1"
+                       IsVisible="{Binding Source={x:Reference tuesday}, Path=IsChecked}"
+                       LineBreakMode="NoWrap"
+                     />
+
+                    <CheckBox x:Name="noiteTuesday" IsVisible="{Binding Source={x:Reference tuesday}, Path=IsChecked}" Color="SteelBlue" Scale="1" />
+                    <Label Text="Noite"
+                       TextColor="SteelBlue"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="1"
+                       IsVisible="{Binding Source={x:Reference tuesday}, Path=IsChecked}"
+                       LineBreakMode="NoWrap"
+                     />
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal" Scale="0.8">
+                    <CheckBox x:Name="wednesday" Color="#76cafb" Scale="1" />
+                    <Label Text="Quarta"
+                       TextColor="#76cafb"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="1"
+                       LineBreakMode="NoWrap"
+                     />
+
+                    <CheckBox x:Name="manhaWednesday" IsVisible="{Binding Source={x:Reference wednesday}, Path=IsChecked}" Color="SteelBlue" Scale="1"/>
+                    <Label Text="Manhã"
+                       TextColor="SteelBlue"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="1"
+                       IsVisible="{Binding Source={x:Reference wednesday}, Path=IsChecked}"
+                       LineBreakMode="NoWrap"
+                     />
+
+                    <CheckBox x:Name="tardeWednesday" IsVisible="{Binding Source={x:Reference wednesday}, Path=IsChecked}" Color="SteelBlue" Scale="1" />
+                    <Label Text="Tarde"
+                       TextColor="SteelBlue"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="1"
+                       IsVisible="{Binding Source={x:Reference wednesday}, Path=IsChecked}"
+                       LineBreakMode="NoWrap"
+                     />
+
+                    <CheckBox x:Name="noiteWednesday" IsVisible="{Binding Source={x:Reference wednesday}, Path=IsChecked}" Color="SteelBlue" Scale="1" />
+                    <Label Text="Noite"
+                       TextColor="SteelBlue"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="1"
+                       IsVisible="{Binding Source={x:Reference wednesday}, Path=IsChecked}"
+                       LineBreakMode="NoWrap"
+                     />
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal" Scale="0.8">
+                    <CheckBox x:Name="thursday" Color="#76cafb" Scale="1" />
+                    <Label Text="Quinta"
+                       TextColor="#76cafb"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="1"
+                       LineBreakMode="NoWrap"
+                     />
+
+                    <CheckBox x:Name="manhaThursday" IsVisible="{Binding Source={x:Reference thursday}, Path=IsChecked}" Color="SteelBlue" Scale="1"/>
+                    <Label Text="Manhã"
+                       TextColor="SteelBlue"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="1"
+                       IsVisible="{Binding Source={x:Reference thursday}, Path=IsChecked}"
+                       LineBreakMode="NoWrap"
+                     />
+
+                    <CheckBox x:Name="tardeThursday" IsVisible="{Binding Source={x:Reference thursday}, Path=IsChecked}" Color="SteelBlue" Scale="1" />
+                    <Label Text="Tarde"
+                       TextColor="SteelBlue"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="1"
+                       IsVisible="{Binding Source={x:Reference thursday}, Path=IsChecked}"
+                       LineBreakMode="NoWrap"
+                     />
+
+                    <CheckBox x:Name="noiteThursday" IsVisible="{Binding Source={x:Reference thursday}, Path=IsChecked}" Color="SteelBlue" Scale="1" />
+                    <Label Text="Noite"
+                       TextColor="SteelBlue"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="1"
+                       IsVisible="{Binding Source={x:Reference thursday}, Path=IsChecked}"
+                       LineBreakMode="NoWrap"
+                     />
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal" Scale="0.8">
+                    <CheckBox x:Name="friday" Color="#76cafb" Scale="1" />
+                    <Label Text="Sexta"
+                       TextColor="#76cafb"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="1"
+                       LineBreakMode="NoWrap"
+                     />
+
+                    <CheckBox x:Name="manhaFriday" IsVisible="{Binding Source={x:Reference friday}, Path=IsChecked}" Color="SteelBlue" Scale="1"/>
+                    <Label Text="Manhã"
+                       TextColor="SteelBlue"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="1"
+                       IsVisible="{Binding Source={x:Reference friday}, Path=IsChecked}"
+                       LineBreakMode="NoWrap"
+                     />
+
+                    <CheckBox x:Name="tardeFriday" IsVisible="{Binding Source={x:Reference friday}, Path=IsChecked}" Color="SteelBlue" Scale="1" />
+                    <Label Text="Tarde"
+                       TextColor="SteelBlue"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="1"
+                       IsVisible="{Binding Source={x:Reference friday}, Path=IsChecked}"
+                       LineBreakMode="NoWrap"
+                     />
+
+                    <CheckBox x:Name="noiteFriday" IsVisible="{Binding Source={x:Reference friday}, Path=IsChecked}" Color="SteelBlue" Scale="1" />
+                    <Label Text="Noite"
+                       TextColor="SteelBlue"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="1"
+                       IsVisible="{Binding Source={x:Reference friday}, Path=IsChecked}"
+                       LineBreakMode="NoWrap"
+                     />
+                </StackLayout>
             </StackLayout>
 
             <Button x:Name="atualizarMedico" 

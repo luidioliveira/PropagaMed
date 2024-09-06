@@ -21,5 +21,6 @@ namespace PropagaMed.Model
         public string DiasVisita { get; set; }
         public string HorariosVisita { get; set; }
         public string CRM { get; set; }
+        public string Observacao { get; set; }
     }
 }

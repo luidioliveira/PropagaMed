@@ -34,9 +34,22 @@ namespace PropagaMed.View
             thursday.IsChecked = medico.DiasVisita is not null && medico.DiasVisita.Contains("Quinta");
             friday.IsChecked = medico.DiasVisita is not null && medico.DiasVisita.Contains("Sexta");
             //Turnos preferenciais de visita
-            morning.IsChecked = medico.HorariosVisita is not null && medico.HorariosVisita.Contains("Manhã");
-            afternoon.IsChecked = medico.HorariosVisita is not null && medico.HorariosVisita.Contains("Tarde");
-            night.IsChecked = medico.HorariosVisita is not null && medico.HorariosVisita.Contains("Noite");
+            manhaMonday.IsChecked = medico.HorariosVisita is not null && medico.HorariosVisita.Contains("ManhãSegunda");
+            tardeMonday.IsChecked = medico.HorariosVisita is not null && medico.HorariosVisita.Contains("TardeSegunda");
+            noiteMonday.IsChecked = medico.HorariosVisita is not null && medico.HorariosVisita.Contains("NoiteSegunda");
+            manhaTuesday.IsChecked = medico.HorariosVisita is not null && medico.HorariosVisita.Contains("ManhãTerça");
+            tardeTuesday.IsChecked = medico.HorariosVisita is not null && medico.HorariosVisita.Contains("TardeTerça");
+            noiteTuesday.IsChecked = medico.HorariosVisita is not null && medico.HorariosVisita.Contains("NoiteTerça");
+            manhaWednesday.IsChecked = medico.HorariosVisita is not null && medico.HorariosVisita.Contains("ManhãQuarta");
+            tardeWednesday.IsChecked = medico.HorariosVisita is not null && medico.HorariosVisita.Contains("TardeQuarta");
+            noiteWednesday.IsChecked = medico.HorariosVisita is not null && medico.HorariosVisita.Contains("NoiteQuarta");
+            manhaThursday.IsChecked = medico.HorariosVisita is not null && medico.HorariosVisita.Contains("ManhãQuinta");
+            tardeThursday.IsChecked = medico.HorariosVisita is not null && medico.HorariosVisita.Contains("TardeQuinta");
+            noiteThursday.IsChecked = medico.HorariosVisita is not null && medico.HorariosVisita.Contains("NoiteQuinta");
+            manhaFriday.IsChecked = medico.HorariosVisita is not null && medico.HorariosVisita.Contains("ManhãSexta");
+            tardeFriday.IsChecked = medico.HorariosVisita is not null && medico.HorariosVisita.Contains("TardeSexta");
+            noiteFriday.IsChecked = medico.HorariosVisita is not null && medico.HorariosVisita.Contains("NoiteSexta");
+            obsMedico.Text = medico.Observacao;
         }
 
         private async void AtualizarMedicoClicado(object sender, EventArgs e)
@@ -58,22 +71,64 @@ namespace PropagaMed.View
                 tiposVisitaSelecionados += String.IsNullOrEmpty(tiposVisitaSelecionados) ? "Online" : "e Online";
 
             if (monday.IsChecked)
+            {
                 diasVisitaSelecionados += "Segunda";
+
+                if (manhaMonday.IsChecked)
+                    horariosVisitaSelecionados += "ManhãSegunda";
+                if (tardeMonday.IsChecked)
+                    horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "TardeSegunda" : " e TardeSegunda";
+                if (noiteMonday.IsChecked)
+                    horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "NoiteSegunda" : " e NoiteSegunda";
+            }
+
             if (tuesday.IsChecked)
+            {
                 diasVisitaSelecionados += String.IsNullOrEmpty(diasVisitaSelecionados) ? "Terça" : " e Terça";
+
+                if (manhaTuesday.IsChecked)
+                    horariosVisitaSelecionados += "ManhãTerça";
+                if (tardeTuesday.IsChecked)
+                    horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "TardeTerça" : " e TardeTerça";
+                if (noiteTuesday.IsChecked)
+                    horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "NoiteTerça" : " e NoiteTerça";
+            }
+
             if (wednesday.IsChecked)
+            {
                 diasVisitaSelecionados += String.IsNullOrEmpty(diasVisitaSelecionados) ? "Quarta" : " e Quarta";
+
+                if (manhaWednesday.IsChecked)
+                    horariosVisitaSelecionados += "ManhãQuarta";
+                if (tardeWednesday.IsChecked)
+                    horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "TardeQuarta" : " e TardeQuarta";
+                if (noiteWednesday.IsChecked)
+                    horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "NoiteQuarta" : " e NoiteQuarta";
+            }
+
             if (thursday.IsChecked)
+            {
                 diasVisitaSelecionados += String.IsNullOrEmpty(diasVisitaSelecionados) ? "Quinta" : " e Quinta";
+
+                if (manhaThursday.IsChecked)
+                    horariosVisitaSelecionados += "ManhãQuinta";
+                if (tardeThursday.IsChecked)
+                    horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "TardeQuinta" : " e TardeQuinta";
+                if (noiteThursday.IsChecked)
+                    horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "NoiteQuinta" : " e NoiteQuinta";
+            }
+
             if (friday.IsChecked)
+            {
                 diasVisitaSelecionados += String.IsNullOrEmpty(diasVisitaSelecionados) ? "Sexta" : " e Sexta";
 
-            if (morning.IsChecked)
-                horariosVisitaSelecionados += "Manhã";
-            if (afternoon.IsChecked)
-                horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "Tarde" : " e Tarde";
-            if (night.IsChecked)
-                horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "Noite" : " e Noite";
+                if (manhaFriday.IsChecked)
+                    horariosVisitaSelecionados += "ManhãSexta";
+                if (tardeFriday.IsChecked)
+                    horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "TardeSexta" : " e TardeSexta";
+                if (noiteFriday.IsChecked)
+                    horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "NoiteSexta" : " e NoiteSexta";
+            }
 
             medicoAAtualizar.Nome = nomeMedico.Text;
             medicoAAtualizar.Especialidade = espMedico.Text;
@@ -89,6 +144,7 @@ namespace PropagaMed.View
             medicoAAtualizar.DiasVisita = diasVisitaSelecionados;
             medicoAAtualizar.HorariosVisita = horariosVisitaSelecionados;
             medicoAAtualizar.CRM = CRMMedico.Text;
+            medicoAAtualizar.Observacao = obsMedico.Text;
 
             if (!String.IsNullOrEmpty(medicoAAtualizar.Nome))
             {

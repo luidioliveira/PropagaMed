@@ -92,22 +92,64 @@ namespace PropagaMed
                 tiposVisitaSelecionados += String.IsNullOrEmpty(tiposVisitaSelecionados) ? "Online" : "e Online";
 
             if (monday.IsChecked)
+            {
                 diasVisitaSelecionados += "Segunda";
+
+                if (manhaMonday.IsChecked)
+                    horariosVisitaSelecionados += "ManhãSegunda";
+                if (tardeMonday.IsChecked)
+                    horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "TardeSegunda" : " e TardeSegunda";
+                if (noiteMonday.IsChecked)
+                    horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "NoiteSegunda" : " e NoiteSegunda";
+            }
+
             if (tuesday.IsChecked)
+            { 
                 diasVisitaSelecionados += String.IsNullOrEmpty(diasVisitaSelecionados) ? "Terça" : " e Terça";
+
+                if (manhaTuesday.IsChecked)
+                    horariosVisitaSelecionados += "ManhãTerça";
+                if (tardeTuesday.IsChecked)
+                    horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "TardeTerça" : " e TardeTerça";
+                if (noiteTuesday.IsChecked)
+                    horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "NoiteTerça" : " e NoiteTerça";
+            }
+
             if (wednesday.IsChecked)
+            { 
                 diasVisitaSelecionados += String.IsNullOrEmpty(diasVisitaSelecionados) ? "Quarta" : " e Quarta";
+
+                if (manhaWednesday.IsChecked)
+                    horariosVisitaSelecionados += "ManhãQuarta";
+                if (tardeWednesday.IsChecked)
+                    horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "TardeQuarta" : " e TardeQuarta";
+                if (noiteWednesday.IsChecked)
+                    horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "NoiteQuarta" : " e NoiteQuarta";
+            }
+
             if (thursday.IsChecked)
+            {
                 diasVisitaSelecionados += String.IsNullOrEmpty(diasVisitaSelecionados) ? "Quinta" : " e Quinta";
+
+                if (manhaThursday.IsChecked)
+                    horariosVisitaSelecionados += "ManhãQuinta";
+                if (tardeThursday.IsChecked)
+                    horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "TardeQuinta" : " e TardeQuinta";
+                if (noiteThursday.IsChecked)
+                    horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "NoiteQuinta" : " e NoiteQuinta";
+            }
+
             if (friday.IsChecked)
+            {
                 diasVisitaSelecionados += String.IsNullOrEmpty(diasVisitaSelecionados) ? "Sexta" : " e Sexta";
 
-            if (morning.IsChecked)
-                horariosVisitaSelecionados += "Manhã";
-            if (afternoon.IsChecked)
-                horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "Tarde" : " e Tarde";
-            if (night.IsChecked)
-                horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "Noite" : " e Noite";
+                if (manhaFriday.IsChecked)
+                    horariosVisitaSelecionados += "ManhãSexta";
+                if (tardeFriday.IsChecked)
+                    horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "TardeSexta" : " e TardeSexta";
+                if (noiteFriday.IsChecked)
+                    horariosVisitaSelecionados += String.IsNullOrEmpty(horariosVisitaSelecionados) ? "NoiteSexta" : " e NoiteSexta";
+            }
 
             MedicoASalvar.Nome = nomeMedico.Text;
             MedicoASalvar.Especialidade = espMedico.Text;
@@ -123,6 +165,7 @@ namespace PropagaMed
             MedicoASalvar.DiasVisita = diasVisitaSelecionados;
             MedicoASalvar.HorariosVisita = horariosVisitaSelecionados;
             MedicoASalvar.CRM = CRMMedico.Text;
+            MedicoASalvar.Observacao = obsMedico.Text;
 
             if (!String.IsNullOrEmpty(MedicoASalvar.Nome))
             {
