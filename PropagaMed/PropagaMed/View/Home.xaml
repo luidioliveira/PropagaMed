@@ -528,7 +528,7 @@
                             <Label x:Name="itemVisita" TextColor="#FFFFFF" Text="{Binding NomeMedicoVisita}" FontSize="15">
                                 <Label.Triggers>
                                     <DataTrigger TargetType="Label" Binding="{Binding IsBirthday}" Value="True">
-                                        <Setter Property="BackgroundColor" Value="DodgerBlue" />
+                                        <Setter Property="BackgroundColor" Value="SteelBlue" />
                                     </DataTrigger>
                                     <DataTrigger TargetType="Label" Binding="{Binding IsBirthday}" Value="False">
                                         <Setter Property="BackgroundColor" Value="#76cafb" />
@@ -598,6 +598,28 @@
         </ContentPage.IconImageSource>
         <StackLayout>
             <SearchBar x:Name="searchBarMedicos" Placeholder="Buscar..." TextChanged="OnSearchBarMedicosChanged"/>
+            <Button x:Name="buttonMedicosFilter" Text="Filtro" Clicked="OnButtonMedicosFilterButtonClicked" BackgroundColor="#76cafb" TextColor="#FFFFFF" />
+            <StackLayout x:Name="medicosFilter" Orientation="Horizontal" HorizontalOptions="Center" IsVisible="false">
+                <CheckBox x:Name="RJ" Color="#76cafb" Scale="0.8" />
+                <Label Text="Rio de Janeiro"
+                    TextColor="#76cafb"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    FontFamily="Arial"
+                    FontAttributes="Bold"
+                    Scale="0.8"
+                />
+                <CheckBox x:Name="NIT" Color="#76cafb" Scale="0.8" />
+                <Label Text="Niterói"
+                    TextColor="#76cafb"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    FontFamily="Arial"
+                    FontAttributes="Bold"
+                    Scale="0.8"
+                />
+                <Button Text="Filtrar" Clicked="OnMedicosFilterButtonClicked" BackgroundColor="#76cafb" TextColor="#FFFFFF" />
+            </StackLayout>
             <ListView x:Name="listView" BackgroundColor="#FFFFFF" VerticalOptions="FillAndExpand" HasUnevenRows="true" RowHeight="-1">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -614,28 +636,37 @@
                                           Text="Visitas" />
                             </ViewCell.ContextActions>
                             <StackLayout>
-                            <Label BackgroundColor="#76cafb" TextColor="#FFFFFF" Text="{Binding Nome}" FontSize="15"/>
-                            <Label TextColor="#76cafb" FontSize="12">
-                                <Label.FormattedText>
-                                   <FormattedString>
-                                     <Span Text="Especialidade: "/>
-                                     <Span Text="{Binding Especialidade}"/>
-                                   </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-                            <Label TextColor="#76cafb" FontSize="12" Margin="0, 0, 0, 5">
-                                <Label.FormattedText>
-                                   <FormattedString>
-                                     <Span Text="Localização: "/>
-                                     <Span Text="{Binding Localizacao}"/>
-                                   </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
+                                <Label BackgroundColor="#76cafb" TextColor="#FFFFFF" Text="{Binding Nome}" FontSize="15"/>
+                                <Label TextColor="#76cafb" FontSize="12">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Especialidade: "/>
+                                            <Span Text="{Binding Especialidade}"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label TextColor="#76cafb" FontSize="12" Margin="0, 0, 0, 5">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Localização: "/>
+                                            <Span Text="{Binding Localizacao}"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
+            <Button x:Name="allMedicos"
+                    TextColor="#76cafb"
+                    Text="Ver Todos os Médicos"
+                    HorizontalOptions="Center"
+                    VerticalOptions="End"
+                    Clicked="GetAllMedicosAsync"
+                    IsEnabled="false"
+                    />
         </StackLayout>
     </ContentPage>
 </TabbedPage>

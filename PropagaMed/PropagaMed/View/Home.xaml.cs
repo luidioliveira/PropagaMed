@@ -200,6 +200,14 @@ namespace PropagaMed
             this.CurrentPage = verVisitas;
         }
 
+        void GetAllMedicosAsync(object sender, EventArgs e)
+        {
+            AlimentaMedicosEVisitas();
+            allMedicos.IsEnabled = false;
+
+            this.CurrentPage = verMedicos;
+        }
+
         async void DetalharMedico(object sender, EventArgs e)
         {
             var mi = ((MenuItem)sender);
@@ -267,6 +275,34 @@ namespace PropagaMed
         void OnSearchBarMedicosChanged(object sender, TextChangedEventArgs e)
         {
             listView.ItemsSource = App.Database.GetItemsMedicoAsync().Result.Where(i => i.Nome.ToLower().Contains(e.NewTextValue.ToLower())).OrderBy(m => m.Nome);
+        }
+
+        private void OnButtonMedicosFilterButtonClicked(object sender, EventArgs e)
+        {
+            buttonMedicosFilter.IsVisible = false;
+            medicosFilter.IsVisible = true;
+        }
+
+        async void OnMedicosFilterButtonClicked(object sender, EventArgs e)
+        {
+            var medicos = await App.Database.GetItemsMedicoAsync();
+            List<Medico> filteredItems = new();
+
+            if (RJ.IsChecked)
+            {
+                filteredItems.AddRange(medicos.Where(item => item.Localizacao.Contains("Rio")));
+            }
+
+            if (NIT.IsChecked)
+            {
+                filteredItems.AddRange(medicos.Where(item => item.Localizacao.Contains("Niterói")));
+            }
+
+            listView.ItemsSource = filteredItems.OrderBy(m => m.Nome);
+
+            medicosFilter.IsVisible = false;
+            buttonMedicosFilter.IsVisible = true;
+            allMedicos.IsEnabled = true;
         }
     }
 }
