@@ -22,7 +22,9 @@ public static class Config
             {
                 SendGridApiKey = jsonObj["SENDGRID_API_KEY"].ToString(),
                 MailFrom = jsonObj["MAIL_FROM"].ToString(),
-                MailTo = jsonObj["MAIL_TO"].ToString()
+                MailTo = jsonObj["MAIL_TO"].ToString(),
+                UsersData = jsonObj["AUTH_USERS"].ToString(),
+                MasterUser = jsonObj["MASTER_USER"].ToString()
             };
         }
     }

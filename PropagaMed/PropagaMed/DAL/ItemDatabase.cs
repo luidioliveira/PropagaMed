@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PropagaMed;
 using PropagaMed.Model;
 using SQLite;
 
@@ -10,7 +9,7 @@ namespace PropagaMed.Dal
 {
     public class ItemDatabase
     {
-        static readonly Lazy<SQLiteAsyncConnection> lazyInitializer = new Lazy<SQLiteAsyncConnection>(() =>
+        static readonly Lazy<SQLiteAsyncConnection> lazyInitializer = new(() =>
         {
             return new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags, false);
         });
@@ -27,17 +26,15 @@ namespace PropagaMed.Dal
         {
             if (!initialized)
             {
-                if (!Database.TableMappings.Any(m => m.MappedType.Name == typeof(Medico).Name))
+                try
                 {
                     await Database.CreateTablesAsync(CreateFlags.None, typeof(Medico)).ConfigureAwait(false);
-                    initialized = true;
-                }
-
-                if (!Database.TableMappings.Any(m => m.MappedType.Name == typeof(Visita).Name))
-                {
                     await Database.CreateTablesAsync(CreateFlags.None, typeof(Visita)).ConfigureAwait(false);
+                    await Database.CreateTablesAsync(CreateFlags.None, typeof(UserData)).ConfigureAwait(false);
+
                     initialized = true;
                 }
+                catch { }
             }
         }
 
@@ -63,7 +60,7 @@ namespace PropagaMed.Dal
             var SixMonthsSameDay = DateTime.Now.AddMonths(-6).Date;
 
             switch (typeParameter)
-            { 
+            {
                 case (int)ExportEnum.byDay:
                     return Database.Table<Visita>().Where(i => i.DiaVisita == DateTime.Now.Date).ToListAsync();
                 case (int)ExportEnum.byMonth:
@@ -100,6 +97,16 @@ namespace PropagaMed.Dal
         public Task<int> DeleteItemAsync(object item)
         {
             return Database.DeleteAsync(item);
+        }
+
+        public Task<List<UserData>> GetItemsUserDataAsync()
+        {
+            return Database.Table<UserData>().ToListAsync();
+        }
+
+        public Task CloseConnections()
+        {
+            return Database.CloseAsync();
         }
     }
 }

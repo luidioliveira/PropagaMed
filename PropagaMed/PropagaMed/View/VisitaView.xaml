@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    x:Class="PropagaMed.View.VisitaView"
+    x:Name="atualizaVisita"
+    Title="Visualização de Visita"
+    BackgroundColor="#FFFFFF">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <Label Text="Médico(a):"
+                       TextColor="#76cafb"
+                       HorizontalTextAlignment="left"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="0.8"/>
+                <Entry x:Name="nomeMedico"
+                       Scale="0.8"     
+                       Placeholder="Nome"
+                       PlaceholderColor="#FFFFFF"
+                       BackgroundColor="#76cafb"
+                       TextColor="#FFFFFF"
+                       IsEnabled="False"
+                />
+
+                <StackLayout>
+                    <Label Text="Data:"
+                       TextColor="#76cafb"
+                       HorizontalTextAlignment="left"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="0.8"
+                     />
+
+                    <DatePicker x:Name="dataVisita"
+                        Scale="0.8"        
+                        MinimumDate="{Binding DataDeHoje}"
+                        BackgroundColor="#76cafb"
+                        TextColor="#FFFFFF"
+                        DateSelected="dataVisita_DateSelected"
+                     />
+                 </StackLayout>
+
+                <StackLayout>
+                <Label Text="Horário:"
+                       TextColor="#76cafb"
+                       HorizontalTextAlignment="left"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="0.8"
+                     />
+            
+                <TimePicker x:Name="horaVisita"
+                    Scale="0.8"
+                    BackgroundColor="#76cafb"
+                    TextColor="#FFFFFF"
+                 />
+                </StackLayout>
+            
+                <Label Text="Tipo de Visita:"
+                        TextColor="#76cafb"
+                        HorizontalTextAlignment="left"
+                        FontFamily="Arial"
+                        FontAttributes="Bold"
+                        Scale="0.8"
+                        />
+            
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <CheckBox x:Name="VisitaPresencialTipoVisita" Color="#76cafb" Scale="0.8" />
+                    <Label Text="Presencial"
+                        TextColor="#76cafb"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        FontFamily="Arial"
+                        FontAttributes="Bold"
+                        Scale="0.8"
+                    />
+
+                    <CheckBox x:Name="VisitaOnlineTipoVisita" Color="#76cafb" Scale="0.8" />
+                        <Label Text="On-line"
+                        TextColor="#76cafb"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        FontFamily="Arial"
+                        FontAttributes="Bold"
+                        Scale="0.8"
+                        />
+                </StackLayout>
+
+                <Label Text="Observação:"
+                       TextColor="#76cafb"
+                       HorizontalTextAlignment="left"
+                       FontFamily="Arial"
+                       FontAttributes="Bold"
+                       Scale="0.8"
+                     />
+                <Editor x:Name="obsVisita"
+                        Scale="0.8" 
+                        Placeholder="Digite uma observação"
+                        PlaceholderColor="#FFFFFF"
+                        BackgroundColor="#76cafb"
+                        TextColor="#FFFFFF">
+                </Editor>
+            
+                 <Button x:Name="atualizarVisita" 
+                   Text="Atualizar"
+                   TextColor="#76cafb"
+                   HorizontalOptions="Center"
+                   VerticalOptions="End"
+                   Clicked="AtualizarVisitaClicado"
+                />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

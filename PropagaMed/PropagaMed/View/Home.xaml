@@ -19,23 +19,27 @@
         </ContentPage.IconImageSource>
     <ScrollView>
         <StackLayout>
-                <Label Text="NOVA VISITA"
-                   TextColor="#76cafb"
-                   HorizontalTextAlignment="Center"
-                   VerticalOptions="CenterAndExpand"
-                   Margin="50"
-                   FontFamily="Arial"
-                   FontAttributes="Bold"
-                   Scale="1.8"
-                />
-
-            <Label Text="Médico(a):"
-                   TextColor="#76cafb"
-                   HorizontalTextAlignment="left"
-                   FontFamily="Arial"
-                   FontAttributes="Bold"
-                   Scale="0.8"
-                 />
+            <Label Text="NOVA VISITA"
+                TextColor="#76cafb"
+                HorizontalTextAlignment="Center"
+                VerticalOptions="CenterAndExpand"
+                Margin="50"
+                FontFamily="Arial"
+                FontAttributes="Bold"
+                Scale="1.8"
+            />
+            
+             <Label Text="Médico(a):"
+                    TextColor="#76cafb"
+                    HorizontalTextAlignment="left"
+                    FontFamily="Arial"
+                    FontAttributes="Bold"
+                    Scale="0.8"
+                    />
+            <SearchBar x:Name="searchBarMedicosVisita"
+                       Placeholder="Filtrar médico..."
+                       TextChanged="OnSearchBarMedicosVisitaChanged"
+                       Scale="0.8"/>
             <Picker x:Name="medicosPicker"
                     TitleColor="#FFFFFF"
                     Title="Escolha um(a) médico(a)" 
@@ -43,8 +47,7 @@
                     Scale="0.8"
                     BackgroundColor="#76cafb"
                     TextColor="#FFFFFF"
-                    SelectedIndexChanged="medicosPicker_SelectedIndexChanged"
-            />
+                    SelectedIndexChanged="medicosPicker_SelectedIndexChanged"/>
 
             <StackLayout>
                 <Label Text="Data:"
@@ -261,7 +264,7 @@
                  />   
             </StackLayout>
 
-            <Label Text="Secretária:"
+            <Label Text="Secretário(a):"
                 TextColor="#76cafb"
                 HorizontalTextAlignment="left"
                 FontFamily="Arial"
@@ -272,7 +275,7 @@
             <Entry x:Name="secretaria"
                 Text="{Binding Secretaria}"
                 Scale="0.8"     
-                Placeholder="Secretária"
+                Placeholder="Secretário(a)"
                 PlaceholderColor="#FFFFFF"
                 BackgroundColor="#76cafb"
                 TextColor="#FFFFFF"
@@ -683,8 +686,11 @@
                 <DataTemplate>
                     <ViewCell Tapped="ViewSelected">
                         <ViewCell.ContextActions>
-                            <MenuItem Clicked="DetalharVisita"
+                            <MenuItem Clicked="ObservacaoVisita"
                                       CommandParameter="{Binding Observacao}"
+                                      Text="Observação" />
+                            <MenuItem Clicked="DetalharVisita"
+                                      CommandParameter="{Binding Id}"
                                       Text="Detalhar" />
                             <MenuItem Clicked="DeletarVisita"
                                       CommandParameter="{Binding Id}"

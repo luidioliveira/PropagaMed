@@ -36,5 +36,9 @@
 	<string>LaunchScreen</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<key>NSFileReadUsageDescription</key>
+	<string>Necessário para backup de banco de dados</string>
+	<key>NSFileWriteUsageDescription</key>
+	<string>Necessário para backup de banco de dados</string>
 </dict>
 </plist>

@@ -54,7 +54,7 @@ namespace PropagaMed.View
 
         private async void AtualizarMedicoClicado(object sender, EventArgs e)
         {
-            var returnPage = new Home(true);
+            var returnPage = new Home("verMedicos");
             var medicoAAtualizar = new Medico
             {
                 Id = medicoId

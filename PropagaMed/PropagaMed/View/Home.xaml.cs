@@ -13,12 +13,12 @@ namespace PropagaMed
         Medico MedicoSelecionado = new();
         DateTime DataSelecionada = DateTime.Now.Date;
 
-        public Home(bool otherView = false)
+        public Home(string otherView = "")
         {
             InitializeComponent();
             AlimentaMedicosEVisitas();
 
-            this.CurrentPage = otherView ? verMedicos : this.CurrentPage;
+            this.CurrentPage = string.IsNullOrEmpty(otherView) ? this.CurrentPage : (Page)CurrentPage.FindByName(otherView);
         }
 
         private void ItemTapped(object sender, System.EventArgs e)
@@ -189,10 +189,18 @@ namespace PropagaMed
             DataSelecionada = (DateTime)picker.Date;
         }
 
-        void DetalharVisita(object sender, EventArgs e)
+        async void ObservacaoVisita(object sender, EventArgs e)
         {
             var mi = ((MenuItem)sender);
-            DisplayAlert("Observação", $"{mi.CommandParameter}", "Ok");
+            await DisplayAlert("Observação", $"{mi.CommandParameter}", "Ok");
+        }
+
+        async void DetalharVisita(object sender, EventArgs e)
+        {
+            var mi = ((MenuItem)sender);
+            var VisitaASerDetalhada = App.Database.GetItemsVisitaAsync().Result.Where(v => v.Id == int.Parse(mi.CommandParameter.ToString())).FirstOrDefault();
+
+            await Navigation.PushAsync(new VisitaView(VisitaASerDetalhada));
         }
 
         async void DeletarVisita(object sender, EventArgs e)
@@ -346,6 +354,11 @@ namespace PropagaMed
             medicosFilter.IsVisible = false;
             buttonMedicosFilter.IsVisible = true;
             allMedicos.IsEnabled = true;
+        }
+
+        void OnSearchBarMedicosVisitaChanged(object sender, TextChangedEventArgs e)
+        {
+            medicosPicker.ItemsSource = App.Database.GetItemsMedicoAsync().Result.Where(i => i.Nome.ToLower().Contains(e.NewTextValue.ToLower())).OrderBy(m => m.Nome).ToList();
         }
     }
 }

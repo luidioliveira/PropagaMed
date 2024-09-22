@@ -10,6 +10,25 @@
              Source="PropagaMed_New_Logo"
              />
 
+            <Entry x:Name="emailUsuario"
+               BackgroundColor="#76cafb"
+               TextColor="#FFFFFF"
+               Scale="0.9"
+               Placeholder="E-mail"
+               PlaceholderColor="#FFFFFF"
+            />
+
+            <Entry x:Name="pinUsuario"
+               BackgroundColor="#76cafb"
+               TextColor="#FFFFFF"
+               Scale="0.9"
+               MaxLength="4"
+               Keyboard="Numeric"
+               IsPassword="True"
+               Placeholder="Senha"
+               PlaceholderColor="#FFFFFF"
+            />
+
             <Button x:Name="Entrar" 
                    Text="Entrar"
                    FontAttributes="Bold"
@@ -19,10 +38,26 @@
                    BackgroundColor="#76cafb"
                    Padding="15"
                    TextColor="#FFFFFF"
-                   Clicked="EntrarClicado"
+                   Clicked="EntrarClicadoAsync"
+                   Scale="0.8"
                 />
 
-            <Label Text="v1.0"
+            <Button x:Name="RecoveryBD" 
+                   Text="Recuperar Banco de Dados"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   VerticalOptions="CenterAndExpand"
+                   Margin="5"
+                   BackgroundColor="#FFFFFF"
+                   BorderColor="#76cafb"
+                   BorderWidth="0.5"
+                   Padding="15"
+                   TextColor="#76cafb"
+                   Clicked="RecoveryBDClicadoAsync"
+                   Scale="0.7">
+            </Button>
+
+            <Label Text="v2.0"
                    TextColor="#76cafb"
                    HorizontalTextAlignment="Center"
                    VerticalOptions="EndAndExpand"

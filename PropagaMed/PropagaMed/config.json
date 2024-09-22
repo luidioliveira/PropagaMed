@@ -1,5 +1,21 @@
 {
   "SENDGRID_API_KEY": "",
-  "MAIL_FROM": "luidi.lima@poli.ufrj.br",
-  "MAIL_TO": "luidi.lima@poli.ufrj.br"
+  "MAIL_FROM": "",
+  "MAIL_TO": "",
+  "AUTH_USERS":
+  [
+    {
+      "mail": "",
+      "pin": ""
+    },
+    {
+      "mail": "",
+      "pin": ""
+    }
+  ],
+  "MASTER_USER":
+  {
+      "mail": "",
+      "pin": ""
+  }
 }

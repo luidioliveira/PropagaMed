@@ -78,6 +78,15 @@
     <PackageReference Include="SendGrid">
       <Version>9.29.3</Version>
     </PackageReference>
+    <PackageReference Include="Google.Apis.Drive.v3">
+      <Version>1.68.0.3508</Version>
+    </PackageReference>
+    <PackageReference Include="Xam.Plugin.Media">
+      <Version>6.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Xam.Plugin.FilePicker">
+      <Version>1.1.0</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />

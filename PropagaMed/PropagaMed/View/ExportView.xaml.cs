@@ -62,7 +62,7 @@ namespace PropagaMed.View
 
                 if (!File.Exists(personalFolderFile))
                 {
-                    List<string> content = new() { "Controle de Visitas", "Nº;CRM;Nome;Data;Hora;Especialidade;Secretaria;Observação;" };
+                    List<string> content = new() { "Controle de Visitas", "Nº;CRM;Nome;Data;Hora;Especialidade;Secretário(a);Observação;" };
                     content.AddRange(visitas.Select(v => string.Join(";", visitas.IndexOf(v) + 1, medicos.Where(m => m.Id.Equals(v.IdMedicoVisita)).First()?.CRM, v.NomeMedicoVisita, v.DiaVisita.ToString("dd/MM/yyyy"), v.HoraVisita.ToString(@"hh\:mm"), medicos.Where(m => m.Id.Equals(v.IdMedicoVisita)).First()?.Especialidade, medicos.Where(m => m.Id.Equals(v.IdMedicoVisita)).First()?.Secretaria, v.Observacao)).ToList());
                     File.WriteAllLines(personalFolderFile, content.ToArray(), System.Text.Encoding.UTF8);
                 }
@@ -75,7 +75,7 @@ namespace PropagaMed.View
                 var client = new SendGridClient(apiKey);
                 var from = new EmailAddress(configItems.MailFrom, "PropagaMed");
                 var subject = $"PropagaMed - Relatório de Controle de Visitas - {DateTime.Now:dd/MM/yyyy}";
-                var to = new EmailAddress(configItems.MailTo, "Luidi Oliveira");
+                var to = new EmailAddress(configItems.MailTo, "Usuário PropagaMed");
                 var plainTextContent = $"Segue anexo o arquivo de visitas {type}.";
                 var htmlContent = $"<strong>Segue anexo o arquivo de visitas {type}.</strong>";
                 var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
