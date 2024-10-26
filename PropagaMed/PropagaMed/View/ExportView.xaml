@@ -51,6 +51,41 @@
                     Clicked="ExportToCSV"
                     CommandParameter="3"
                 />
+
+                <Button x:Name="exportCustomSelected" 
+                    Text="Personalizado"
+                    TextColor="#76cafb"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="CenterAndExpand"
+                    Clicked="CustomExportClicked"
+                />
+
+                <StackLayout x:Name="customDateFilter" IsVisible="false">
+                    <DatePicker x:Name="inicioVisitaExport"
+                        Scale="0.8"        
+                        MinimumDate="{Binding DataDeHoje}"
+                        BackgroundColor="#76cafb"
+                        TextColor="#FFFFFF"
+                        DateSelected="InicioVisita_DateSelected"
+                     />
+
+                    <DatePicker x:Name="fimVisitaExport"
+                        Scale="0.8"        
+                        MinimumDate="{Binding DataDeHoje}"
+                        BackgroundColor="#76cafb"
+                        TextColor="#FFFFFF"
+                        DateSelected="FimVisita_DateSelected"
+                     />
+
+                    <Button x:Name="exportCustom" 
+                            Text="Exportar Personalizado"
+                            TextColor="CornflowerBlue"
+                            HorizontalOptions="Fill"
+                            VerticalOptions="CenterAndExpand"
+                            Clicked="ExportToCSV"
+                            CommandParameter="4"
+                    />
+                </StackLayout>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

@@ -57,7 +57,7 @@
                    Scale="0.7">
             </Button>
 
-            <Label Text="v2.1"
+            <Label Text="v2.2"
                    TextColor="#76cafb"
                    HorizontalTextAlignment="Center"
                    VerticalOptions="EndAndExpand"

@@ -12,9 +12,24 @@ namespace PropagaMed.View
 {
     public partial class ExportView : ContentPage
     {
+        DateTime InicioVisitaDataSelecionada = DateTime.Now.Date;
+        DateTime FimVisitaDataSelecionada = DateTime.Now.Date;
+
         public ExportView()
         {
             InitializeComponent();
+        }
+
+        void InicioVisita_DateSelected(object sender, DateChangedEventArgs e)
+        {
+            DatePicker picker = sender as DatePicker;
+            InicioVisitaDataSelecionada = (DateTime)picker.Date;
+        }
+
+        void FimVisita_DateSelected(object sender, DateChangedEventArgs e)
+        {
+            DatePicker picker = sender as DatePicker;
+            FimVisitaDataSelecionada = (DateTime)picker.Date;
         }
 
         [Obsolete]
@@ -47,10 +62,19 @@ namespace PropagaMed.View
                     type = "para os últimos 6 meses";
                     typeAdd = "Ultimos_6_meses";
                     break;
+                case (int)ExportEnum.custom:
+                    type = $"com período personalizado - {InicioVisitaDataSelecionada:dd-MM-yyyy} a {FimVisitaDataSelecionada:dd-MM-yyyy}";
+                    typeAdd = $"{InicioVisitaDataSelecionada:dd-MM-yyyy}_a_{FimVisitaDataSelecionada:dd-MM-yyyy}";
+                    break;
             }
 
             string personalFolderFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal)).ToString() + $@"/PropagaMed_Visitas_{typeAdd}.csv";
-            List<Visita> visitas = App.Database.GetItemsVisitaByParameterAsync(parameter).Result.OrderBy(v => v.DiaVisita).ThenBy(v => v.HoraVisita).ThenBy(v => v.NomeMedicoVisita).ToList();
+
+            List<Visita> visitas = parameter.Equals((int)ExportEnum.custom) ?
+                                   App.Database.GetItemsVisitaByCustomParameterAsync(InicioVisitaDataSelecionada, FimVisitaDataSelecionada).Result.OrderBy(v => v.DiaVisita).ThenBy(v => v.HoraVisita).ToList()
+                                   :
+                                   App.Database.GetItemsVisitaByParameterAsync(parameter).Result.OrderBy(v => v.DiaVisita).ThenBy(v => v.HoraVisita).ToList();
+
             List<Medico> medicos = new();
 
             if (visitas.Any())
@@ -62,8 +86,8 @@ namespace PropagaMed.View
 
                 if (!File.Exists(personalFolderFile))
                 {
-                    List<string> content = new() { "Controle de Visitas", "Nº;CRM;Nome;Data;Hora;Especialidade;Secretário(a);Observação;" };
-                    content.AddRange(visitas.Select(v => string.Join(";", visitas.IndexOf(v) + 1, medicos.Where(m => m.Id.Equals(v.IdMedicoVisita)).First()?.CRM, v.NomeMedicoVisita, v.DiaVisita.ToString("dd/MM/yyyy"), v.HoraVisita.ToString(@"hh\:mm"), medicos.Where(m => m.Id.Equals(v.IdMedicoVisita)).First()?.Especialidade, medicos.Where(m => m.Id.Equals(v.IdMedicoVisita)).First()?.Secretaria, v.Observacao)).ToList());
+                    List<string> content = new() { "Controle de Visitas", "Nº;CRM;Nome;Data;Hora;Especialidade;Observação;" };
+                    content.AddRange(visitas.Select(v => string.Join(";", visitas.IndexOf(v) + 1, medicos.Where(m => m.Id.Equals(v.IdMedicoVisita)).First()?.CRM, v.NomeMedicoVisita, v.DiaVisita.ToString("dd/MM/yyyy"), v.HoraVisita.ToString(@"hh\:mm"), medicos.Where(m => m.Id.Equals(v.IdMedicoVisita)).First()?.Especialidade, v.Observacao)).ToList());
                     File.WriteAllLines(personalFolderFile, content.ToArray(), System.Text.Encoding.UTF8);
                 }
 
@@ -103,6 +127,11 @@ namespace PropagaMed.View
 
             actInd.IsVisible = false;
             actInd.IsRunning = false;
+        }
+
+        void CustomExportClicked(object sender, EventArgs e)
+        {
+            customDateFilter.IsVisible = true;
         }
     }
 }

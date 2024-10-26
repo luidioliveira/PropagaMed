@@ -1,4 +1,4 @@
 ﻿namespace PropagaMed.Model
 {
-    public enum ExportEnum { byDay = 0, byMonth = 1, lastMonth = 2, lastSixMonths = 3 };
+    public enum ExportEnum { byDay = 0, byMonth = 1, lastMonth = 2, lastSixMonths = 3, custom = 4 };
 }

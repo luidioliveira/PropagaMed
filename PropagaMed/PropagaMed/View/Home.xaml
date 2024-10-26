@@ -746,6 +746,15 @@
                 IsEnabled="false"
                 />
 
+        <Button x:Name="deleteAllVisits"
+                TextColor="#76cafb"
+                Text="Deletar Todas as Visitas"
+                HorizontalOptions="Center"
+                VerticalOptions="End"
+                Clicked="DeleteAllVisitsAsync"
+                IsEnabled="false"
+                />
+
         <Button x:Name="exportParameters"
                 TextColor="#76cafb"
                 Text="Exportar Visitas"

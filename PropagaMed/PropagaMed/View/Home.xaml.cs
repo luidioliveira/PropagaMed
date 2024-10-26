@@ -37,6 +37,7 @@ namespace PropagaMed
             List<Visita> visitas = await App.Database.GetItemsVisitaAsync();
 
             exportParameters.IsEnabled = visitas.Any();
+            deleteAllVisits.IsEnabled = visitas.Any();
 
             medicosPicker.ItemsSource = medicos;
             listView.ItemsSource = medicos.OrderBy(m => m.Nome);
@@ -257,6 +258,22 @@ namespace PropagaMed
             allMedicos.IsEnabled = false;
 
             this.CurrentPage = verMedicos;
+        }
+
+        async void DeleteAllVisitsAsync(object sender, EventArgs e)
+        {
+            var confirmDelete = await DisplayAlert("Atenção", $"Deseja realmente deletar todas as suas visitas cadastradas?", "Sim", "Não");
+
+            if (confirmDelete)
+            { 
+                await App.Database.DeleteAllVisitasAsync();
+                deleteAllVisits.IsEnabled = false;
+                AlimentaMedicosEVisitas();
+
+                this.CurrentPage = verVisitas;
+
+                await DisplayAlert("Informação", $"Visitas deletadas com sucesso", "Ok");
+            }
         }
 
         async void DetalharMedico(object sender, EventArgs e)

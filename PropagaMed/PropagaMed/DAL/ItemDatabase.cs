@@ -59,19 +59,19 @@ namespace PropagaMed.Dal
             var LastDayOfLastMonth = new DateTime(firstDayOfLastMonth.Year, firstDayOfLastMonth.Month, DateTime.DaysInMonth(firstDayOfLastMonth.Year, firstDayOfLastMonth.Month)).Date;
             var SixMonthsSameDay = DateTime.Now.AddMonths(-6).Date;
 
-            switch (typeParameter)
+            return typeParameter switch
             {
-                case (int)ExportEnum.byDay:
-                    return Database.Table<Visita>().Where(i => i.DiaVisita == DateTime.Now.Date).ToListAsync();
-                case (int)ExportEnum.byMonth:
-                    return Database.Table<Visita>().Where(i => i.DiaVisita >= firstDayOfMonth && i.DiaVisita <= lastDayOfMonth).ToListAsync();
-                case (int)ExportEnum.lastMonth:
-                    return Database.Table<Visita>().Where(i => i.DiaVisita >= firstDayOfLastMonth && i.DiaVisita <= LastDayOfLastMonth).ToListAsync();
-                case (int)ExportEnum.lastSixMonths:
-                    return Database.Table<Visita>().Where(i => i.DiaVisita >= SixMonthsSameDay && i.DiaVisita <= DateTime.Now.Date).ToListAsync();
-                default:
-                    return Database.Table<Visita>().Where(i => i.DiaVisita == DateTime.Now.Date).ToListAsync();
-            }
+                (int)ExportEnum.byDay => Database.Table<Visita>().Where(i => i.DiaVisita == DateTime.Now.Date).ToListAsync(),
+                (int)ExportEnum.byMonth => Database.Table<Visita>().Where(i => i.DiaVisita >= firstDayOfMonth && i.DiaVisita <= lastDayOfMonth).ToListAsync(),
+                (int)ExportEnum.lastMonth => Database.Table<Visita>().Where(i => i.DiaVisita >= firstDayOfLastMonth && i.DiaVisita <= LastDayOfLastMonth).ToListAsync(),
+                (int)ExportEnum.lastSixMonths => Database.Table<Visita>().Where(i => i.DiaVisita >= SixMonthsSameDay && i.DiaVisita <= DateTime.Now.Date).ToListAsync(),
+                _ => Database.Table<Visita>().Where(i => i.DiaVisita == DateTime.Now.Date).ToListAsync(),
+            };
+        }
+
+        public Task<List<Visita>> GetItemsVisitaByCustomParameterAsync(DateTime begin, DateTime end)
+        {
+            return Database.Table<Visita>().Where(v => v.DiaVisita >= begin && v.DiaVisita <= end).ToListAsync();
         }
 
         public Task<List<Medico>> GetItemsNotDoneAsync()
@@ -97,6 +97,11 @@ namespace PropagaMed.Dal
         public Task<int> DeleteItemAsync(object item)
         {
             return Database.DeleteAsync(item);
+        }
+
+        public async Task DeleteAllVisitasAsync()
+        {
+            await Database.QueryAsync<Visita>("DELETE FROM [Visita]");
         }
 
         public Task<List<UserData>> GetItemsUserDataAsync()
