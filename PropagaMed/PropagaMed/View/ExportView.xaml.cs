@@ -50,7 +50,7 @@ namespace PropagaMed.View
             }
 
             string personalFolderFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal)).ToString() + $@"/PropagaMed_Visitas_{typeAdd}.csv";
-            List<Visita> visitas = App.Database.GetItemsVisitaByParameterAsync(parameter).Result.OrderBy(v => v.HoraVisita).ToList();
+            List<Visita> visitas = App.Database.GetItemsVisitaByParameterAsync(parameter).Result.OrderBy(v => v.DiaVisita).ThenBy(v => v.HoraVisita).ThenBy(v => v.NomeMedicoVisita).ToList();
             List<Medico> medicos = new();
 
             if (visitas.Any())

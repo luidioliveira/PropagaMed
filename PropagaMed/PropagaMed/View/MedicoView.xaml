@@ -111,7 +111,7 @@
                  />   
             </StackLayout>
             
-            <Label Text="Secretária:"
+            <Label Text="Secretário(a):"
                 TextColor="#76cafb"
                 HorizontalTextAlignment="left"
                 FontFamily="Arial"
@@ -122,7 +122,7 @@
             <Entry x:Name="secretaria"
                 Text="{Binding Secretaria}"
                 Scale="0.8"     
-                Placeholder="Secretária"
+                Placeholder="Secretário(a)"
                 PlaceholderColor="#FFFFFF"
                 BackgroundColor="#76cafb"
                 TextColor="#FFFFFF"
