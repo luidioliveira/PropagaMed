@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="2.0" package="LuidiOliveiraSolucoes.PropagaMed" android:versionCode="2">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="2.1" package="LuidiOliveiraSolucoes.PropagaMed" android:versionCode="2.1">
 	<uses-sdk android:minSdkVersion="29" android:targetSdkVersion="33" />
 	<application android:label="PropagaMed.Android" android:icon="@mipmap/propagamed_new_logo"></application>
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
