@@ -1,5 +1,5 @@
 {
-  "SENDGRID_API_KEY": "",
+  "BREVO_API_KEY": "",
   "MAIL_FROM": "",
   "MAIL_TO": "",
   "AUTH_USERS":
@@ -7,15 +7,11 @@
     {
       "mail": "",
       "pin": ""
-    },
-    {
-      "mail": "",
-      "pin": ""
     }
   ],
   "MASTER_USER":
   {
-      "mail": "",
-      "pin": ""
+    "mail": "",
+    "pin": ""
   }
 }

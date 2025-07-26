@@ -20,7 +20,7 @@ public static class Config
 
             return new()
             {
-                SendGridApiKey = jsonObj["SENDGRID_API_KEY"].ToString(),
+                BrevoApiKey = jsonObj["BREVO_API_KEY"].ToString(),
                 MailFrom = jsonObj["MAIL_FROM"].ToString(),
                 MailTo = jsonObj["MAIL_TO"].ToString(),
                 UsersData = jsonObj["AUTH_USERS"].ToString(),

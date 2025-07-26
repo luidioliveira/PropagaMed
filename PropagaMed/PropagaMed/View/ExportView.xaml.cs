@@ -5,8 +5,8 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
-using SendGrid;
-using SendGrid.Helpers.Mail;
+using brevo_csharp.Api;
+using brevo_csharp.Model;
 
 namespace PropagaMed.View
 {
@@ -37,7 +37,7 @@ namespace PropagaMed.View
         {
             actInd.IsVisible = true;
             actInd.IsRunning = true;
-            await Task.Delay(100);
+            await System.Threading.Tasks.Task.Delay(100);
 
             int parameter = int.Parse(((Button)sender).CommandParameter.ToString());
 
@@ -68,7 +68,7 @@ namespace PropagaMed.View
                     break;
             }
 
-            string personalFolderFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal)).ToString() + $@"/PropagaMed_Visitas_{typeAdd}.csv";
+            string personalFolderFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal)) + $@"/PropagaMed_Visitas_{typeAdd}.csv";
 
             List<Visita> visitas = parameter.Equals((int)ExportEnum.custom) ?
                                    App.Database.GetItemsVisitaByCustomParameterAsync(InicioVisitaDataSelecionada, FimVisitaDataSelecionada).Result.OrderBy(v => v.DiaVisita).ThenBy(v => v.HoraVisita).ToList()
@@ -93,32 +93,38 @@ namespace PropagaMed.View
 
                 //Envio de e-mail
                 var configItems = Config.GetConfigItems();
+                var apiKey = configItems.BrevoApiKey;
 
-                var apiKey = configItems.SendGridApiKey;
+                brevo_csharp.Client.Configuration.Default.AddApiKey("api-key", apiKey);
+                var apiInstance = new TransactionalEmailsApi();
 
-                var client = new SendGridClient(apiKey);
-                var from = new EmailAddress(configItems.MailFrom, "PropagaMed");
-                var subject = $"PropagaMed - Relatório de Controle de Visitas - {DateTime.Now:dd/MM/yyyy}";
-                var to = new EmailAddress(configItems.MailTo, "Usuário PropagaMed");
-                var plainTextContent = $"Segue anexo o arquivo de visitas {type}.";
-                var htmlContent = $"<strong>Segue anexo o arquivo de visitas {type}.</strong>";
-                var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+                try
+                {
+                    var sendSmtpEmail = new SendSmtpEmail
+                    {
+                        Sender = new SendSmtpEmailSender("PropagaMed", configItems.MailFrom),
+                        To = new List<SendSmtpEmailTo> { new SendSmtpEmailTo(configItems.MailTo, "Usuário PropagaMed") },
+                        Subject = $"PropagaMed - Relatório de Controle de Visitas - {DateTime.Now:dd/MM/yyyy}",
+                        TextContent = $"Segue anexo o arquivo de visitas {type}.",
+                        HtmlContent = $"<strong>Segue anexo o arquivo de visitas {type}.</strong>",
+                        Attachment = new List<SendSmtpEmailAttachment>
+                        {
+                            new SendSmtpEmailAttachment
+                            {
+                                Name = $"PropagaMed_Visitas_{typeAdd}.csv",
+                                Content = File.ReadAllBytes(personalFolderFile)
+                            }
+                        }
+                    };
 
-                //Relatório como anexo
-                var fileBytes = File.ReadAllBytes(personalFolderFile);
-                var fileBase64 = Convert.ToBase64String(fileBytes);
-                msg.AddAttachment($"PropagaMed_Visitas_{typeAdd}.csv", fileBase64);
-                var response = await client.SendEmailAsync(msg);
-
-                if (File.Exists(personalFolderFile))
+                    CreateSmtpEmail result = await apiInstance.SendTransacEmailAsync(sendSmtpEmail);
                     File.Delete(personalFolderFile);
-
-                if (response.IsSuccessStatusCode)
-                { 
-                    await DisplayAlert("Informação", $"Arquivo enviado para o e-mail {to.Email}", "Ok");
+                    await DisplayAlert("Informação", $"Arquivo enviado para o e-mail {configItems.MailTo}", "Ok");
                 }
-                else
-                    await DisplayAlert("Erro", $"Falha no envio para o e-mail {to.Email}. Tente novamente mais tarde.", "Ok");
+                catch (Exception ex)
+                {
+                    await DisplayAlert("Erro", $"Falha no envio: {ex.Message}", "Ok");
+                }
             }
             else
             {
