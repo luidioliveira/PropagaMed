@@ -18,7 +18,7 @@ Aplicativo multiplataforma (Xamarin.Forms -> Android/iOS) pensado para **propaga
 
 * **Xamarin.Forms** — permite compartilhar grande parte do código entre Android e iOS, agilizando o desenvolvimento
 * **C# e .NET** como base do app — código limpo e reutilizável
-* * **SQLite**
+* **SQLite**
 
 ---
 
