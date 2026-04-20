@@ -765,11 +765,10 @@
                 />
     </StackLayout>
   </ContentPage>
-    
-  <ContentPage x:Name="verMedicos" Title="Médicos" BackgroundColor="#FFFFFF">
+
+    <ContentPage x:Name="verMedicos" Title="Médicos" BackgroundColor="#FFFFFF">
         <ContentPage.ToolbarItems>
-            <ToolbarItem Text="Médicos"
-                         IconImageSource="blue_stethoscope"/>
+            <ToolbarItem Text="Médicos" IconImageSource="blue_stethoscope"/>
         </ContentPage.ToolbarItems>
         <ContentPage.IconImageSource>
             <OnPlatform x:TypeArguments="FileImageSource">
@@ -777,47 +776,80 @@
                 <On Platform="Android" Value="medico" />
             </OnPlatform>
         </ContentPage.IconImageSource>
-        <StackLayout>
-            <SearchBar x:Name="searchBarMedicos" Placeholder="Buscar..." TextChanged="OnSearchBarMedicosChanged"/>
-            <Button x:Name="buttonMedicosFilter" Text="Filtro" Clicked="OnButtonMedicosFilterButtonClicked" BackgroundColor="#76cafb" TextColor="#FFFFFF" />
-            <StackLayout x:Name="medicosFilter" Orientation="Horizontal" HorizontalOptions="Center" IsVisible="false">
-                <CheckBox x:Name="RJ" Color="#76cafb" Scale="0.8" />
-                <Label Text="Rio de Janeiro"
-                    TextColor="#76cafb"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    FontFamily="Arial"
-                    FontAttributes="Bold"
-                    Scale="0.8"
-                />
-                <CheckBox x:Name="NIT" Color="#76cafb" Scale="0.8" />
-                <Label Text="Niterói"
-                    TextColor="#76cafb"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    FontFamily="Arial"
-                    FontAttributes="Bold"
-                    Scale="0.8"
-                />
-                <Button Text="Filtrar" Clicked="OnMedicosFilterButtonClicked" BackgroundColor="#76cafb" TextColor="#FFFFFF" />
+
+        <Grid RowDefinitions="Auto, Auto, Auto, *, Auto">
+
+            <SearchBar Grid.Row="0"
+                   x:Name="searchBarMedicos"
+                   Placeholder="Buscar..."
+                   TextChanged="OnSearchBarMedicosChanged"/>
+
+            <StackLayout Grid.Row="1">
+                <Button x:Name="buttonMedicosFilter"
+                    Text="Filtro"
+                    Clicked="OnButtonMedicosFilterButtonClicked"
+                    BackgroundColor="#76cafb"
+                    TextColor="#FFFFFF"/>
+                <StackLayout x:Name="medicosFilter"
+                         Orientation="Horizontal"
+                         HorizontalOptions="Center"
+                         IsVisible="False">
+                    <CheckBox x:Name="RJ" Color="#76cafb" Scale="0.8"/>
+                    <Label Text="Rio de Janeiro" TextColor="#76cafb"
+                       VerticalOptions="Center" FontAttributes="Bold" Scale="0.8"/>
+                    <CheckBox x:Name="NIT" Color="#76cafb" Scale="0.8"/>
+                    <Label Text="Niterói" TextColor="#76cafb"
+                       VerticalOptions="Center" FontAttributes="Bold" Scale="0.8"/>
+                    <Button Text="Filtrar"
+                        Clicked="OnMedicosFilterButtonClicked"
+                        BackgroundColor="#76cafb" TextColor="#FFFFFF"/>
+                </StackLayout>
             </StackLayout>
-            <ListView x:Name="listView" BackgroundColor="#FFFFFF" VerticalOptions="FillAndExpand" HasUnevenRows="true" RowHeight="-1">
+
+            <StackLayout Grid.Row="2"
+                     x:Name="barraSelecao"
+                     IsVisible="False"
+                     Orientation="Horizontal"
+                     BackgroundColor="#e8f7fd"
+                     Padding="12,6"
+                     Spacing="8">
+                <Label x:Name="labelSelecao"
+                   Text="Selecione até 2 médicos"
+                   TextColor="#76cafb"
+                   FontAttributes="Bold"
+                   VerticalOptions="Center"
+                   HorizontalOptions="FillAndExpand"/>
+                <Button Text="Cancelar"
+                    TextColor="#76cafb"
+                    BackgroundColor="Transparent"
+                    Clicked="CancelarSelecaoClicado"/>
+            </StackLayout>
+
+            <ListView Grid.Row="3"
+                  x:Name="listView"
+                  BackgroundColor="#FFFFFF"
+                  VerticalOptions="FillAndExpand"
+                  HasUnevenRows="True"
+                  RowHeight="-1">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell Tapped="ViewSelected">
                             <ViewCell.ContextActions>
                                 <MenuItem Clicked="DetalharMedico"
-                                          CommandParameter="{Binding Id}"
-                                          Text="Detalhar" />
+                                      CommandParameter="{Binding Id}"
+                                      Text="Detalhar"/>
                                 <MenuItem Clicked="DeletarMedico"
-                                          CommandParameter="{Binding Id}"
-                                          Text="Deletar" IsDestructive="True" />
+                                      CommandParameter="{Binding Id}"
+                                      Text="Deletar" IsDestructive="True"/>
                                 <MenuItem Clicked="VisitasPorMedico"
-                                          CommandParameter="{Binding Id}"
-                                          Text="Visitas" />
+                                      CommandParameter="{Binding Id}"
+                                      Text="Visitas"/>
                             </ViewCell.ContextActions>
-                            <StackLayout>
-                                <Label BackgroundColor="#76cafb" TextColor="#FFFFFF" Text="{Binding Nome}" FontSize="15"/>
+                            <StackLayout Padding="0,0,0,0">
+                                <Label BackgroundColor="#76cafb"
+                                   TextColor="#FFFFFF"
+                                   Text="{Binding Nome}"
+                                   FontSize="15"/>
                                 <Label TextColor="#76cafb" FontSize="12">
                                     <Label.FormattedText>
                                         <FormattedString>
@@ -826,7 +858,7 @@
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
-                                <Label TextColor="#76cafb" FontSize="12" Margin="0, 0, 0, 5">
+                                <Label TextColor="#76cafb" FontSize="12" Margin="0,0,0,5">
                                     <Label.FormattedText>
                                         <FormattedString>
                                             <Span Text="Localização: "/>
@@ -834,20 +866,39 @@
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
+
+                                <BoxView x:Name="indicadorSelecao"
+                                     HeightRequest="3"
+                                     Color="#01696f"
+                                     IsVisible="{Binding Selecionado}"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
 
-            <Button x:Name="allMedicos"
+            <StackLayout Grid.Row="4" Spacing="0">
+                <Button x:Name="btnExportarCartoes"
+                    Text="Exportar Cartão"
+                    TextColor="#FFFFFF"
+                    BackgroundColor="#76cafb"
+                    IsVisible="False"
+                    Clicked="ExportarCartoesClicado"
+                    Margin="8,4"/>
+
+                <Button x:Name="btnModoExportacao"
+                    Text="Selecionar para Exportar Cartões"
+                    TextColor="#76cafb"
+                    BackgroundColor="Transparent"
+                    Clicked="ModoExportacaoClicado"/>
+
+                <Button x:Name="allMedicos"
                     TextColor="#76cafb"
                     Text="Ver Todos os Médicos"
                     HorizontalOptions="Center"
-                    VerticalOptions="End"
                     Clicked="GetAllMedicosAsync"
-                    IsEnabled="false"
-                    />
-        </StackLayout>
+                    IsEnabled="False"/>
+            </StackLayout>
+        </Grid>
     </ContentPage>
 </TabbedPage>

@@ -22,5 +22,7 @@ namespace PropagaMed.Model
         public string HorariosVisita { get; set; }
         public string CRM { get; set; }
         public string Observacao { get; set; }
+        [SQLite.Ignore]
+        public bool Selecionado { get; set; } = false;
     }
 }

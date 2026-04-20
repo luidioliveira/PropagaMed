@@ -10,6 +10,7 @@ using Plugin.FilePicker;
 using Xamarin.Essentials;
 using brevo_csharp.Api;
 using brevo_csharp.Model;
+using PropagaMed.Utils;
 
 namespace PropagaMed
 {
@@ -80,7 +81,7 @@ namespace PropagaMed
                 }
                 finally
                 {
-                    await Navigation.PushAsync(new Home());
+                    await Navigation.PushAsync(new Home(checkTodayBirthdaysHome: true));
                 }
             }
             else

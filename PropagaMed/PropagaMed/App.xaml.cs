@@ -1,4 +1,5 @@
 using PropagaMed.Dal;
+using PropagaMed.Utils;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -6,41 +7,35 @@ using Xamarin.Forms.Xaml;
 namespace PropagaMed
 {
     public partial class App : Application
-	{
-		static ItemDatabase database;
+    {
+        static ItemDatabase database;
 
-		public App ()
-		{
-			InitializeComponent();
-
+        public App()
+        {
+            InitializeComponent();
             MainPage = new NavigationPage(new Login());
-		}
+        }
 
-		public static ItemDatabase Database
-		{
-			get
-			{
-				if (database == null)
-				{
-					database = new ItemDatabase();
-				}
-				return database;
-			}
-		}
+        public static ItemDatabase Database
+        {
+            get
+            {
+                database ??= new();
 
-		protected override void OnStart ()
-		{
-			// Handle when your app starts
-		}
+                return database;
+            }
+        }
 
-		protected override void OnSleep ()
-		{
-			// Handle when your app sleeps
-		}
+        protected override void OnStart()
+        {
+            _ = BirthdayNotificationService.CheckTodayBirthdaysAsync();
+        }
 
-		protected override void OnResume ()
-		{
-			// Handle when your app resumes
-		}
-	}
+        protected override void OnSleep() { }
+
+        protected override void OnResume()
+        {
+            _ = BirthdayNotificationService.CheckTodayBirthdaysAsync();
+        }
+    }
 }

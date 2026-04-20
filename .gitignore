@@ -1,0 +1,15 @@
+﻿################################################################################
+# Este arquivo .gitignore foi criado automaticamente pelo Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/*
+/PropagaMed/PropagaMed.Android/.vs/*
+/PropagaMed/PropagaMed.Android/bin/*
+/PropagaMed/PropagaMed.Android/obj/*
+/PropagaMed/PropagaMed.iOS/.vs/*
+/PropagaMed/PropagaMed.iOS/bin/*
+/PropagaMed/PropagaMed.iOS/obj/*
+/PropagaMed/PropagaMed.Android/PropagaMed.Android.csproj.user
+/PropagaMed/PropagaMed.iOS/PropagaMed.iOS.csproj.user
+/PropagaMed/PropagaMed.Android/Resources/Resource.Designer.cs
+/PropagaMed/PropagaMed.Android/Resources/Resource.designer.cs

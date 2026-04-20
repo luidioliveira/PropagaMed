@@ -25,7 +25,7 @@ namespace PropagaMed.View
 
         private async void AtualizarVisitaClicado(object sender, EventArgs e)
         {
-            var returnPage = new Home("verVisitas");
+            var returnPage = new Home(otherView: "verVisitas");
 
             var visitaAAtualizar = new Visita
             {

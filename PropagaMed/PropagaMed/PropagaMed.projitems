@@ -34,7 +34,11 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Model\JsonConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Medico.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\BirthdayNotificationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)utils\CardExportService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Config.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\FontResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\DiasETurnosVisitaHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)View\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -81,12 +85,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)View\" />
-    <Folder Include="$(MSBuildThisFileDirectory)ViewModel\" />
     <Folder Include="$(MSBuildThisFileDirectory)DAL\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)config.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\Fonts\OpenSans-Bold.ttf" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\Fonts\OpenSans-Regular.ttf" />
   </ItemGroup>
 </Project>

@@ -504,12 +504,20 @@
             </StackLayout>
 
             <Button x:Name="atualizarMedico" 
-               Text="Atualizar"
-               TextColor="#76cafb"
-               HorizontalOptions="Center"
-               VerticalOptions="End"
-               Clicked="AtualizarMedicoClicado"
+                      Text="Atualizar"
+                      TextColor="#76cafb"
+                      HorizontalOptions="Center"
+                      VerticalOptions="End"
+                      Clicked="AtualizarMedicoClicado"
             />
+
+            <Button x:Name="btnExportarCartao"
+                    Text="Exportar Cartão"
+                    TextColor="#76cafb"
+                    HorizontalOptions="Center"
+                    VerticalOptions="End"
+                    Clicked="ExportarCartaoClicado"
+             />
         </StackLayout>            
     </ScrollView>
     </ContentPage.Content>

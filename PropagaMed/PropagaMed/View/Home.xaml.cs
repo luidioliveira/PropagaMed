@@ -1,4 +1,5 @@
 ﻿using PropagaMed.Model;
+using PropagaMed.Utils;
 using PropagaMed.View;
 using System;
 using System.Collections.Generic;
@@ -12,13 +13,17 @@ namespace PropagaMed
     {
         Medico MedicoSelecionado = new();
         DateTime DataSelecionada = DateTime.Now.Date;
+        private bool _modoExportacao = false;
+        private readonly List<Medico> _medicosParaExportar = [];
 
-        public Home(string otherView = "")
+        public Home(bool checkTodayBirthdaysHome = false, string otherView = "")
         {
             InitializeComponent();
             AlimentaMedicosEVisitas();
 
             this.CurrentPage = string.IsNullOrEmpty(otherView) ? this.CurrentPage : (Page)CurrentPage.FindByName(otherView);
+
+            _ = BirthdayNotificationService.CheckTodayBirthdaysAsync(checkTodayBirthdaysHome: checkTodayBirthdaysHome);
         }
 
         private void ItemTapped(object sender, System.EventArgs e)
@@ -308,6 +313,32 @@ namespace PropagaMed
         void ViewSelected(object sender, EventArgs e)
         {
             var viewCell = (ViewCell)sender;
+
+            if (_modoExportacao)
+            {
+                if (viewCell.BindingContext is not Medico medico) return;
+
+                if (_medicosParaExportar.Contains(medico))
+                {
+                    _medicosParaExportar.Remove(medico);
+                    medico.Selecionado = false;
+                    viewCell.View.BackgroundColor = Color.FromHex("#FFFFFF");
+                }
+                else if (_medicosParaExportar.Count < 2)
+                {
+                    _medicosParaExportar.Add(medico);
+                    medico.Selecionado = true;
+                    viewCell.View.BackgroundColor = Color.FromHex("#d0f0e8");
+                }
+                else
+                {
+                    DisplayAlert("Limite atingido", "Você pode selecionar no máximo 2 médicos.", "Ok");
+                }
+
+                AtualizarBotaoExportar();
+                return;
+            }
+
             var actualColor = viewCell.View.BackgroundColor.ToHex();
 
             if (actualColor.Equals("#FFFFFF"))
@@ -376,6 +407,84 @@ namespace PropagaMed
         void OnSearchBarMedicosVisitaChanged(object sender, TextChangedEventArgs e)
         {
             medicosPicker.ItemsSource = App.Database.GetItemsMedicoAsync().Result.Where(i => i.Nome.ToLower().Contains(e.NewTextValue.ToLower())).OrderBy(m => m.Nome).ToList();
+        }
+
+        private void ModoExportacaoClicado(object sender, EventArgs e)
+        {
+            _modoExportacao = true;
+            _medicosParaExportar.Clear();
+
+            barraSelecao.IsVisible = true;
+            btnModoExportacao.IsVisible = false;
+            btnExportarCartoes.IsVisible = false;
+            labelSelecao.Text = "Selecione até 2 médicos (0/2)";
+
+            foreach (var m in listView.ItemsSource as System.Collections.IEnumerable ?? Array.Empty<object>())
+                if (m is Medico medico) medico.Selecionado = false;
+        }
+
+        private void CancelarSelecaoClicado(object sender, EventArgs e)
+        {
+            _modoExportacao = false;
+            _medicosParaExportar.Clear();
+
+            barraSelecao.IsVisible = false;
+            btnModoExportacao.IsVisible = true;
+            btnExportarCartoes.IsVisible = false;
+            labelSelecao.Text = "Selecione até 2 médicos";
+
+            foreach (var m in listView.ItemsSource as System.Collections.IEnumerable ?? Array.Empty<object>())
+                if (m is Medico medico) medico.Selecionado = false;
+        }
+
+        private async void ExportarCartoesClicado(object sender, EventArgs e)
+        {
+            if (_medicosParaExportar.Count == 0) return;
+
+            try
+            {
+                btnExportarCartoes.IsEnabled = false;
+                btnExportarCartoes.Text = "Gerando...";
+
+                var medicosExport = _medicosParaExportar.Select(m => new Medico
+                {
+                    Id = m.Id,
+                    Nome = m.Nome,
+                    Especialidade = m.Especialidade,
+                    Localizacao = m.Localizacao,
+                    Endereco = m.Endereco,
+                    CEP = m.CEP,
+                    Aniversario = m.Aniversario,
+                    Secretaria = m.Secretaria,
+                    Telefone = m.Telefone,
+                    Celular = m.Celular,
+                    Email = m.Email,
+                    CRM = m.CRM,
+                    DiasVisita = DiasETurnosVisitaHelper.FormatarDias(m.DiasVisita),
+                    HorariosVisita = DiasETurnosVisitaHelper.FormatarTurnos(m.HorariosVisita),
+                    Observacao = m.Observacao
+                }).ToList();
+
+                await CardExportService.ExportCardsAsync(medicosExport);
+                CancelarSelecaoClicado(sender, e);
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", $"Não foi possível gerar:\n{ex.Message}", "Ok");
+            }
+            finally
+            {
+                btnExportarCartoes.IsEnabled = true;
+                AtualizarBotaoExportar();
+            }
+        }
+
+        private void AtualizarBotaoExportar()
+        {
+            int qtd = _medicosParaExportar.Count;
+            btnExportarCartoes.IsVisible = qtd > 0;
+            btnExportarCartoes.Text = qtd == 1 ? "Exportar Cartão" : "Exportar Cartões";
+            labelSelecao.Text = $"Selecione até 2 médicos ({qtd}/2)";
         }
     }
 }
