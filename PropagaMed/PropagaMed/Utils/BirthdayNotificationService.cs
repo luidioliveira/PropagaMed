@@ -1,7 +1,6 @@
-using PropagaMed.Model;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -9,71 +8,60 @@ namespace PropagaMed.Utils
 {
     public static class BirthdayNotificationService
     {
-        /// <summary>
-        /// Verifica se a visita ocorre no aniversário do médico.
-        /// Exibe alerta e permite registrar observação comemorativa.
-        /// </summary>
-        public static bool CheckAndNotify(Visita visita, Medico medico)
+        public static async Task CheckTodayBirthdaysAsync(bool checkTodayBirthdaysHome = false)
         {
-            if (medico == null || medico.Aniversario == default) return false;
-
-            bool isBirthday = visita.DiaVisita.Month == medico.Aniversario.Month
-                           && visita.DiaVisita.Day   == medico.Aniversario.Day;
-
-            if (isBirthday)
+            try
             {
-                visita.IsBirthday = true;
+                var currentPage = (Application.Current.MainPage as NavigationPage)?.CurrentPage;
+                if (currentPage is Login && !checkTodayBirthdaysHome)
+                    return;
+
+                var today = DateTime.Now.Date;
+
+                var visitasHoje = (await App.Database.GetItemsVisitaAsync())
+                    .Where(v => v.DiaVisita.Date == today)
+                    .ToList();
+
+                if (!visitasHoje.Any()) return;
+
+                var medicos = await App.Database.GetItemsMedicoAsync();
+
+                var aniversariantes = visitasHoje
+                    .Select(v => new
+                    {
+                        Visita = v,
+                        Medico = medicos.FirstOrDefault(m => m.Id == v.IdMedicoVisita)
+                    })
+                    .Where(x => x.Medico != null
+                             && x.Visita.DiaVisita.Month == x.Medico.Aniversario.Month
+                             && x.Visita.DiaVisita.Day == x.Medico.Aniversario.Day)
+                    .ToList();
+
+                if (!aniversariantes.Any()) return;
+
+                var sb = new StringBuilder();
+                sb.AppendLine("Você tem visitas hoje com médicos(as) que fazem aniversário\n");
+
+                foreach (var item in aniversariantes)
+                {
+                    sb.AppendLine($"> Dr(a). {item.Medico.Nome}");
+                    sb.AppendLine($"> {item.Visita.HoraVisita:hh\\:mm} – {item.Visita.TipoVisita}");
+                    if (!string.IsNullOrEmpty(item.Medico.Especialidade))
+                        sb.AppendLine($"> Esp.: {item.Medico.Especialidade}");
+                    sb.AppendLine();
+                }
 
                 Device.BeginInvokeOnMainThread(async () =>
                 {
-                    bool addObs = await Application.Current.MainPage.DisplayAlert(
-                        "🎂 Aniversário!",
-                        $"A visita de {visita.DiaVisita:dd/MM/yyyy} coincide com o aniversário de {medico.Nome}!\n" +
-                        "Ótima oportunidade para levar um brinde ou cartão.",
-                        "Registrar observação",
+                    await Application.Current.MainPage.DisplayAlert(
+                        aniversariantes.Count == 1
+                            ? $"Aniversário hoje! {DateTime.Now.Date:dd/MM/yyyy}"
+                            : $"{aniversariantes.Count} aniversários hoje! {DateTime.Now.Date:dd/MM/yyyy}",
+                        sb.ToString(),
                         "Ok");
-
-                    if (addObs)
-                    {
-                        string obs = await Application.Current.MainPage.DisplayPromptAsync(
-                            "Observação de Aniversário",
-                            $"Nota para a visita de aniversário de {medico.Nome}:",
-                            initialValue: "🎂 Visita de aniversário – levar brinde");
-
-                        if (!string.IsNullOrWhiteSpace(obs))
-                        {
-                            visita.Observacao = obs;
-                            await App.Database.SaveItemAsync(visita);
-                        }
-                    }
                 });
             }
-
-            return isBirthday;
-        }
-
-        /// <summary>
-        /// Decora a lista de visitas com a flag de aniversário de forma assíncrona e segura.
-        /// Substitui os blocos Parallel.ForEach duplicados em Home.xaml.cs.
-        /// </summary>
-        public static Task DecorateBirthdaysAsync(IEnumerable<Visita> visitas, List<Medico> medicos)
-        {
-            foreach (var visita in visitas)
-            {
-                var medico = medicos.FirstOrDefault(m => m.Id == visita.IdMedicoVisita);
-                if (medico == null || medico.Aniversario == default) continue;
-
-                bool isBirthday = visita.DiaVisita.Month == medico.Aniversario.Month
-                               && visita.DiaVisita.Day   == medico.Aniversario.Day;
-
-                if (isBirthday && !visita.NomeMedicoVisita.Contains("🎂"))
-                {
-                    visita.IsBirthday = true;
-                    visita.NomeMedicoVisita = $"🎂 {visita.NomeMedicoVisita} – Aniversário!";
-                }
-            }
-
-            return Task.CompletedTask;
+            catch { }
         }
     }
 }
