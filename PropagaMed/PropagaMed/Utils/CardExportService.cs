@@ -74,9 +74,7 @@ namespace PropagaMed.Utils
             double gap = XUnit.FromCentimeter(1).Point;
 
             // Altura total ocupada (1 ou 2 cartões)
-            double totalH = medicos.Count == 1
-                ? cardH
-                : cardH * 2 + gap;
+            double totalH = medicos.Count == 1 ? cardH : cardH * 2 + gap;
 
             // Centraliza horizontal e verticalmente na folha A4
             double startX = (pageW - cardW) / 2;
@@ -90,6 +88,30 @@ namespace PropagaMed.Utils
             document.Save(outputPath);
         }
 
+        // ── Detecta se o médico é de Niterói (case-insensitive, sem acento) ──────
+        private static bool IsNiteroi(Medico medico)
+        {
+            if (string.IsNullOrWhiteSpace(medico.Localizacao)) return false;
+
+            // Normaliza para comparar independente de acento ou capitalização
+            string loc = medico.Localizacao
+                .Trim()
+                .ToLowerInvariant()
+                .Normalize(System.Text.NormalizationForm.FormD);
+
+            // Remove diacríticos (acentos)
+            var sb = new System.Text.StringBuilder();
+            foreach (char c in loc)
+            {
+                var cat = System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c);
+                if (cat != System.Globalization.UnicodeCategory.NonSpacingMark)
+                    sb.Append(c);
+            }
+
+            string normalized = sb.ToString();
+            return normalized == "niteroi" || normalized.StartsWith("niteroi");
+        }
+
         private static void DrawCard(XGraphics gfx, Medico medico,
                                      double originX, double originY,
                                      double w, double h)
@@ -98,10 +120,20 @@ namespace PropagaMed.Utils
             var fontValue = new XFont("OpenSans", 6.5, XFontStyle.Regular);
             var fontFooter = new XFont("OpenSans", 4.5, XFontStyle.Regular);
 
+            // ── Cor da escrita: vermelho para Niterói, padrão para demais ────────
+            bool niteroi = IsNiteroi(medico);
+
+            XBrush corLabel = niteroi
+                ? new XSolidBrush(XColor.FromArgb(180, 0, 0))   // vermelho escuro para labels
+                : new XSolidBrush(XColor.FromArgb(80, 80, 80));  // cinza padrão
+
+            XBrush corValor = niteroi
+                ? new XSolidBrush(XColor.FromArgb(200, 0, 0))   // vermelho para valores
+                : XBrushes.Black;                                 // preto padrão
+
+            // Borda e linha separadora não mudam
             var corFundo = XBrushes.White;
             var corBorda = XPens.Black;
-            var corLabel = new XSolidBrush(XColor.FromArgb(80, 80, 80));
-            var corValor = XBrushes.Black;
             var corLinha = new XPen(XColor.FromArgb(200, 200, 200), 0.3);
 
             gfx.DrawRectangle(corFundo, originX, originY, w, h);
