@@ -18,11 +18,9 @@ namespace PropagaMed.Utils
 
         private static bool _fontResolverRegistered = false;
 
-        // ── Entrada única (1 médico) ───────────────────────────────────────────
         public static async Task ExportCardAsync(Medico medico)
             => await ExportCardsAsync(new List<Medico> { medico });
 
-        // ── Entrada múltipla (1 ou 2 médicos) ───────────────────────────────────
         public static async Task ExportCardsAsync(List<Medico> medicos)
         {
             if (medicos == null || medicos.Count == 0) return;
@@ -60,7 +58,6 @@ namespace PropagaMed.Utils
                 : "PropagaMed – Cartões de Médicos";
             document.Info.Subject = "PropagaMed – Cartão de Médico";
 
-            // Sempre A4 retrato: 21 x 29,7 cm
             var page = document.AddPage();
             page.Width = XUnit.FromCentimeter(21);
             page.Height = XUnit.FromCentimeter(29.7);
@@ -69,14 +66,11 @@ namespace PropagaMed.Utils
 
             double pageW = page.Width.Point;
             double pageH = page.Height.Point;
-            double cardW = CardWidth.Point;   // 11 cm em pontos
-            double cardH = CardHeight.Point;  // 7 cm em pontos
+            double cardW = CardWidth.Point;
+            double cardH = CardHeight.Point;
             double gap = XUnit.FromCentimeter(1).Point;
 
-            // Altura total ocupada (1 ou 2 cartões)
             double totalH = medicos.Count == 1 ? cardH : cardH * 2 + gap;
-
-            // Centraliza horizontal e verticalmente na folha A4
             double startX = (pageW - cardW) / 2;
             double startY = (pageH - totalH) / 2;
 
@@ -88,18 +82,15 @@ namespace PropagaMed.Utils
             document.Save(outputPath);
         }
 
-        // ── Detecta se o médico é de Niterói (case-insensitive, sem acento) ──────
         private static bool IsNiteroi(Medico medico)
         {
             if (string.IsNullOrWhiteSpace(medico.Localizacao)) return false;
 
-            // Normaliza para comparar independente de acento ou capitalização
             string loc = medico.Localizacao
                 .Trim()
                 .ToLowerInvariant()
                 .Normalize(System.Text.NormalizationForm.FormD);
 
-            // Remove diacríticos (acentos)
             var sb = new System.Text.StringBuilder();
             foreach (char c in loc)
             {
@@ -116,82 +107,100 @@ namespace PropagaMed.Utils
                                      double originX, double originY,
                                      double w, double h)
         {
-            var fontLabel = new XFont("OpenSans", 5.5, XFontStyle.Bold);
-            var fontValue = new XFont("OpenSans", 6.5, XFontStyle.Regular);
-            var fontFooter = new XFont("OpenSans", 4.5, XFontStyle.Regular);
+            // ── Fontes maiores para melhor aproveitamento do cartão 11x7 cm ──────
+            var fontLabel = new XFont("OpenSans", 7.0, XFontStyle.Bold);
+            var fontValue = new XFont("OpenSans", 8.5, XFontStyle.Regular);
+            var fontFooter = new XFont("OpenSans", 5.5, XFontStyle.Regular);
 
-            // ── Cor da escrita: vermelho para Niterói, padrão para demais ────────
             bool niteroi = IsNiteroi(medico);
 
             XBrush corLabel = niteroi
-                ? new XSolidBrush(XColor.FromArgb(180, 0, 0))   // vermelho escuro para labels
-                : new XSolidBrush(XColor.FromArgb(80, 80, 80));  // cinza padrão
+                ? new XSolidBrush(XColor.FromArgb(180, 0, 0))
+                : new XSolidBrush(XColor.FromArgb(80, 80, 80));
 
             XBrush corValor = niteroi
-                ? new XSolidBrush(XColor.FromArgb(200, 0, 0))   // vermelho para valores
-                : XBrushes.Black;                                 // preto padrão
+                ? new XSolidBrush(XColor.FromArgb(200, 0, 0))
+                : XBrushes.Black;
 
-            // Borda e linha separadora não mudam
             var corFundo = XBrushes.White;
             var corBorda = XPens.Black;
-            var corLinha = new XPen(XColor.FromArgb(200, 200, 200), 0.3);
+            var corLinha = new XPen(XColor.FromArgb(200, 200, 200), 0.4);
 
             gfx.DrawRectangle(corFundo, originX, originY, w, h);
             gfx.DrawRectangle(corBorda, originX, originY, w, h);
 
-            double marginX = 8;
-            double marginY = 7;
-            double colRight = originX + w / 2 + 4;
-            double lineH = 13;
+            // ── Layout: margens maiores, altura de linha proporcional ─────────────
+            // Cartão tem ~198pt de altura. 8 campos + rodapé.
+            // Reservamos: marginY*2=18, rodapé=11 → disponível = 169pt para 8 linhas
+            // lineH = 169 / 8 ≈ 21pt (vs 13pt anterior, +62%)
+            double marginX = 10;
+            double marginY = 9;
+            double rodapeH = 11;
+            double lineH = (h - marginY * 2 - rodapeH) / 8.0;  // dinâmico, sempre cabe
+            double colRight = originX + w * 0.52;                  // divisão levemente assimétrica
             double y = originY + marginY;
 
+            // ── Linha 1: NOME | ESP. ──────────────────────────────────────────────
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "NOME", medico.Nome,
-                originX + marginX, y, colRight - originX - marginX - 6, lineH);
+                originX + marginX, y,
+                colRight - originX - marginX - 4, lineH);
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "ESP.", medico.Especialidade,
-                colRight, y, originX + w - colRight - marginX, lineH);
+                colRight, y,
+                originX + w - colRight - marginX, lineH);
             y += lineH;
 
+            // ── Linha 2: END. ─────────────────────────────────────────────────────
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "END.", medico.Endereco,
                 originX + marginX, y, w - marginX * 2, lineH);
             y += lineH;
 
+            // ── Linha 3: CEP | ANIVERSÁRIO ────────────────────────────────────────
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "CEP", medico.CEP,
-                originX + marginX, y, colRight - originX - marginX - 6, lineH);
+                originX + marginX, y,
+                colRight - originX - marginX - 4, lineH);
 
             string aniversario = medico.Aniversario == default
                 ? "" : medico.Aniversario.ToString("dd/MM");
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "ANIVERSÁRIO", aniversario,
-                colRight, y, originX + w - colRight - marginX, lineH);
+                colRight, y,
+                originX + w - colRight - marginX, lineH);
             y += lineH;
 
+            // ── Linha 4: CRM(N) ───────────────────────────────────────────────────
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "CRM(N)", medico.CRM,
                 originX + marginX, y, w - marginX * 2, lineH);
             y += lineH;
 
+            // ── Linha 5: SECRETÁRIA ───────────────────────────────────────────────
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "SECRETÁRIA", medico.Secretaria,
                 originX + marginX, y, w - marginX * 2, lineH);
             y += lineH;
 
+            // ── Linha 6: TEL. | CELULAR ───────────────────────────────────────────
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "TEL.", medico.Telefone,
-                originX + marginX, y, colRight - originX - marginX - 6, lineH);
+                originX + marginX, y,
+                colRight - originX - marginX - 4, lineH);
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "CELULAR", medico.Celular,
-                colRight, y, originX + w - colRight - marginX, lineH);
+                colRight, y,
+                originX + w - colRight - marginX, lineH);
             y += lineH;
 
+            // ── Linha 7: E-MAIL ───────────────────────────────────────────────────
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "E-MAIL", medico.Email,
                 originX + marginX, y, w - marginX * 2, lineH);
             y += lineH;
 
+            // ── Linha 8: DIAS E TURNOS ────────────────────────────────────────────
             string diasHorarios = string.Join(" | ",
                 new[] { medico.DiasVisita, medico.HorariosVisita }
                     .Where(s => !string.IsNullOrEmpty(s)));
@@ -200,9 +209,10 @@ namespace PropagaMed.Utils
                 "DIAS E TURNOS", diasHorarios,
                 originX + marginX, y, w - marginX * 2, lineH);
 
+            // ── Rodapé ────────────────────────────────────────────────────────────
             gfx.DrawString($"PropagaMed · {DateTime.Now:dd/MM/yyyy}",
                 fontFooter, XBrushes.Gray,
-                new XRect(originX, originY + h - 8, w, 8),
+                new XRect(originX, originY + h - rodapeH, w, rodapeH),
                 XStringFormats.BottomCenter);
         }
 
@@ -213,18 +223,48 @@ namespace PropagaMed.Utils
             string label, string value,
             double x, double y, double width, double height)
         {
-            double labelH = height * 0.35;
-            double valueH = height * 0.55;
+            double labelH = height * 0.36;
+            double valueH = height * 0.54;
 
+            // Label
             gfx.DrawString(label, fontLabel, corLabel,
                 new XRect(x, y, width, labelH),
                 XStringFormats.TopLeft);
 
-            gfx.DrawString(value ?? "", fontValue, corValor,
+            // Valor: trunca com reticências se o texto não couber na largura disponível
+            string safeValue = TruncateToFit(gfx, fontValue, value ?? "", width);
+            gfx.DrawString(safeValue, fontValue, corValor,
                 new XRect(x, y + labelH, width, valueH),
                 XStringFormats.TopLeft);
 
+            // Linha separadora
             gfx.DrawLine(corLinha, x, y + height - 1, x + width, y + height - 1);
+        }
+
+        /// <summary>
+        /// Trunca o texto adicionando "…" caso ultrapasse a largura disponível.
+        /// Garante que textos longos nunca transbordem para fora do campo.
+        /// </summary>
+        private static string TruncateToFit(XGraphics gfx, XFont font, string text, double maxWidth)
+        {
+            if (string.IsNullOrEmpty(text)) return text;
+
+            // Cabe sem corte?
+            if (gfx.MeasureString(text, font).Width <= maxWidth)
+                return text;
+
+            // Reduz caracter a caracter até caber com reticências
+            const string ellipsis = "…";
+            double ellipsisW = gfx.MeasureString(ellipsis, font).Width;
+
+            for (int i = text.Length - 1; i > 0; i--)
+            {
+                string candidate = text.Substring(0, i) + ellipsis;
+                if (gfx.MeasureString(candidate, font).Width <= maxWidth)
+                    return candidate;
+            }
+
+            return ellipsis;
         }
 
         private static string SanitizeName(string name)
