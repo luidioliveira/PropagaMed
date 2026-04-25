@@ -54,10 +54,7 @@ namespace PropagaMed.Utils
         }
 
         /// <summary>
-        /// Gera um PDF A4 com o máximo de cartões que couberem por página (1 coluna, até 4 linhas).
-        /// Cria novas páginas conforme necessário. A última página parcial é recentralizada.
-        /// Nota: 2 colunas são geometricamente impossíveis — o cartão (11 cm) não cabe duas vezes
-        /// na largura de uma folha A4 (21 cm).
+        /// Gera um PDF A4 com o máximo de cartões que couberem por página.
         /// </summary>
         private static void GeneratePdf(List<Medico> medicos, string outputPath)
         {
@@ -280,10 +277,5 @@ namespace PropagaMed.Utils
 
             return ellipsis;
         }
-
-        private static string SanitizeName(string name)
-            => string.IsNullOrEmpty(name)
-               ? "Medico"
-               : string.Join("_", name.Split(Path.GetInvalidFileNameChars()));
     }
 }
