@@ -1,4 +1,4 @@
-﻿using PdfSharpCore.Drawing;
+using PdfSharpCore.Drawing;
 using PdfSharpCore.Fonts;
 using PdfSharpCore.Pdf;
 using PropagaMed.Model;
@@ -13,8 +13,11 @@ namespace PropagaMed.Utils
 {
     public static class CardExportService
     {
-        private static readonly XUnit CardWidth = XUnit.FromCentimeter(11);
+        private static readonly XUnit CardWidth  = XUnit.FromCentimeter(11);
         private static readonly XUnit CardHeight = XUnit.FromCentimeter(7);
+
+        // Gap vertical entre cartões (cm).
+        private const double GapCm = 0.5;
 
         private static bool _fontResolverRegistered = false;
 
@@ -27,10 +30,10 @@ namespace PropagaMed.Utils
 
             EnsureFontResolver();
 
-            string nomes = string.Join("_", medicos.Select(m => SanitizeName(m.Nome)));
+            string guid = Guid.NewGuid().ToString("N").Substring(0, 10).ToUpper();
             string filePath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.Personal),
-                $"Cartoes_{nomes}_{DateTime.Now:dd_MM_yyyy}.pdf");
+                $"Cartoes_{guid}_{DateTime.Now:dd_MM_yyyy}.pdf");
 
             GeneratePdf(medicos, filePath);
 
@@ -50,34 +53,60 @@ namespace PropagaMed.Utils
             _fontResolverRegistered = true;
         }
 
+        /// <summary>
+        /// Gera um PDF A4 com o máximo de cartões que couberem por página (1 coluna, até 4 linhas).
+        /// Cria novas páginas conforme necessário. A última página parcial é recentralizada.
+        /// Nota: 2 colunas são geometricamente impossíveis — o cartão (11 cm) não cabe duas vezes
+        /// na largura de uma folha A4 (21 cm).
+        /// </summary>
         private static void GeneratePdf(List<Medico> medicos, string outputPath)
         {
             var document = new PdfDocument();
-            document.Info.Title = medicos.Count == 1
+            document.Info.Title   = medicos.Count == 1
                 ? $"Cartão – {medicos[0].Nome}"
                 : "PropagaMed – Cartões de Médicos";
             document.Info.Subject = "PropagaMed – Cartão de Médico";
 
-            var page = document.AddPage();
-            page.Width = XUnit.FromCentimeter(21);
-            page.Height = XUnit.FromCentimeter(29.7);
+            double pageWCm = 21.0;
+            double pageHCm = 29.7;
+            double cardHCm = CardHeight.Centimeter;
+            double gapCm   = GapCm;
 
-            using var gfx = XGraphics.FromPdfPage(page);
+            // Quantas linhas cabem por página com o gap configurado
+            int rowsPerPage = (int)((pageHCm + gapCm) / (cardHCm + gapCm));
+            if (rowsPerPage < 1) rowsPerPage = 1;
 
-            double pageW = page.Width.Point;
-            double pageH = page.Height.Point;
-            double cardW = CardWidth.Point;
-            double cardH = CardHeight.Point;
-            double gap = XUnit.FromCentimeter(1).Point;
+            double cardWPt = CardWidth.Point;
+            double cardHPt = CardHeight.Point;
+            double gapPt   = XUnit.FromCentimeter(gapCm).Point;
+            double pageHPt = XUnit.FromCentimeter(pageHCm).Point;
+            double pageWPt = XUnit.FromCentimeter(pageWCm).Point;
 
-            double totalH = medicos.Count == 1 ? cardH : cardH * 2 + gap;
-            double startX = (pageW - cardW) / 2;
-            double startY = (pageH - totalH) / 2;
+            // Posição X centralizada horizontalmente (mesma para todas as páginas)
+            double startXPt = (pageWPt - cardWPt) / 2.0;
 
-            DrawCard(gfx, medicos[0], startX, startY, cardW, cardH);
+            int totalCards = medicos.Count;
+            int cardIndex  = 0;
 
-            if (medicos.Count == 2)
-                DrawCard(gfx, medicos[1], startX, startY + cardH + gap, cardW, cardH);
+            while (cardIndex < totalCards)
+            {
+                int cardsThisPage     = Math.Min(rowsPerPage, totalCards - cardIndex);
+                double blockHThisPage = cardsThisPage * cardHPt + (cardsThisPage - 1) * gapPt;
+                double startYPt       = (pageHPt - blockHThisPage) / 2.0;
+
+                var page = document.AddPage();
+                page.Width  = XUnit.FromCentimeter(pageWCm);
+                page.Height = XUnit.FromCentimeter(pageHCm);
+
+                using var gfx = XGraphics.FromPdfPage(page);
+
+                for (int row = 0; row < cardsThisPage; row++)
+                {
+                    double originY = startYPt + row * (cardHPt + gapPt);
+                    DrawCard(gfx, medicos[cardIndex], startXPt, originY, cardWPt, cardHPt);
+                    cardIndex++;
+                }
+            }
 
             document.Save(outputPath);
         }
@@ -107,10 +136,9 @@ namespace PropagaMed.Utils
                                      double originX, double originY,
                                      double w, double h)
         {
-            // ── Fontes maiores para melhor aproveitamento do cartão 11x7 cm ──────
-            var fontLabel = new XFont("OpenSans", 7.0, XFontStyle.Bold);
-            var fontValue = new XFont("OpenSans", 8.5, XFontStyle.Regular);
-            var fontFooter = new XFont("OpenSans", 5.5, XFontStyle.Regular);
+            var fontLabel  = new XFont("OpenSans", 7.0,  XFontStyle.Bold);
+            var fontValue  = new XFont("OpenSans", 8.5,  XFontStyle.Regular);
+            var fontFooter = new XFont("OpenSans", 5.5,  XFontStyle.Regular);
 
             bool niteroi = IsNiteroi(medico);
 
@@ -129,18 +157,14 @@ namespace PropagaMed.Utils
             gfx.DrawRectangle(corFundo, originX, originY, w, h);
             gfx.DrawRectangle(corBorda, originX, originY, w, h);
 
-            // ── Layout: margens maiores, altura de linha proporcional ─────────────
-            // Cartão tem ~198pt de altura. 8 campos + rodapé.
-            // Reservamos: marginY*2=18, rodapé=11 → disponível = 169pt para 8 linhas
-            // lineH = 169 / 8 ≈ 21pt (vs 13pt anterior, +62%)
             double marginX = 10;
             double marginY = 9;
             double rodapeH = 11;
-            double lineH = (h - marginY * 2 - rodapeH) / 8.0;  // dinâmico, sempre cabe
-            double colRight = originX + w * 0.52;                  // divisão levemente assimétrica
+            double lineH   = (h - marginY * 2 - rodapeH) / 8.0;
+            double colRight = originX + w * 0.52;
             double y = originY + marginY;
 
-            // ── Linha 1: NOME | ESP. ──────────────────────────────────────────────
+            // Linha 1: NOME | ESP.
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "NOME", medico.Nome,
                 originX + marginX, y,
@@ -151,13 +175,13 @@ namespace PropagaMed.Utils
                 originX + w - colRight - marginX, lineH);
             y += lineH;
 
-            // ── Linha 2: END. ─────────────────────────────────────────────────────
+            // Linha 2: END.
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "END.", medico.Endereco,
                 originX + marginX, y, w - marginX * 2, lineH);
             y += lineH;
 
-            // ── Linha 3: CEP | ANIVERSÁRIO ────────────────────────────────────────
+            // Linha 3: CEP | ANIVERSÁRIO
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "CEP", medico.CEP,
                 originX + marginX, y,
@@ -171,19 +195,19 @@ namespace PropagaMed.Utils
                 originX + w - colRight - marginX, lineH);
             y += lineH;
 
-            // ── Linha 4: CRM(N) ───────────────────────────────────────────────────
+            // Linha 4: CRM(N)
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "CRM(N)", medico.CRM,
                 originX + marginX, y, w - marginX * 2, lineH);
             y += lineH;
 
-            // ── Linha 5: SECRETÁRIA ───────────────────────────────────────────────
+            // Linha 5: SECRETÁRIA
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "SECRETÁRIA", medico.Secretaria,
                 originX + marginX, y, w - marginX * 2, lineH);
             y += lineH;
 
-            // ── Linha 6: TEL. | CELULAR ───────────────────────────────────────────
+            // Linha 6: TEL. | CELULAR
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "TEL.", medico.Telefone,
                 originX + marginX, y,
@@ -194,13 +218,13 @@ namespace PropagaMed.Utils
                 originX + w - colRight - marginX, lineH);
             y += lineH;
 
-            // ── Linha 7: E-MAIL ───────────────────────────────────────────────────
+            // Linha 7: E-MAIL
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "E-MAIL", medico.Email,
                 originX + marginX, y, w - marginX * 2, lineH);
             y += lineH;
 
-            // ── Linha 8: DIAS E TURNOS ────────────────────────────────────────────
+            // Linha 8: DIAS E TURNOS
             string diasHorarios = string.Join(" | ",
                 new[] { medico.DiasVisita, medico.HorariosVisita }
                     .Where(s => !string.IsNullOrEmpty(s)));
@@ -209,7 +233,7 @@ namespace PropagaMed.Utils
                 "DIAS E TURNOS", diasHorarios,
                 originX + marginX, y, w - marginX * 2, lineH);
 
-            // ── Rodapé ────────────────────────────────────────────────────────────
+            // Rodapé
             gfx.DrawString($"PropagaMed · {DateTime.Now:dd/MM/yyyy}",
                 fontFooter, XBrushes.Gray,
                 new XRect(originX, originY + h - rodapeH, w, rodapeH),
@@ -226,36 +250,26 @@ namespace PropagaMed.Utils
             double labelH = height * 0.36;
             double valueH = height * 0.54;
 
-            // Label
             gfx.DrawString(label, fontLabel, corLabel,
                 new XRect(x, y, width, labelH),
                 XStringFormats.TopLeft);
 
-            // Valor: trunca com reticências se o texto não couber na largura disponível
             string safeValue = TruncateToFit(gfx, fontValue, value ?? "", width);
             gfx.DrawString(safeValue, fontValue, corValor,
                 new XRect(x, y + labelH, width, valueH),
                 XStringFormats.TopLeft);
 
-            // Linha separadora
             gfx.DrawLine(corLinha, x, y + height - 1, x + width, y + height - 1);
         }
 
-        /// <summary>
-        /// Trunca o texto adicionando "…" caso ultrapasse a largura disponível.
-        /// Garante que textos longos nunca transbordem para fora do campo.
-        /// </summary>
         private static string TruncateToFit(XGraphics gfx, XFont font, string text, double maxWidth)
         {
             if (string.IsNullOrEmpty(text)) return text;
 
-            // Cabe sem corte?
             if (gfx.MeasureString(text, font).Width <= maxWidth)
                 return text;
 
-            // Reduz caracter a caracter até caber com reticências
             const string ellipsis = "…";
-            double ellipsisW = gfx.MeasureString(ellipsis, font).Width;
 
             for (int i = text.Length - 1; i > 0; i--)
             {

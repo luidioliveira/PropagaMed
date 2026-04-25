@@ -1,4 +1,4 @@
-﻿using PropagaMed.Model;
+using PropagaMed.Model;
 using PropagaMed.Utils;
 using PropagaMed.View;
 using System;
@@ -15,6 +15,9 @@ namespace PropagaMed
         DateTime DataSelecionada = DateTime.Now.Date;
         private bool _modoExportacao = false;
         private readonly List<Medico> _medicosParaExportar = [];
+
+        // Limite de médicos selecionáveis por exportação (= cartões por página A4)
+        private const int LimiteSelecao = 4;
 
         public Home(bool checkTodayBirthdaysHome = false, string otherView = "")
         {
@@ -87,7 +90,6 @@ namespace PropagaMed
         {
             Medico MedicoASalvar = new();
 
-            //Tipos, dias e horários preferenciais de visita selecionados
             string tiposVisitaSelecionados = string.Empty;
             string diasVisitaSelecionados = string.Empty;
             string horariosVisitaSelecionados = string.Empty;
@@ -110,7 +112,7 @@ namespace PropagaMed
             }
 
             if (tuesday.IsChecked)
-            { 
+            {
                 diasVisitaSelecionados += String.IsNullOrEmpty(diasVisitaSelecionados) ? "Terça" : " e Terça";
 
                 if (manhaTuesday.IsChecked)
@@ -122,7 +124,7 @@ namespace PropagaMed
             }
 
             if (wednesday.IsChecked)
-            { 
+            {
                 diasVisitaSelecionados += String.IsNullOrEmpty(diasVisitaSelecionados) ? "Quarta" : " e Quarta";
 
                 if (manhaWednesday.IsChecked)
@@ -230,7 +232,6 @@ namespace PropagaMed
 
             var visitas = App.Database.GetItemsVisitaAsync((int)mi.CommandParameter).Result.OrderBy(v => v.DiaVisita).ThenBy(v => v.HoraVisita);
 
-            //Lógica para reforçar aniversário
             Parallel.ForEach(visitas, visita =>
             {
                 var birthdayDoc = App.Database.GetItemsMedicoAsync().Result.Find(m => m.Id == visita.IdMedicoVisita).Aniversario;
@@ -270,7 +271,7 @@ namespace PropagaMed
             var confirmDelete = await DisplayAlert("Atenção", $"Deseja realmente deletar todas as suas visitas cadastradas?", "Sim", "Não");
 
             if (confirmDelete)
-            { 
+            {
                 await App.Database.DeleteAllVisitasAsync();
                 deleteAllVisits.IsEnabled = false;
                 AlimentaMedicosEVisitas();
@@ -324,7 +325,7 @@ namespace PropagaMed
                     medico.Selecionado = false;
                     viewCell.View.BackgroundColor = Color.FromHex("#FFFFFF");
                 }
-                else if (_medicosParaExportar.Count < 2)
+                else if (_medicosParaExportar.Count < LimiteSelecao)
                 {
                     _medicosParaExportar.Add(medico);
                     medico.Selecionado = true;
@@ -332,7 +333,7 @@ namespace PropagaMed
                 }
                 else
                 {
-                    DisplayAlert("Limite atingido", "Você pode selecionar no máximo 2 médicos.", "Ok");
+                    DisplayAlert("Limite atingido", $"Você pode selecionar no máximo {LimiteSelecao} médicos por exportação.", "Ok");
                 }
 
                 AtualizarBotaoExportar();
@@ -356,7 +357,6 @@ namespace PropagaMed
         {
             var visitas = App.Database.GetItemsVisitaAsync().Result.Where(i => i.NomeMedicoVisita.ToLower().Contains(e.NewTextValue.ToLower())).OrderBy(v => v.DiaVisita).ThenBy(v => v.HoraVisita);
 
-            //Lógica para reforçar aniversário
             Parallel.ForEach(visitas, visita =>
             {
                 var birthdayDoc = App.Database.GetItemsMedicoAsync().Result.Find(m => m.Id == visita.IdMedicoVisita).Aniversario;
@@ -417,7 +417,7 @@ namespace PropagaMed
             barraSelecao.IsVisible = true;
             btnModoExportacao.IsVisible = false;
             btnExportarCartoes.IsVisible = false;
-            labelSelecao.Text = "Selecione até 2 médicos (0/2)";
+            labelSelecao.Text = $"Selecione até {LimiteSelecao} médicos (0/{LimiteSelecao})";
 
             foreach (var m in listView.ItemsSource as System.Collections.IEnumerable ?? Array.Empty<object>())
                 if (m is Medico medico) medico.Selecionado = false;
@@ -431,7 +431,7 @@ namespace PropagaMed
             barraSelecao.IsVisible = false;
             btnModoExportacao.IsVisible = true;
             btnExportarCartoes.IsVisible = false;
-            labelSelecao.Text = "Selecione até 2 médicos";
+            labelSelecao.Text = $"Selecione até {LimiteSelecao} médicos";
 
             foreach (var m in listView.ItemsSource as System.Collections.IEnumerable ?? Array.Empty<object>())
                 if (m is Medico medico) medico.Selecionado = false;
@@ -483,8 +483,8 @@ namespace PropagaMed
         {
             int qtd = _medicosParaExportar.Count;
             btnExportarCartoes.IsVisible = qtd > 0;
-            btnExportarCartoes.Text = qtd == 1 ? "Exportar Cartão" : "Exportar Cartões";
-            labelSelecao.Text = $"Selecione até 2 médicos ({qtd}/2)";
+            btnExportarCartoes.Text = qtd == 1 ? "Exportar Cartão" : $"Exportar {qtd} Cartões";
+            labelSelecao.Text = $"{qtd}/{LimiteSelecao} médico{(qtd == 1 ? "" : "s")} selecionado{(qtd == 1 ? "" : "s")}";
         }
     }
 }
