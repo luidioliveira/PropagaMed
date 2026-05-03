@@ -154,22 +154,22 @@ namespace PropagaMed.Utils
             gfx.DrawRectangle(corFundo, originX, originY, w, h);
             gfx.DrawRectangle(corBorda, originX, originY, w, h);
 
-            double marginX = 10;
-            double marginY = 9;
-            double rodapeH = 11;
-            double lineH   = (h - marginY * 2 - rodapeH) / 8.0;
+            double marginX  = 10;
+            double marginY  = 9;
+            double rodapeH  = 11;
+            double lineH    = (h - marginY * 2 - rodapeH) / 8.0;
             double colRight = originX + w * 0.52;
-            double y = originY + marginY;
+            double leftW    = colRight - originX - marginX - 4;
+            double rightW   = originX + w - colRight - marginX;
+            double y        = originY + marginY;
 
             // Linha 1: NOME | ESP.
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "NOME", medico.Nome,
-                originX + marginX, y,
-                colRight - originX - marginX - 4, lineH);
+                originX + marginX, y, leftW, lineH);
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "ESP.", medico.Especialidade,
-                colRight, y,
-                originX + w - colRight - marginX, lineH);
+                colRight, y, rightW, lineH);
             y += lineH;
 
             // Linha 2: END.
@@ -181,49 +181,44 @@ namespace PropagaMed.Utils
             // Linha 3: CEP | ANIVERSÁRIO
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "CEP", medico.CEP,
-                originX + marginX, y,
-                colRight - originX - marginX - 4, lineH);
+                originX + marginX, y, leftW, lineH);
 
             string aniversario = medico.Aniversario == default
                 ? "" : medico.Aniversario.ToString("dd/MM");
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "ANIVERSÁRIO", aniversario,
-                colRight, y,
-                originX + w - colRight - marginX, lineH);
+                colRight, y, rightW, lineH);
             y += lineH;
 
-            // Linha 4: CRM(N)
+            // Linhas 4-5 (esquerda): CRM(N) na linha 4 e SECRETÁRIA na linha 5
+            // Linhas 4-5 (direita):  OBS. ocupando altura dupla (lineH * 2)
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "CRM(N)", medico.CRM,
-                originX + marginX, y, w - marginX * 2, lineH);
+                originX + marginX, y, leftW, lineH);
+            DrawFieldMultiLine(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
+                "OBS.", medico.Observacao,
+                colRight, y, rightW, lineH * 2);
             y += lineH;
 
-            // Linha 5: SECRETÁRIA
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "SECRETÁRIA", medico.Secretaria,
-                originX + marginX, y, w - marginX * 2, lineH);
+                originX + marginX, y, leftW, lineH);
+            // Lado direito já ocupado pelo OBS. de altura dupla — sem chamada aqui
             y += lineH;
 
             // Linha 6: TEL. | CELULAR
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "TEL.", medico.Telefone,
-                originX + marginX, y,
-                colRight - originX - marginX - 4, lineH);
+                originX + marginX, y, leftW, lineH);
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "CELULAR", medico.Celular,
-                colRight, y,
-                originX + w - colRight - marginX, lineH);
+                colRight, y, rightW, lineH);
             y += lineH;
 
-            // Linha 7: E-MAIL | OBS.
+            // Linha 7: E-MAIL
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "E-MAIL", medico.Email,
-                originX + marginX, y,
-                colRight - originX - marginX - 4, lineH);
-            DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
-                "OBS.", medico.Observacao,
-                colRight, y,
-                originX + w - colRight - marginX, lineH);
+                originX + marginX, y, w - marginX * 2, lineH);
             y += lineH;
 
             // Linha 8: DIAS E TURNOS
@@ -264,22 +259,95 @@ namespace PropagaMed.Utils
             gfx.DrawLine(corLinha, x, y + height - 1, x + width, y + height - 1);
         }
 
+        /// <summary>
+        /// Renderiza um campo com quebra de linha automática do valor,
+        /// aproveitando toda a altura disponibilizada (ex.: lineH * 2).
+        /// A linha separadora é desenhada apenas no final da área total.
+        /// </summary>
+        private static void DrawFieldMultiLine(
+            XGraphics gfx,
+            XFont fontLabel, XFont fontValue,
+            XBrush corLabel, XBrush corValor, XPen corLinha,
+            string label, string value,
+            double x, double y, double width, double height)
+        {
+            double labelH = height * 0.18; // proporcional à altura total
+            double valueH = height - labelH - 2;
+
+            gfx.DrawString(label, fontLabel, corLabel,
+                new XRect(x, y, width, labelH),
+                XStringFormats.TopLeft);
+
+            // Quebra o texto em palavras e monta linhas que caibam na largura
+            string safeValue = value ?? string.Empty;
+            var linhas = WrapText(gfx, fontValue, safeValue, width);
+
+            double lineSpacing = gfx.MeasureString("Ag", fontValue).Height * 1.2;
+            double textY = y + labelH;
+            foreach (string linha in linhas)
+            {
+                if (textY + lineSpacing > y + height - 2) break; // não ultrapassa a borda
+                gfx.DrawString(linha, fontValue, corValor,
+                    new XRect(x, textY, width, lineSpacing),
+                    XStringFormats.TopLeft);
+                textY += lineSpacing;
+            }
+
+            // Linha separadora no final da área dupla
+            gfx.DrawLine(corLinha, x, y + height - 1, x + width, y + height - 1);
+        }
+
+        /// <summary>
+        /// Quebra o texto em linhas que caibam dentro de maxWidth.
+        /// </summary>
+        private static List<string> WrapText(XGraphics gfx, XFont font, string text, double maxWidth)
+        {
+            var result = new List<string>();
+            if (string.IsNullOrWhiteSpace(text)) return result;
+
+            var words = text.Split(' ');
+            var currentLine = new System.Text.StringBuilder();
+
+            foreach (string word in words)
+            {
+                string test = currentLine.Length == 0 ? word : currentLine + " " + word;
+                if (gfx.MeasureString(test, font).Width <= maxWidth)
+                {
+                    currentLine.Clear();
+                    currentLine.Append(test);
+                }
+                else
+                {
+                    if (currentLine.Length > 0)
+                        result.Add(currentLine.ToString());
+                    // Se a própria palavra é maior que a largura, trunca
+                    currentLine.Clear();
+                    currentLine.Append(TruncateToFitStatic(gfx, font, word, maxWidth));
+                }
+            }
+
+            if (currentLine.Length > 0)
+                result.Add(currentLine.ToString());
+
+            return result;
+        }
+
         private static string TruncateToFit(XGraphics gfx, XFont font, string text, double maxWidth)
         {
             if (string.IsNullOrEmpty(text)) return text;
+            if (gfx.MeasureString(text, font).Width <= maxWidth) return text;
+            return TruncateToFitStatic(gfx, font, text, maxWidth);
+        }
 
-            if (gfx.MeasureString(text, font).Width <= maxWidth)
-                return text;
-
+        private static string TruncateToFitStatic(XGraphics gfx, XFont font, string text, double maxWidth)
+        {
             const string ellipsis = "…";
-
             for (int i = text.Length - 1; i > 0; i--)
             {
                 string candidate = text.Substring(0, i) + ellipsis;
                 if (gfx.MeasureString(candidate, font).Width <= maxWidth)
                     return candidate;
             }
-
             return ellipsis;
         }
     }
