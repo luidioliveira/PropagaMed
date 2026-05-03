@@ -215,10 +215,15 @@ namespace PropagaMed.Utils
                 originX + w - colRight - marginX, lineH);
             y += lineH;
 
-            // Linha 7: E-MAIL
+            // Linha 7: E-MAIL | OBS.
             DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
                 "E-MAIL", medico.Email,
-                originX + marginX, y, w - marginX * 2, lineH);
+                originX + marginX, y,
+                colRight - originX - marginX - 4, lineH);
+            DrawField(gfx, fontLabel, fontValue, corLabel, corValor, corLinha,
+                "OBS.", medico.Observacao,
+                colRight, y,
+                originX + w - colRight - marginX, lineH);
             y += lineH;
 
             // Linha 8: DIAS E TURNOS
