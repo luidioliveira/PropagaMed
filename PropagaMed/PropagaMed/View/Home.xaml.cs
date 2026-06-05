@@ -14,7 +14,7 @@ namespace PropagaMed
         Medico MedicoSelecionado = new();
         DateTime DataSelecionada = DateTime.Now.Date;
         private bool _modoExportacao = false;
-        private readonly List<Medico> _medicosParaExportar = [];
+        private readonly List<Medico> _medicosParaExportar = new();
 
         // Limite de médicos selecionáveis por exportação (= cartões por página A4)
         private const int LimiteSelecao = 4;
