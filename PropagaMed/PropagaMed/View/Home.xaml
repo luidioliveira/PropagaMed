@@ -886,6 +886,12 @@
                     Clicked="ExportarCartoesClicado"
                     Margin="8,4"/>
 
+                <Button x:Name="btnModoExportacaoMedicos"
+                    Text="Selecionar para Exportar Todos os Médicos"
+                    TextColor="#76cafb"
+                    BackgroundColor="Transparent"
+                    Clicked="OnExportarRelatorioGeralClicked"/>
+
                 <Button x:Name="btnModoExportacao"
                     Text="Selecionar para Exportar Cartões"
                     TextColor="#76cafb"

@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PropagaMed.View.FiltroRelatorioPage"
+             Title="Exportar Relatório Médico">
+    <StackLayout Padding="20" Spacing="16">
+
+        <Label Text="Filtrar por cidade antes de exportar:"
+               FontSize="16" FontAttributes="Bold" />
+
+        <Label Text="Selecione uma opção:"
+               FontSize="14" TextColor="Gray" />
+
+        <RadioButton x:Name="RbTodas"
+                     Content="Todas as cidades"
+                     GroupName="FiltroGrupo"
+                     IsChecked="True"
+                     FontSize="14" />
+
+        <RadioButton x:Name="RbRio"
+                     Content="Somente Rio de Janeiro"
+                     GroupName="FiltroGrupo"
+                     IsChecked="False"
+                     FontSize="14" />
+
+        <RadioButton x:Name="RbNiteroi"
+                     Content="Somente Niterói"
+                     GroupName="FiltroGrupo"
+                     IsChecked="False"
+                     FontSize="14" />
+
+        <Button Text="EXPORTAR RELATÓRIO"
+                BackgroundColor="#2196F3" TextColor="White"
+                FontAttributes="Bold"
+                Clicked="OnExportarClicked" />
+
+        <Button Text="Cancelar"
+                BackgroundColor="Transparent" TextColor="#2196F3"
+                Clicked="OnCancelarClicked" />
+
+    </StackLayout>
+</ContentPage>
