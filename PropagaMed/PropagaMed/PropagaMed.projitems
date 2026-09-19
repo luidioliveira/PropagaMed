@@ -27,6 +27,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)View\FiltroRelatorioPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
@@ -60,6 +64,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Model\UserData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)View\VisitaView.xaml.cs">
       <DependentUpon>VisitaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\MedicalReportExportService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)View\FiltroRelatorioPage.xaml.cs">
+      <DependentUpon>FiltroRelatorioPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -479,6 +479,20 @@ namespace PropagaMed
             }
         }
 
+        private async void OnExportarRelatorioGeralClicked(object sender, EventArgs e)
+        {
+            var medicos = await App.Database.GetItemsMedicoAsync();
+
+            if (medicos == null || medicos.Count == 0)
+            {
+                await DisplayAlert("Aviso", "Nenhum médico disponível para exportar.", "OK");
+                return;
+            }
+
+            await Navigation.PushAsync(new FiltroRelatorioPage(medicos));
+        }
+
+
         private void AtualizarBotaoExportar()
         {
             int qtd = _medicosParaExportar.Count;
